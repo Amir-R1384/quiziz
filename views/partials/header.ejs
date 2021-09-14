@@ -1,0 +1,23 @@
+<header class="bg-primary w-full px-8 py-4">
+    <div class="wrapper flex items-center justify-between">
+        <div class="flex items-center justify-between min-w-max gap-x-5" style="min-width: 50%;">
+            <img src="assets/images/logo.svg" alt="Logo">
+            <nav>
+                <ul class="flex gap-x-5 text-md clr-light">
+                    <li><a href="/" class="py-2 px-3">Home</a></li>
+                    <li><a href="/explore" class="py-2 px-3 ">Explore</a></li>
+                    <li><a href="/join" class="bg-white button clr-primary border-2 border-white">Join a quiz</a></li>
+                </ul>
+            </nav> 
+        </div>
+        <div class="flex item-center gap-x-5">
+            <a href="/signup" class="button button-secondary">Sign Up</a>
+            <a href="/login" class="button button-outline">Login</a>
+        </div>
+    </div>
+    <script defer>
+        const route = document.documentElement.getAttribute("data-route")
+        const link = document.querySelector(`a[href='${route}'`)
+        if (link) boldOut(link)
+    </script>
+</header>

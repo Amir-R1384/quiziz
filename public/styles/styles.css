@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --clr-primary: #25A55F;
+    --clr-secondary: #0D6560;
+    --clr-light: white;
+    --clr-dark: #484A47;
+    --clr-info: #F7DD72;
+    --clr-blue: #00A1E4;
+    --clr-red: #E5625E;
+
+    --br-1: 10px;
+    --br-2: 20px;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+@layer utilities {
+    .fill-browser-height {content: ""} /* It's there so that we don't get an error when building the css.*/
+
+    .bg-primary { background-color: var(--clr-primary); }
+    .bg-secondary { background-color: var(--clr-secondary); }
+    .bg-light { background-color: var(--clr-light); }
+    .bg-dark { background-color: var(--clr-dark); }
+
+    .clr-primary { color: var(--clr-primary); }
+    .clr-secondary { color: var(--clr-secondary); }
+    .clr-light { color: var(--clr-light); }
+    .clr-dark { color: var(--clr-dark); }
+}
+
+
+.wrapper { @apply max-w-screen-xl mx-auto; }
+
+section { @apply fill-browser-height overflow-y-hidden px-8; }
+
+.button { @apply py-2 px-4 rounded-md font-semibold; }
+.button-primary { @apply bg-primary clr-light; }
+.button-secondary { @apply bg-secondary clr-light; }
+.button-outline {
+    border-color: var(--clr-light);
+    @apply border-2 rounded-md clr-light;
+}
