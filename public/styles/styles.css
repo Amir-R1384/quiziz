@@ -32,8 +32,20 @@ body {
     .clr-secondary { color: var(--clr-secondary); }
     .clr-light { color: var(--clr-light); }
     .clr-dark { color: var(--clr-dark); }
+
+    .border-primary { border-color: var(--clr-primary); }
+    .border-secondary { border-color: var(--clr-secondary); }
+    .border-light { border-color: var(--clr-light); }
+    .border-dark { border-color: var(--clr-dark); }
 }
 
+.form-shadow {
+    box-shadow: 0 0 50px 0 rgba(0,0,0,0.2);
+}
+
+.input-error {
+    @apply border-red-500;
+}
 
 .wrapper { @apply max-w-screen-xl mx-auto; }
 

@@ -1,4 +1,6 @@
 plan.md
+todos.md
 node_modules
 .env
 .vscode
+public/styles/tailwind.css

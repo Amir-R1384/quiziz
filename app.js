@@ -3,6 +3,8 @@ if (process.env.NODE_ENV === "development") require("dotenv").config()
 const express = require("express")
 const expressEjsLayouts = require("express-ejs-layouts")
 const mongoose = require("mongoose")
+const cookieParser = require("cookie-parser")
+const authRoutes = require("./routes/authRoutes")
 
 
 // App setup
@@ -12,9 +14,11 @@ app.set("layout", "layouts/mainLayout.ejs")
 app.use(expressEjsLayouts)
 app.use(express.static("public"))
 app.use(express.urlencoded({extended: true}))
-
+app.use(express.json())
+app.use(cookieParser())
 
 app.get("/", (req, res) => res.render("index", {route:"/"}))
+app.use(authRoutes)
 
 // Database connection
 const { DB_NAME, DB_USERNAME, DB_PASSWORD } = process.env
