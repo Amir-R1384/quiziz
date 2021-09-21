@@ -8,6 +8,10 @@ module.exports.authenticate = async (req, res, next) => {
         next()
     }
     catch(err) {
-        res.redirect(`/login?route=${req.url}`)
+        res.redirect(`/login?route=${req.originalUrl}`)
     }
+}
+
+module.exports.checkUser = (req, res, next) => {
+    next()
 }

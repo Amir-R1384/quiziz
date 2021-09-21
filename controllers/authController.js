@@ -1,15 +1,15 @@
-module.exports = {signup_get, signup_post, login_get, login_post}
 const User = require("../models/User")
 const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 
-async function signup_get(req, res) {
+module.exports.signup_get = (req, res) => {
     res.render("signup", {layout: "layouts/blankLayout"})
 }
-function login_get(req, res) {
+module.exports.login_get = (req, res) => {
     res.render("login", {layout: "layouts/blankLayout"})
 }
 
-async function signup_post(req, res) {
+module.exports.signup_post = async (req, res) => {
     try {
         const { name, email, password } = req.body
 
@@ -27,13 +27,13 @@ async function signup_post(req, res) {
 }
 
 
-async function login_post(req, res) {
+module.exports.login_post = async (req, res) => {
     const { email, password } = req.body
 
-    if (/^\s*$/.test(email)) return res.status(400).json({email: "The Email is required"})
+    if (/^\s*$/.test(email)) return res.status(400).json({errors: {email: "The Email is required"}})
 
     const user = await User.findOne({ email })
-    if (!user) return res.status(400).json({email: "This Email does not exist"})
+    if (!user) return res.status(400).json({errors: {email: "This Email does not exist"}})
 
     const savedPassword = user.password
     const match = await bcrypt.compare(password, savedPassword)
@@ -53,8 +53,12 @@ async function login_post(req, res) {
         }
 
     } else {
-        res.status(400).json({password: "The password is incorrect"})
+        res.status(400).json({errors: {password: "The password is incorrect"}})
     }
+}
+
+module.exports.logout_get = (req, res) => {
+    res.cookie("jwt", "", { maxAge: 1 }).redirect("/")
 }
 
 function handleDatabaseErrors(err, res) {
@@ -63,7 +67,7 @@ function handleDatabaseErrors(err, res) {
     // Unique email check
     if (err.code === 11000) {
         errors.email = "The email has already been regiestered"
-        return res.status(400).json(errors)
+        return res.status(400).json({ errors })
     }
 
     for (let field in err.errors) {
