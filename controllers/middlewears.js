@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken")
+const jwt = require('jsonwebtoken')
 
 module.exports.authenticate = async (req, res, next) => {
     verifyToken(req.cookies.jwt)
@@ -8,7 +8,7 @@ module.exports.authenticate = async (req, res, next) => {
 
 module.exports.checkUser = (req, res, next) => {
     verifyToken(req.cookies.jwt)
-        .then(() => res.redirect("/dashboard"))
+        .then(() => res.redirect('/dashboard'))
         .catch(() => next())
 }
 
