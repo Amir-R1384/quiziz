@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("./partials/head.ejs") %> 
+</head>
+<body class="bg-gray-200 h-screen">
+    <header class="w-full px-8 py-4 bg-light drop-shadow-sm">
+        <div class="wrapper flex items-center justify-between">
+            <div class="flex items-center justify-between min-w-max gap-x-5" style="min-width: 50%;">
+                <img src="assets/images/logo-primary.svg" alt="Logo">
+                <nav>
+                    <ul class="flex gap-x-5 text-lg font-semibold text-gray-500">
+                        <li><a href="/create" class="py-2 px-3">Create</a></li>
+                        <li><a href="/join" class="py-2 px-3 ">Join</a></li>
+                    </ul>
+                </nav> 
+            </div>
+            <div class="flex item-center gap-x-5">
+                <a href="/logout" class="button button-outline bg-red-500 text-md">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="my-10">
+        <div class="wrapper p-4">
+            <div class="flex flex-col p-4 items-center w-72 h-96 bg-light rounded-lg shadow-md">
+                <div class="flex items-center w-full">
+                    <div class="bg-gray-600 rounded-full w-16 h-16"></div>
+                    <div class="ml-8 text-lg font-bold text-gray-600"> <%= locals.profileName %>  </div>
+                </div>
+                <div class="w-full h-0.5 bg-yellow-200 my-6 rounded-full"></div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

@@ -5,6 +5,8 @@ const expressEjsLayouts = require("express-ejs-layouts")
 const mongoose = require("mongoose")
 const cookieParser = require("cookie-parser")
 const authRoutes = require("./routes/authRoutes")
+const deashboardRoutes = require("./routes/dashboardRoutes")
+const { checkUser } = require("./controllers/middlewears")
 
 
 // App setup
@@ -17,8 +19,9 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(cookieParser())
 
-app.get("/", (req, res) => res.render("index", {route:"/"}))
+app.get("/", checkUser, (req, res) => res.render("index", {route:"/"}))
 app.use(authRoutes)
+app.use("/dashboard", deashboardRoutes)
 
 // Database connection
 const { DB_NAME, DB_USERNAME, DB_PASSWORD } = process.env

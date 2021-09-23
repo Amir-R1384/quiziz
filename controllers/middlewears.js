@@ -1,17 +1,25 @@
 const jwt = require("jsonwebtoken")
 
 module.exports.authenticate = async (req, res, next) => {
-    try {
-        const token = req.cookies?.jwt
-        
-        jwt.verify(token, process.env.SECRET_KEY)
-        next()
-    }
-    catch(err) {
-        res.redirect(`/login?route=${req.originalUrl}`)
-    }
+    verifyToken(req.cookies.jwt)
+        .then(() => next())
+        .catch(() => res.redirect(`/login?route=${req.originalUrl}`))
 }
 
 module.exports.checkUser = (req, res, next) => {
-    next()
+    verifyToken(req.cookies.jwt)
+        .then(() => res.redirect("/dashboard"))
+        .catch(() => next())
+}
+
+function verifyToken(token) {
+    return new Promise((resolve, reject) => {
+        try {
+            jwt.verify(token, process.env.SECRET_KEY)
+            resolve()
+        }
+        catch(err) {
+            reject()
+        }
+    })
 }
