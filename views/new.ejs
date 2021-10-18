@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("./partials/head.ejs") %> 
+    <script src="/scripts/createQuiz.js" defer></script>
+</head>
+<body class="bg-gray-200 h-screen">
+    <header class="w-full px-8 py-4 bg-light drop-shadow-md">
+        <div class="wrapper flex items-center justify-between">
+            <div class="flex items-center gap-x-3" style="min-width: 50%;">
+                <input id="titleInp" data-storage-name="title" type="text" class="bg-gray-200 py-2 px-4 rounded-md text-lg clr-primary font-semibold w-full box-border h-10" placeholder="Write your title">
+                <button id="moreBtn" class="button border-gray-600 text-gray-700 border-2 text-md h-10 flex items-center hover:bg-gray-100">More</button>                
+            </div>
+            <div class="flex items-center gap-x-3">
+
+                <div class="flex gap-x-2 items-center mr-6">
+                    Public 
+                    <div id="visibilityToggle" class="flex items-center w-12 rounded-2xl bg-gray-400 cursor-pointer transition-colors" style="padding: 2px;">
+                        <div class="bg-white rounded-full w-5 h-5 transition-transform duration-300 ease-in-out"></div>
+                    </div>
+                </div>
+                
+                <a href="/dashboard" class="button clr-light bg-red-500 text-md border-2 border-red-500 h-10 flex items-center hover:opacity-90 transition-opacity">Cencel</a>
+                <button id="saveBtn" class="button clr-light bg-primary text-md border-2 border-primary h-10 flex items-center hover:opacity-90 transition-opacity">Save</button>
+            </div>
+        </div>
+    </header>
+    <main class="flex items-center fill-browser-height">
+        <div class="wrapper flex items-center h-full w-full">
+            <div id="leftPanel" class=" pt-4 pr-4 h-full flex flex-col gap-y-4 bg-gray-100" style="box-shadow: 1px 0px 8px 0px rgba(0,0,0,0.2)">
+                <select id="questionTypeSelect" disabled class="ml-4 mb-3 p-1 border-b-2 border-gray-700 font-semibold text-gray-700 bg-transparent outline-none cursor-pointer disabled:cursor-not-allowed">
+                    <option value="default" class="bg-gray-800 text-white">Question Type</option>
+                    <option value="true/false" class="bg-gray-800 text-white">True/False</option>
+                </select>
+
+                <div id="questionSetting" class="h-full border-t border-r border-gray-400 bg-gray-200 flex flex-col items-center gap-y-2 p-2" style="border-top-right-radius: 8px;"></div>
+                
+            </div>
+            <div class="w-full h-full pt-8 px-10 flex flex-col items-center">
+                <div class="bg-white w-full h-full rounded-lg p-4 flex flex-col gap-y-5" style="box-shadow: 0 0 10px 1px rgba(0,0,0,0.25);">
+                    <input id="questionTitleInp" disabled type="text" placeholder="Write your question" class="py-2 px-3 bg-gray-200 rounded-md font-semibold text-gray-700 disabled:cursor-not-allowed disabled:placeholder-transparent">
+                    <div id="questionBoard" class="w-full h-full px-12 py-5"></div>
+                </div>
+
+                <div class="mt-8 flex py-1 bg-white gap-x-2" style="border-top-right-radius: 12px; border-top-left-radius: 12px; box-shadow: 0 0 10px 1px rgba(0,0,0,0.25);">
+                    <div id="questionsList" class="flex py-1 pr-1 pl-3 gap-x-2 items-center overflow-x-auto" style="max-width: 70vw;">
+                    </div>
+                    <div class="px-3 py-1 flex flex-col justify-around gap-y-1 border-l border-gray-300">
+                        <div id="newQuestionBtn" class="rounded-full bg-primary grid place-items-center p-0.5 w-8 h-8 transition-colors hover:bg-green-500 cursor-pointer" style="box-shadow: 0 0 5px 1px rgba(0,0,0,0.2);"> <img src="/assets/icons/plus.svg" alt="New Question"> </div>
+                        <div id="deleteQuestionBtn" class="rounded-full bg-red-500 grid place-items-center p-0.5 w-8 h-8 transition-colors hover:bg-red-400 cursor-pointer" style="box-shadow: 0 0 5px 1px rgba(0,0,0,0.2);"> <img src="/assets/icons/trash.svg" alt="New Question"> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="moreContainer" class="absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-40 hidden">
+            <div id="more" class="absolute w-1/2 h-3/5 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-2xl p-3 overflow-auto max-w-screen-md max-h-96">
+                <div class="flex justify-end">
+                    <img src="/assets/icons/close.svg" alt="close" id="closeBtn" class="self-end cursor-pointer mb-3">
+                </div>
+                <label class="font-semibold text-gray-700" for="descriptionInp">Description</label>
+                <textarea class="block w-full py-2 px-3 bg-gray-200 rounded-md font-medium text-gray-700 resize-y mb-6" name="description" data-storage-name="description" id="descriptionInp" maxlength="100"></textarea>
+                <label class="font-semibold text-gray-700" for="keywordsInp">Keywords</label>
+                <textarea class="block w-full py-2 px-3 bg-gray-200 rounded-md font-medium text-gray-700 resize-y h-10 mb-11" name="keywords" data-storage-name="keywords" id="keywordsInp"></textarea>
+                <div id="imgInpContainer" class="py-2 px-3 bg-gray-200 rounded-md font-medium text-gray-700 flex-1 grid place-items-center relative hover:bg-gray-300 transition-colors">
+                    <label id="imageInpLabel" class="font-semibold text-gray-700" for="imageInp">Choose an image...</label>
+                    <input class="block overflow-hidden opacity-0 w-full h-full absolute top-0 left-0 cursor-pointer" type="file" name="image" id="imageInp" accept="image/*"></input>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        document.querySelectorAll(".fill-browser-height").forEach(el => {
+            stretchToBrowserHeight(el)
+            window.addEventListener("resize", () => {
+                stretchToBrowserHeight(el)
+            })
+        })
+    </script>
+</body>
+</html>
