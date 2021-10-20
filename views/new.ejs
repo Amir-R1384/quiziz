@@ -53,7 +53,7 @@
             </div>
         </div>
         <div id="moreContainer" class="absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-40 hidden">
-            <div id="more" class="absolute w-1/2 h-3/5 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-2xl p-3 overflow-auto max-w-screen-md max-h-96">
+            <div id="more" class="absolute w-3/4 h-3/5 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-2xl px-5 py-3 overflow-auto max-w-screen-md max-h-96">
                 <div class="flex justify-end">
                     <img src="/assets/icons/close.svg" alt="close" id="closeBtn" class="self-end cursor-pointer mb-3">
                 </div>
@@ -61,9 +61,12 @@
                 <textarea class="block w-full py-2 px-3 bg-gray-200 rounded-md font-medium text-gray-700 resize-y mb-6" name="description" data-storage-name="description" id="descriptionInp" maxlength="100"></textarea>
                 <label class="font-semibold text-gray-700" for="keywordsInp">Keywords</label>
                 <textarea class="block w-full py-2 px-3 bg-gray-200 rounded-md font-medium text-gray-700 resize-y h-10 mb-11" name="keywords" data-storage-name="keywords" id="keywordsInp"></textarea>
-                <div id="imgInpContainer" class="py-2 px-3 bg-gray-200 rounded-md font-medium text-gray-700 flex-1 grid place-items-center relative hover:bg-gray-300 transition-colors">
-                    <label id="imageInpLabel" class="font-semibold text-gray-700" for="imageInp">Choose an image...</label>
-                    <input class="block overflow-hidden opacity-0 w-full h-full absolute top-0 left-0 cursor-pointer" type="file" name="image" id="imageInp" accept="image/*"></input>
+                <div id="imgInpContainer" class="py-2 px-3 bg-gray-200 rounded-md font-medium text-gray-700 flex-1 grid place-items-center hover:bg-gray-300 transition-colors">
+                    <div id="imgContainer" class="relative w-full p-1 cursor-pointer">
+                        <label id="imageInpLabel" class="font-semibold text-gray-700 cursor-pointer" for="imageInp">Choose an image...</label>
+                        <input class="block overflow-hidden opacity-0 w-full h-full absolute top-0 left-0 cursor-pointer" onclick="this.value=null;" type="file" name="image" id="imageInp" accept="image/*"></input>
+                    </div>
+                    <button id="removeImgBtn" class=" mt-2 w-full p-2 bg-red-500 text-white font-semibold text-md rounded-md hover:bg-red-400 transition-colors duration-200 hidden">Remove image</button>
                 </div>
             </div>
         </div>

@@ -35,7 +35,9 @@ saveBtn.addEventListener('mouseup', saveQuiz)
 moreBtn.addEventListener('mouseup', toggleMoreSection)
 closeBtn.addEventListener('mouseup', toggleMoreSection)
 moreContainer.addEventListener('click', e => e.target.id === 'moreContainer' ? toggleMoreSection() : null)
+
 imageInp.addEventListener('change', displayQuizImage)
+removeImgBtn.addEventListener('mouseup', () => imageInp.dispatchEvent(new Event('change')))
 
 autoSaveDataToLocalStorage()
 /* eslint-disable no-undef */
@@ -277,13 +279,14 @@ async function fetchComponent(path) {
     }
 }
 
-function displayQuizImage() {
-    
-    if (!this.files.length) {
+function displayQuizImage(event) {
+
+    if (!this.files.length || !event.isTrusted) {
         quizImageEncoded = null
 
         imageInpLabel.classList.remove('hidden')
-        imgInpContainer.querySelectorAll('img').forEach(img => imgInpContainer.removeChild(img))
+        removeImgBtn.classList.add('hidden')
+        imgContainer.querySelectorAll('img').forEach(img => imgContainer.removeChild(img))
 
         savedProgress.quizImageEncoded = null
         save()
@@ -324,10 +327,11 @@ function displayQuizImage() {
     // TODO Redirecting to the erorr page in the future
 }
 
-function displayImageInput(img) {
+async function displayImageInput(img) {
     imageInpLabel.classList.add('hidden')
+    removeImgBtn.classList.remove('hidden')
     imgInpContainer.querySelectorAll('img').forEach(img => img.remove())
-    imgInpContainer.appendChild(img)
+    imgContainer.appendChild(img)
 }
 
 function deselectQuestions() {
