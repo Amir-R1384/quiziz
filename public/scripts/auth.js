@@ -21,3 +21,7 @@ function makeTransitionBetweenInputs(inputsOrder) {
     })
 
 }
+
+window.onload = () => {
+    setTimeout(() => document.querySelector('input').focus(), 100)
+}
