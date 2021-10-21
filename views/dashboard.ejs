@@ -10,8 +10,8 @@
                 <img src="/assets/images/logo-primary.svg" alt="Logo">
                 <nav>
                     <ul class="flex gap-x-5 text-lg font-semibold text-gray-500">
-                        <li><a href="/quiz/create" class="py-2 px-3">Create</a></li>
-                        <li><a href="/quiz/join" class="py-2 px-3 ">Join</a></li>
+                        <li><a href="/quiz/create" class="py-2 px-3 transition-colors hover:text-gray-700">Create</a></li>
+                        <li><a href="/quiz/join" class="py-2 px-3 transition-colors hover:text-gray-700">Join</a></li>
                     </ul>
                 </nav> 
             </div>
@@ -29,8 +29,14 @@
                     <div class="ml-8 text-lg font-bold text-gray-600"> <%= locals.profileName %>  </div>
                 </div>
                 <div class="w-full h-0.5 bg-yellow-200 my-6 rounded-full"></div>
+                <button onmousedown="clearAutoSaveData()" class="font-medium text-gray-600 border border-gray-600 rounded-md px-1.5 py-1 hover:bg-gray-100 transition-colors active:bg-gray-200">Clear autosave data</button>
             </div>
         </div>
     </section>
+    <script>
+        function clearAutoSaveData() {
+            localStorage.savedProgress = JSON.stringify({})
+        }
+    </script>
 </body>
 </html>
