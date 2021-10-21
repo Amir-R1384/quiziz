@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser')
 const authRoutes = require('./routes/authRoutes')
 const deashboardRoutes = require('./routes/dashboardRoutes')
 const quizRoutes = require('./routes/quizRoutes')
+const errorRoutes = require('./routes/errorRoutes')
 const { checkUser } = require('./controllers/middlewears')
 
 
@@ -24,6 +25,7 @@ app.get('/', checkUser, (req, res) => res.render('index', {route:'/'}))
 app.use(authRoutes)
 app.use('/dashboard', deashboardRoutes)
 app.use('/quiz', quizRoutes)
+app.use(errorRoutes)
 
 // Database connection
 const { DB_NAME, DB_USERNAME, DB_PASSWORD } = process.env

@@ -360,14 +360,32 @@ async function saveQuiz() {
         },
         body: JSON.stringify(data)
     })
+
     if (response.ok) {
+
         savedProgress = {}
         save()
         location.assign('/')
+
     } else {
-        const errors = await response.json()
-        
-        console.error(errors)
-        // TODO Redirecting to the erorr page in the future or telling the user the problem
+
+        if (response.status === 500) return location.assign('/500')
+
+        try {
+            const errors = await response.json()
+
+            let errorMessage = ''
+
+            for (let errorProperty in errors) {
+                const errorReason = errors[errorProperty]
+                errorMessage += `\n The ${errorProperty} ${errorReason}.`
+            }
+
+            alert(errorMessage)
+        }
+        catch(err) {
+            localStorage.setItem('err', JSON.stringify(err))
+            location.assign('/error')
+        }
     }
 }

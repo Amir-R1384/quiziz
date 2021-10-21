@@ -21,6 +21,7 @@ function validateForBadWords(type) {
 }
 
 function validateBase64(string) {
+    if (string == null) return true
     return isBase64(string, { mimeRequired: true, allowEmpty: false })
 }
 
@@ -37,11 +38,11 @@ const quizSchema = new Schema({
     },
     imageEncoded: {
         type: String,
-        validate: [validateBase64, 'image, not base64']
+        validate: [validateBase64, 'image, is not a valid type']
     },
     keywords: [{
         type: String,
-        required: [true, 'keyword, is required'],
+        required: [true, 'keywords, are required'],
         validate: [validateForBadWords, 'keyword, contains bad words']
     }],
     isPublic: {
@@ -57,7 +58,7 @@ const quizSchema = new Schema({
         type: {
             type: String,
             required: [true, 'question type, is required'],
-            validate: [validateQuestionType, 'question type, invalid']
+            validate: [validateQuestionType, 'question type, is invalid']
         },
         title: {
             type: String,
@@ -73,7 +74,7 @@ const quizSchema = new Schema({
 })
 
 quizSchema.pre('validate', function (next) {
-    if (!this.questions.length) throw new mongoose.Error('questions, not enough')
+    if (!this.questions.length) throw ({customError: {questions: 'are not enough'}})
     next()
 })
 

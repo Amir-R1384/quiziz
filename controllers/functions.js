@@ -17,6 +17,12 @@ module.exports.handleDatabaseErrors = (err, res) => {
             return res.status(400).json(finalErrors)
         }
 
+        if (err.customError) { 
+            const property = Object.keys(err.customError)[0]
+            const value = err.customError[property]
+            finalErrors[property] = value
+        }
+
         for (let key in err.errors) {
             const error = err.errors[key]
 

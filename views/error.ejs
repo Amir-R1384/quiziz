@@ -1,0 +1,28 @@
+<body class="grid place-items-center h-screen overflow-hidden">
+    <div class="message relative  border-black">
+        <h1 class="font-bold clr-primary mt-5" style="font-size: 45px; line-height:0;">Ooops! Something went <div class="mt-16">wrong!</div> </h1>
+        <div class="flex justify-between w-full mt-20">
+            <div class="text-gray-500 font-bold"> <%= errorMessage %> </div>
+            <a href="/" class="text-gray-500 font-semibold border border-gray-500 rounded-md px-1.5 py-1 transition-colors hover:text-gray-700 hover:border-gray-700">Go Back</a>
+        </div>
+    </div>
+    <style>
+        .message::before, .message::after {
+            content: '';
+            position: absolute;
+            width: 87px;
+            height: 359px;
+        }
+
+        .message::before {
+            left: max(-200px, -20vw);
+            background: url('/assets/images/!_green.svg');
+        }
+
+        .message::after {
+            right: max(-200px, -20vw);
+            bottom: 0;
+            background: url('/assets/images/!_red.svg');
+        }
+    </style>
+</body>
