@@ -11,10 +11,10 @@ router.use(authenticate)
 router.get('/create', quizController.createQuiz_get)
 router.post('/create', quizController.createQuiz_post)
 
-router.get('/:id/edit', quizController.editQuiz_get)
-router.post('/:id/edit', quizController.editQuiz_post)
+router.get('/edit/:id', quizController.editQuiz_get)
+router.post('/edit/:id', quizController.editQuiz_post)
 
-router.get('/:id/play', quizController.playQuiz_get)
+router.get('/play/:id', quizController.playQuiz_get)
 
 router.delete('/:id', quizController.deleteQuiz_delete)
 

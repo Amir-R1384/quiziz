@@ -15,7 +15,11 @@ const paths = {
     trueFalseDesign: '/components/true-false/true-false-design.html'
 }
 
-preloadDataFromLocalStorage()
+// eslint-disable-next-line no-undef
+if (editMode) 
+    preloadDataFromServer()
+else
+    preloadDataFromLocalStorage()
 
 // * Event listeners
 
@@ -43,6 +47,41 @@ autoSaveDataToLocalStorage()
 /* eslint-disable no-undef */
 
 // * Functions
+
+async function preloadDataFromServer() {
+    // Things to load from pre saved quiz : title, description, keywords, imageEncoded, visibility(isPublic) and questions
+
+    // * For title, description and keywords inputs
+    const mainInputs = [titleInp, descriptionInp, keywordsInp]
+
+    mainInputs.forEach(input => {
+        const presavedInput = preSavedQuiz[input.getAttribute('data-storage-name')]
+        if (presavedInput) input.value = presavedInput
+    })
+
+    // * For imageEncoded
+    if (preSavedQuiz.imageEncoded) {
+        quizImageEncoded = preSavedQuiz.imageEncoded
+
+        const image = new Image()
+        image.src = quizImageEncoded
+        image.onload = () => displayImageInput(image)
+    }
+
+    // * For visibility
+    if (preSavedQuiz.isPublic != undefined) {
+        isPublic = preSavedQuiz.isPublic
+        if (isPublic === true) toggleVisibility()
+    }
+
+    // * Questions
+    if (preSavedQuiz.questions) {
+        for (let question of preSavedQuiz.questions) {
+            createQuestion(question.type, question.title, question.answer)
+        }
+
+    }
+}  
 
 async function preloadDataFromLocalStorage() {
     // Things to load from localStorage : title, description, keywords, imageEncoded, visibility(isPublic) and questions
@@ -353,7 +392,9 @@ async function saveQuiz() {
         imageEncoded: quizImageEncoded 
     }
 
-    const response = await fetch('/quiz/create', {
+    const url = editMode ? `/quiz/edit/${preSavedQuiz._id}` : 'quiz/create'
+    
+    const response = await fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
