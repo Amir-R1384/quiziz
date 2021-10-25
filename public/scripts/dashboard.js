@@ -56,6 +56,49 @@ deleteBtns.forEach(btn => {
     })
 })
 
+const quizzes = document.querySelectorAll('.quiz')
+const searchData = createSearchData()
+
+/* eslint-disable no-undef */
+searchInp.addEventListener('keydown', e => e.key === 'Enter' ? searchQuiz() : null)
+searchBtn.addEventListener('mouseup', searchQuiz)
+/* eslint-disable no-undef */
+
+function searchQuiz() {
+    const query = searchInp.value.toLowerCase()
+
+    if (/^\s*$/.test(query)) return quizzes.forEach(quiz => quiz.classList.remove('hidden'))
+
+    quizzes.forEach((quiz, i) => {
+
+        if (searchData[i].includes(query)) 
+            quiz.classList.remove('hidden')
+        else
+            quiz.classList.add('hidden')
+
+    })
+}
+
+function createSearchData() {
+    const data = []
+
+    quizzes.forEach(quiz => {
+        let dataStr = ''
+
+        const quizTitle = quiz.querySelector('.quiz-title').textContent.toLowerCase()
+        const quizDescription = quiz.querySelector('.quiz-description').textContent.toLowerCase()
+        const keywords = quiz.getAttribute('data-keywords')
+
+        dataStr += quizTitle
+        dataStr += ` ${quizDescription}`
+        dataStr += ` ${keywords}`
+
+        data.push(dataStr)
+    })
+
+    return data
+}
+
 function getQuizId(son) {
     const quizDiv = getParent(son, 5)
     const quizId = quizDiv.getAttribute('data-id')
