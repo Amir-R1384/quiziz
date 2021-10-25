@@ -2,6 +2,15 @@
 <html lang="en">
 <head>
     <%- include("./partials/head.ejs") %> 
+    <script src="/scripts/dashboard.js" defer></script>
+    <%
+        function shortenText(text) {
+            if (text.length > 45) {
+                return text.slice(0,Math.min(45, text.length)) + '...'
+            }
+            return text
+        }
+    %>
 </head>
 <body class="bg-gray-200 h-screen">
     <header class="w-full px-8 py-4 bg-light drop-shadow-sm">
@@ -10,33 +19,107 @@
                 <img src="/assets/images/logo-primary.svg" alt="Logo">
                 <nav>
                     <ul class="flex gap-x-5 text-lg font-semibold text-gray-500">
-                        <li><a href="/quiz/create" class="py-2 px-3 transition-colors hover:text-gray-700">Create</a></li>
-                        <li><a href="/quiz/join" class="py-2 px-3 transition-colors hover:text-gray-700">Join</a></li>
+                        <li><a href="/quiz/create" class="button button-primary transition-opacity hover:opacity-90">Create</a></li>
+                        <li><a href="/quiz/join" class="button button-secondary transition-opacity hover:opacity-90">Join</a></li>
                     </ul>
                 </nav> 
             </div>
             <div class="flex item-center gap-x-5">
-                <a href="/logout" class="button button-outline bg-red-500 text-md">Logout</a>
+                <a href="/logout" class="button button-outline bg-red-500 text-md transition-opacity hover:opacity-90">Logout</a>
             </div>
         </div>
     </header>
 
     <section class="my-10">
-        <div class="wrapper p-4">
-            <div class="flex flex-col p-4 items-center w-72 h-96 bg-light rounded-lg shadow-md">
-                <div class="flex items-center w-full">
-                    <div class="bg-gray-600 rounded-full w-16 h-16"></div>
-                    <div class="ml-8 text-lg font-bold text-gray-600"> <%= locals.profileName %>  </div>
+        <div class="wrapper pb-10 flex gap-x-12">
+            <!-- Profile board -->
+            <div class="flex flex-col justify-between p-4 items-center w-72 h-96 bg-light rounded-lg shadow-md">
+                <div class="w-full">
+                    <div class="flex items-center justify-between w-full">
+                        <div class="bg-gray-600 rounded-full w-16 h-16 flex-shrink-0"></div>
+                        <div class="text-lg font-bold text-gray-500 text-center"> <%= locals.profileName %>  </div>
+                        <a href="/dashboard/settings">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9 text-gray-500 cursor-pointer transition-colors hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="w-full h-0.5 bg-yellow-200 mt-5 rounded-full"></div>
                 </div>
-                <div class="w-full h-0.5 bg-yellow-200 my-6 rounded-full"></div>
-                <button onmousedown="clearAutoSaveData()" class="font-medium text-gray-600 border border-gray-600 rounded-md px-1.5 py-1 hover:bg-gray-100 transition-colors active:bg-gray-200">Clear autosave data</button>
+                <div class="flex-1 w-full flex flex-col justify-center gap-y-5">
+                    <div>
+                        <div class="flex justify-between w-full">
+                            <div class="clr-secondary font-semibold text-lg">Quizzes attended:</div>
+                            <div class="clr-primary font-semibold text-lg"><%= quizzesAttended %> </div>
+                        </div>
+                        <div class="w-full h-0.5 bg-gray-500"></div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between w-full">
+                            <div class="clr-secondary font-semibold text-lg">Quizzes made:</div>
+                            <div class="clr-primary font-semibold text-lg"><%= quizzesMade %> </div>
+                        </div>
+                        <div class="w-full h-0.5 bg-gray-500"></div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between w-full">
+                            <div class="clr-secondary font-semibold text-lg">Overall score:</div>
+                            <div class="clr-primary font-semibold text-lg"><%= overallScore %> </div>
+                        </div>
+                        <div class="w-full h-0.5 bg-gray-500"></div>
+                    </div>
+                    
+                </div>  
+                <div class="w-full">
+                    <div class="w-full h-0.5 bg-yellow-200 mb-5 rounded-full"></div>
+                    <button onmousedown="clearAutoSaveData()" class="block mx-auto font-medium text-gray-600 border border-gray-600 rounded-md px-1.5 py-1 hover:bg-gray-100 transition-colors active:bg-gray-200">Clear autosave data</button>
+                </div>
+            </div>
+
+            <div class="flex-1 flex flex-col gap-y-12">
+                <div class="w-full flex shadow-md">
+                    <input type="text" class="flex-1 text-xl font-medium py-2 px-5 border-2 border-white outline-none focus:border-gray-600 text-gray-700" placeholder="Search quizzes" style="border-top-left-radius: 8px; border-bottom-left-radius: 8px;">
+                    <button class="bg-gray-600 text-white font-medium text-lg px-5 transition-opacity hover:opacity-90" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px;">Search</button>
+                </div>
+                <% if (quizzes.length) { %>
+
+                    <div class="grid grid-cols-3 w-full gap-10">
+                    
+                        <% quizzes.forEach(quiz => { %>
+    
+                            <div data-id ="<%= quiz._id %> " class="quiz rounded-2xl h-64 bg-white flex flex-col gap-y-2" style="box-shadow: 0 0 7px 2px rgba(0,0,0,0.2);">
+                                <div class=" flex-1 bg-center bg-no-repeat bg-cover" style="border-top-left-radius: 16px; border-top-right-radius: 16px; background-image: url('<%= quiz.imageEncoded %>');"></div>
+                                <div class="p-3 flex flex-col justify-between flex-1">
+                                    <div class="text-xl font-semibold text-gray-700"><%= quiz.title %></div>
+                                    <div class="text-sm font-medium text-gray-500 break-words"><%= shortenText(quiz.description) %> </div>
+                                    <div class="flex w-full justify-between gap-x-2">
+                                        <button class="sendLinkBtn bg-primary text-white font-semibold text-lg flex-1 rounded-lg transition-opacity hover:opacity-90">Send Link</button>
+                                        <button class="quizMenuBtn relative">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 transition-colors hover:bg-gray-300 rounded-lg cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                                            </svg>
+                                            <div class="quiz-menu absolute bottom-full -mb-7 mr-1 right-full  bg-gray-600 text-white rounded-lg hidden flex-col border-2 border-gray-700 overflow-hidden" style="box-shadow: 0 0 10px 1px rgba(0,0,0,0.5);">
+                                                <div class="editBtn text-sm font-medium text-white text-left pl-3 transition-colors hover:bg-gray-700 py-1">Edit</div>
+                                                <div class="w-full bg-gray-800 h-0.5"></div>
+                                                <div class="deleteBtn text-sm font-medium bg-red-500 text-white text-left px-3 transition-colors hover:bg-red-600 py-1">Delete</div>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+    
+                        <% }) %>
+                    </div>
+
+                <% } else { %>  
+                    <div class="text-center text-xl border-2 bg-gray-300 border-gray-600 rounded-lg font-semibold text-gray-500 flex-1 grid place-items-center">You haven't made any quizzes yet</div>
+                <% } %> 
+                
             </div>
         </div>
     </section>
-    <script>
-        function clearAutoSaveData() {
-            localStorage.savedProgress = JSON.stringify({})
-        }
-    </script>
 </body>
 </html>

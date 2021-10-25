@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, 'The Email is required'],
-        unique: [false, 'The Email has already been registered'],
+        unique: [true, 'The Email has already been registered'],
         lowercase: true,
         validate: [isEmail, 'The Email is not a valid Email.']
     },
@@ -18,6 +18,20 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'The password is required'],
         minlength: [6, 'The password is too short']
+    },
+    quizzesAttended: {
+        type: Number,
+        default: 0,
+        min: 0
+    },
+    quizzesMade: {
+        type: Number,
+        default: 0,
+        min: 0
+    },
+    overallScore: {
+        type: String,
+        default: 'N/A'
     }
 })
 
