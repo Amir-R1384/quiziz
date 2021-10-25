@@ -392,8 +392,8 @@ async function saveQuiz() {
         imageEncoded: quizImageEncoded 
     }
 
-    const url = editMode ? `/quiz/edit/${preSavedQuiz._id}` : 'quiz/create'
-    
+    const url = editMode ? `/quiz/edit/${preSavedQuiz._id}` : '/quiz/create'
+
     const response = await fetch(url, {
         method: 'POST',
         headers: {
