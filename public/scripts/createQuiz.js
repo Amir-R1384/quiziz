@@ -51,13 +51,16 @@ autoSaveDataToLocalStorage()
 async function preloadDataFromServer() {
     // Things to load from pre saved quiz : title, description, keywords, imageEncoded, visibility(isPublic) and questions
 
-    // * For title, description and keywords inputs
+    // * For title and description inputs
     const mainInputs = [titleInp, descriptionInp, keywordsInp]
 
     mainInputs.forEach(input => {
         const presavedInput = preSavedQuiz[input.getAttribute('data-storage-name')]
         if (presavedInput) input.value = presavedInput
     })
+
+    // * For keywords input
+    keywordsInp.value = preSavedQuiz.keywords.join(' ')
 
     // * For imageEncoded
     if (preSavedQuiz.imageEncoded) {
@@ -86,13 +89,16 @@ async function preloadDataFromServer() {
 async function preloadDataFromLocalStorage() {
     // Things to load from localStorage : title, description, keywords, imageEncoded, visibility(isPublic) and questions
 
-    // * For title, description and keywords inputs
-    const mainInputs = [titleInp, descriptionInp, keywordsInp]
+    // * For title and description inputs
+    const mainInputs = [titleInp, descriptionInp]
 
     mainInputs.forEach(input => {
         const presavedInput = savedProgress[input.getAttribute('data-storage-name')]
         if (presavedInput) input.value = presavedInput
     })
+
+    // * For keywords input
+    keywordsInp.value = savedProgress.keywords.join(' ')
 
     // * For imageEncoded
     if (savedProgress.quizImageEncoded) {
