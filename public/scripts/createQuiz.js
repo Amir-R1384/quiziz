@@ -98,7 +98,7 @@ async function preloadDataFromLocalStorage() {
     })
 
     // * For keywords input
-    keywordsInp.value = savedProgress.keywords.join(' ')
+    keywordsInp.value = savedProgress.keywords?.join(' ')
 
     // * For imageEncoded
     if (savedProgress.quizImageEncoded) {
