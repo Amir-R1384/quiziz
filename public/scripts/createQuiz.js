@@ -244,8 +244,9 @@ async function createQuestion(type = null, title = '', answer = null) {
         savedProgress.questions = questions
         save()
 
-    } catch (error) {
-        console.error(error)
+    } catch (err) {
+        console.error(err)
+        displayErrorPage()
     }
 }
 
@@ -323,6 +324,7 @@ async function fetchComponent(path) {
         return componentOrComponents
     } catch (err) {
         console.error(err)
+        displayErrorPage()
     }
 }
 
@@ -433,8 +435,8 @@ async function saveQuiz() {
             alert(errorMessage)
         }
         catch(err) {
-            localStorage.setItem('err', JSON.stringify(err))
-            location.assign('/error')
+            console.error(err)
+            displayErrorPage()
         }
     }
 }
