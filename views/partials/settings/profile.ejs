@@ -1,0 +1,114 @@
+<div class="font-bold text-2xl text-gray-800">Visible profile</div>
+<div class="bg-primary rounded-full w-full h-0.5 mt-2 mb-10"></div>
+
+<form class="flex">
+    <div class="flex-1 flex flex-col gap-y-10">
+        <div>   
+            <label for="nameInp" class="block text-lg text-gray-700 font-medium mb-2">Name</label>
+            <input id="nameInp" type="text" value="<%= userInfo.name %>" class="block w-full px-2 py-1 bg-gray-100 border border-black rounded-md">
+            <div class="error-div text-red-500" data-for="name"></div>
+        </div>
+        <div>   
+            <label for="emailInp" class="block text-lg text-gray-700 font-medium mb-2">Email</label>
+            <input id="emailInp" type="email" value="<%= userInfo.email %>" class="block w-full px-2 py-1 bg-gray-100 border border-black rounded-md">
+            <div class="error-div text-red-500" data-for="email"></div>
+        </div>
+
+        <div>
+            <button onclick="saveProfile()" type="submit" id="saveSettingsBtn" class="bg-primary text-white font-medium text-xl py-1 px-5 rounded-md hover:opacity-90 transition-opacity shadow-sm">Save</button>
+        </div>
+        
+    </div>
+    <div class="flex-1 flex justify-end">
+        <div class="w-40 h-40 rounded-full mr-12 bg-center bg-cover" style="background-image: url('<%= userInfo.profileImageEncoded || `/assets/images/defaultProfileImage.jpg` %>')">
+            <input type="file" accept="image/*" id="imgInp" hidden>
+            <label for="imgInp" class="relative w-full h-full grid place-items-center text-white font-semibold rounded-full bg-primary opacity-0 hover:opacity-100 transition-opacity cursor-pointer duration-300">
+                Choose an image
+                <button id="removeImgBtn" class="absolute bottom-0 left-0 mb-1 px-2 py-1 text-center rounded-md bg-red-500 text-white text-xs font-medium">Remove Image</button>
+            </label>
+        </div>
+    </div>
+</form>
+<script>
+    imgInp.addEventListener('change', updateProfileImage)
+    removeImgBtn.addEventListener('mouseup', removeProfileImage)
+
+    function updateProfileImage(event) {
+
+        if (!this.files.length || !event.isTrusted) {
+            this.setAttribute('data-value', 'no image')
+            const imageInputParent = imgInp.parentNode
+            imageInputParent.style.backgroundImage = 'url(/assets/images/defaultProfileImage.jpg)'
+            return
+        }
+
+        const fileReader = new FileReader()
+        fileReader.readAsDataURL(this.files[0])
+
+        fileReader.onload = () => {
+            const img = new Image()
+            img.src = fileReader.result
+
+            img.onload = () => {
+                const canvas = document.createElement('canvas')
+                const ctx = canvas.getContext('2d')
+                canvas.width = img.width
+                canvas.height = img.height
+
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+
+                const imageEncoded = canvas.toDataURL('image/jpeg', 0.2)
+
+                imgInp.setAttribute('data-value', imageEncoded)
+                
+                const imageInputParent = imgInp.parentNode
+                imageInputParent.style.backgroundImage = `url(${imageEncoded})`
+            }
+        }
+    }
+
+    function removeProfileImage() {
+        const event = new Event('change')
+        imgInp.dispatchEvent(event)
+    }
+
+    async function saveProfile() {
+
+        const data = {
+            name: nameInp.value,
+            email: emailInp.value
+        }
+
+        // Setting the value for profileImageEncoded
+        const value = imgInp.getAttribute('data-value')
+        data.profileImageEncoded = value === null ? undefined : value === 'no image' ? null : value
+
+        const res = await fetch('/settings/profile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'Application/json'
+            },
+            body: JSON.stringify(data)
+        })
+
+        if (res.ok) {
+
+            showUpdateMessage()
+            
+        } else {
+            const err = await res.json()
+
+            if (err.inputs) {
+
+                for (let name in err.inputs) {
+                    const value = err.inputs[name]
+                    const errorField = document.querySelector(`.error-div[data-for='${name}']`)
+                    errorField.innerText = value
+                }
+
+            } else {
+                displayErrorPage(res.status)
+            }
+        }
+    }
+</script>

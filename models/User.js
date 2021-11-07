@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const bcrypt = require('bcrypt')
 const { isEmail } = require('validator')
+const { validateBase64, hash } = require('../controllers/functions')
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -19,6 +19,12 @@ const userSchema = new mongoose.Schema({
         required: [true, 'The password is required'],
         minlength: [6, 'The password is too short']
     },
+    profileImageEncoded: {
+        type: String,
+        default: '/assets/images/defaultProfileImage.jpg',
+        validate: [validateBase64, 'The profile image is not valid']
+    },
+    showStats: Boolean,
     quizzesAttended: {
         type: Number,
         default: 0,
@@ -36,7 +42,7 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.pre('save', async function (next) {
-    this.password = await bcrypt.hash(this.password, 1)
+    this.password = await hash(this.password)
     next()
 })
 

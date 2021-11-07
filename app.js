@@ -7,9 +7,9 @@ const cookieParser = require('cookie-parser')
 const authRoutes = require('./routes/authRoutes')
 const deashboardRoutes = require('./routes/dashboardRoutes')
 const quizRoutes = require('./routes/quizRoutes')
+const settingsRoutes = require('./routes/settingsRoutes')
 const errorRoutes = require('./routes/errorRoutes')
 const { checkUser } = require('./controllers/middlewears')
-
 
 // App setup
 const app = express()
@@ -25,6 +25,7 @@ app.get('/', checkUser, (req, res) => res.render('index', {route:'/'}))
 app.use(authRoutes)
 app.use('/dashboard', deashboardRoutes)
 app.use('/quiz', quizRoutes)
+app.use('/settings', settingsRoutes)
 app.use(errorRoutes)
 
 // Database connection

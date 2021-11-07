@@ -112,8 +112,3 @@ function getParent(son, generation) {
     generation--
     return getParent(son, generation)
 }
-
-// eslint-disable-next-line no-unused-vars
-function clearAutoSaveData() {
-    localStorage.savedProgress = JSON.stringify({})
-}

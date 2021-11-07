@@ -1,0 +1,9 @@
+<div class="font-bold text-2xl text-gray-800">Data</div>
+<div class="bg-primary rounded-full w-full h-0.5 mt-2 mb-10"></div>
+
+<button onmousedown="clearAutoSaveData()" class="font-medium text-gray-600 border border-gray-600 rounded-md px-1.5 py-1 hover:bg-gray-100 transition-colors active:bg-gray-200">Clear autosave data</button>
+<script>
+    function clearAutoSaveData() {
+        localStorage.savedProgress = JSON.stringify({})
+    }
+</script>

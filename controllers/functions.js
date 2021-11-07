@@ -1,3 +1,7 @@
+const isBase64 = require('is-base64')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
+
 module.exports.handleDatabaseErrors = (err, res) => {
     try {
         const finalErrors = {}
@@ -41,4 +45,18 @@ module.exports.handleDatabaseErrors = (err, res) => {
         console.error(err)
         res.status(500).end()
     }
+}
+
+module.exports.validateBase64 = string => {
+    // The /assets... string comes from the path to the deault profile picture in the images folder
+    if (string == null || string === '/assets/images/defaultProfileImage.jpg') return true
+    return isBase64(string, { mimeRequired: true, allowEmpty: false })
+}
+
+module.exports.getUserId = token => {
+    return jwt.verify(token, process.env.SECRET_KEY).id
+}
+
+module.exports.hash = async (data) => {
+    return await bcrypt.hash(data, 1)
 }

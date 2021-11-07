@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const User = require('./User')
 const Filter = require('bad-words')
-const isBase64 = require('is-base64')
 const appData = require('../appData.json')
+const { validateBase64 } = require('../controllers/functions')
 
 const filter = new Filter()
 
@@ -18,11 +18,6 @@ function validateQuestionType(type) {
 
 function validateForBadWords(type) {
     return !filter.isProfane(type)
-}
-
-function validateBase64(string) {
-    if (string == null) return true
-    return isBase64(string, { mimeRequired: true, allowEmpty: false })
 }
 
 const quizSchema = new Schema({

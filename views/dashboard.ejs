@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <%- include("./partials/head.ejs") %> 
+<body class="bg-gray-200 h-screen">
     <script src="/scripts/dashboard.js" defer></script>
     <%
         function shortenText(text) {
@@ -11,34 +8,15 @@
             return text
         }
     %>
-</head>
-<body class="bg-gray-200 h-screen">
-    <header class="w-full px-8 py-4 bg-light drop-shadow-sm">
-        <div class="wrapper flex items-center justify-between">
-            <div class="flex items-center justify-between min-w-max gap-x-5" style="min-width: 50%;">
-                <img src="/assets/images/logo-primary.svg" alt="Logo">
-                <nav>
-                    <ul class="flex gap-x-5 text-lg font-semibold text-gray-500">
-                        <li><a href="/quiz/create" class="button button-primary transition-opacity hover:opacity-90">Create</a></li>
-                        <li><a href="/quiz/join" class="button button-secondary transition-opacity hover:opacity-90">Join</a></li>
-                    </ul>
-                </nav> 
-            </div>
-            <div class="flex item-center gap-x-5">
-                <a href="/logout" class="button button-outline bg-red-500 text-md transition-opacity hover:opacity-90">Logout</a>
-            </div>
-        </div>
-    </header>
-
     <section class="my-10">
         <div class="wrapper pb-10 flex gap-x-12">
             <!-- Profile board -->
             <div class="flex flex-col justify-between p-4 items-center w-72 h-96 bg-light rounded-lg shadow-md">
                 <div class="w-full">
                     <div class="flex items-center justify-between w-full">
-                        <div class="bg-gray-600 rounded-full w-16 h-16 flex-shrink-0"></div>
-                        <div class="text-lg font-bold text-gray-500 text-center"> <%= locals.profileName %>  </div>
-                        <a href="/dashboard/settings">
+                        <div class="bg-gray-600 rounded-full w-16 h-16 flex-shrink-0 bg-center bg-cover" style="background-image: url('<%= profileInfo.profileImageEncoded || `/assets/images/defaultProfileImage.jpg` %>')"></div>
+                        <div class="text-lg font-bold text-gray-500 text-center"> <%= profileInfo.name %>  </div>
+                        <a href="/settings">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9 text-gray-500 cursor-pointer transition-colors hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -51,7 +29,7 @@
                     <div>
                         <div class="flex justify-between w-full">
                             <div class="clr-secondary font-semibold text-lg">Quizzes attended:</div>
-                            <div class="clr-primary font-semibold text-lg"><%= quizzesAttended %> </div>
+                            <div class="clr-primary font-semibold text-lg"><%= profileInfo.quizzesAttended %> </div>
                         </div>
                         <div class="w-full h-0.5 bg-gray-500"></div>
                     </div>
@@ -59,7 +37,7 @@
                     <div>
                         <div class="flex justify-between w-full">
                             <div class="clr-secondary font-semibold text-lg">Quizzes made:</div>
-                            <div class="clr-primary font-semibold text-lg"><%= quizzesMade %> </div>
+                            <div class="clr-primary font-semibold text-lg"><%= profileInfo.quizzesMade %> </div>
                         </div>
                         <div class="w-full h-0.5 bg-gray-500"></div>
                     </div>
@@ -67,7 +45,7 @@
                     <div>
                         <div class="flex justify-between w-full">
                             <div class="clr-secondary font-semibold text-lg">Overall score:</div>
-                            <div class="clr-primary font-semibold text-lg"><%= overallScore %> </div>
+                            <div class="clr-primary font-semibold text-lg"><%= profileInfo.overallScore %> </div>
                         </div>
                         <div class="w-full h-0.5 bg-gray-500"></div>
                     </div>
@@ -75,7 +53,6 @@
                 </div>  
                 <div class="w-full">
                     <div class="w-full h-0.5 bg-yellow-200 mb-5 rounded-full"></div>
-                    <button onmousedown="clearAutoSaveData()" class="block mx-auto font-medium text-gray-600 border border-gray-600 rounded-md px-1.5 py-1 hover:bg-gray-100 transition-colors active:bg-gray-200">Clear autosave data</button>
                 </div>
             </div>
 
@@ -122,4 +99,3 @@
         </div>
     </section>
 </body>
-</html>
