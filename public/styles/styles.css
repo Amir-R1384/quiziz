@@ -44,8 +44,11 @@ body {
 .true-false.selected { @apply bg-primary text-white; }
 .true-false.selected:hover { @apply bg-primary }
 
-#visibilityToggle.active { @apply bg-primary }
-#visibilityToggle.active > * { @apply translate-x-6 }
+.tab-button.selected { @apply bg-primary text-white }
+.tab-button.selected:hover { @apply bg-primary text-white }
+
+.toggle.active { @apply bg-primary }
+.toggle.active > * { @apply translate-x-6 }
 
 .form-shadow {
     box-shadow: 0 0 50px 0 rgba(0,0,0,0.2);
