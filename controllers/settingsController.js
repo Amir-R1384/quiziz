@@ -44,7 +44,7 @@ module.exports.profile_post = async (req, res) => {
 
     } catch (err) {
         // If from mongoose
-        if (err._message.includes('validation failed')) {
+        if (err._message.toLowerCase().includes('validation failed')) {
 
             const errorObj = {
                 inputs: {}
