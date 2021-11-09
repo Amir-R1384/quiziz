@@ -1,11 +1,12 @@
 const mongoose = require('mongoose')
 const { isEmail } = require('validator')
-const { validateBase64, hash } = require('../controllers/functions')
+const { validateBase64, hash, validateForBadWords } = require('../controllers/functions')
 
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, 'The name is required']
+        required: [true, 'The name is required'],
+        validate: [validateForBadWords, 'The name contains bad words']
     },
     email: {
         type: String,

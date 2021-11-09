@@ -1,11 +1,8 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const User = require('./User')
-const Filter = require('bad-words')
 const appData = require('../appData.json')
-const { validateBase64 } = require('../controllers/functions')
-
-const filter = new Filter()
+const { validateBase64, validateForBadWords } = require('../controllers/functions')
 
 async function validateUserId(id) {
     return await User.exists(id)
@@ -14,10 +11,6 @@ async function validateUserId(id) {
 function validateQuestionType(type) {
     const validQuestionTypes = new Set(appData.questionTypes)
     return validQuestionTypes.has(type)
-}
-
-function validateForBadWords(type) {
-    return !filter.isProfane(type)
 }
 
 const quizSchema = new Schema({

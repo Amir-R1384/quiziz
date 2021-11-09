@@ -1,6 +1,9 @@
 const isBase64 = require('is-base64')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const Filter = require('bad-words')
+
+const filter = new Filter()
 
 module.exports.handleDatabaseErrors = (err, res) => {
     try {
@@ -59,4 +62,8 @@ module.exports.getUserId = token => {
 
 module.exports.hash = async (data) => {
     return await bcrypt.hash(data, 1)
+}
+
+module.exports.validateForBadWords = string => {
+    return !filter.isProfane(string)
 }
