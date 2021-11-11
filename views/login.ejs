@@ -1,7 +1,7 @@
-<body class="bg-primary h-screen flex items-center justify-center">
-    <form class="bg-light p-5 w-1/3 h-5/6 rounded-2xl form-shadow flex flex-col justify-between items-center">
+<body class="bg-primary h-screen flex items-center justify-center p-12">
+    <form class="bg-light p-5 w-1/3 h-full rounded-2xl form-shadow flex flex-col justify-between items-center">
         <h1 class="font-bold text-2xl clr-primary">Login</h1>
-        <div class="flex flex-col justify-around w-full gap-y-10 h-1/2">
+        <div class="flex flex-col justify-around w-full gap-y-14 h-1/2">
             <div>
                 <label for="email" class="clr-secondary">Email</label>
                 <input class="w-full border-b-2 border-primary focus:border-gray-900 focus:outline-none focus:bg-gray-100 focus:duration-200 transition pb-1 my-1 rounded-t-md text-lg px-2" type="email" name="email" id="email" placeholder="Enter your Email">
@@ -12,7 +12,9 @@
                 <input class="w-full border-b-2 border-primary focus:border-gray-900 focus:outline-none focus:bg-gray-100 focus:duration-200 transition  pb-1 my-1 rounded-t-md text-lg px-2" type="password" name="password" id="password" placeholder="Enter you password">
                 <div class="error-div text-red-500" data-for="password"></div>
             </div>
+            <a href="/forgotPassword" class="text-gray-400 text-center underline cursor-pointer hover:text-gray-500 relative top-10">Forgot password?</a>
         </div>
+        
         <button id="submitBtn" class="button button-secondary w-full hover:opacity-95 transition-all">Login</button>
     </form>
     <script src="/scripts/auth.js"></script>
@@ -74,6 +76,20 @@
             }
             catch(err) {
                 console.error(err)
+            }
+        })
+
+        const forgotPasswordBtn = document.getElementById('forgotPasswordBtn')
+
+        forgotPasswordBtn.addEventListener('click', async (e) => {
+            e.preventDefault()
+
+            const res = await fetch('/forgotPassword', { method: 'POST' })
+            
+            if (res.ok) {
+                location.assign('/forgotPassword')
+            } else {
+                displayErrorPage(res.status)
             }
         })
     </script>

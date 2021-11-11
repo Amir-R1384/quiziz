@@ -33,6 +33,7 @@
     "is-base64": "^1.1.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.5",
+    "nodemailer": "^6.7.0",
     "tailwindcss": "^2.2.15",
     "validator": "^13.6.0"
   },

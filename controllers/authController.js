@@ -1,6 +1,9 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const nodemailer = require('nodemailer')
+const { isEmail } = require('validator')
+const getMailOptions = require('../nodemailerOptions')
 
 module.exports.signup_get = (req, res) => {
     res.render('signup', {layout: 'layouts/blankLayout'})
@@ -59,6 +62,72 @@ module.exports.login_post = async (req, res) => {
 
 module.exports.logout_get = (req, res) => {
     res.cookie('jwt', '', { maxAge: 1 }).redirect('/')
+}
+
+module.exports.forgotPassword_get = (req, res) => {
+    res.render('forgotPassword', {
+        layout: 'layouts/blankLayout'
+    })
+}
+
+module.exports.forgotPassword_post = async (req, res) => {
+    try {
+    
+        const { email } = req.body
+
+        if (!await User.exists({ email })) {
+            return res.status(400).json({
+                inputs: {
+                    email: 'There is not user with this email.'
+                }
+            })
+        }
+
+        await sendEmail(email)
+
+        res.status(200).end()
+
+    } catch (err) {
+        console.error(err)
+        res.status(500).end()
+    }
+}
+
+module.exports.changePassword_get = (req, res) => {
+    res.render('changePassword', {
+        title: 'Reset password',
+        layout: 'layouts/blankLayout'
+    })
+}
+
+module.exports.changePassword_post = async (req, res) => {
+    try {
+        const { email, password } = req.body
+
+        if (!await User.exists({ email })) {
+            return res.status(400).end()
+        }
+    
+        const user = await User.findOne({ email })
+        user.password = password
+        await user.save()
+    
+        res.status(200).end()
+        
+    } catch (err) {
+        console.error(err)
+        res.status(500).end()
+    }
+   
+}
+
+async function sendEmail(reciever) {
+
+    const mailOptions = getMailOptions(reciever)
+    const { transport, emailOptions } = mailOptions
+
+    const transporter = nodemailer.createTransport(transport)
+    await transporter.sendMail(emailOptions)
 }
 
 function handleDatabaseErrors(err, res) {

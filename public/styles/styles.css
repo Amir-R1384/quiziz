@@ -50,6 +50,10 @@ body {
 .toggle.active { @apply bg-primary }
 .toggle.active > * { @apply translate-x-6 }
 
+.info.success { @apply text-green-700 }
+
+code { @apply px-1 bg-gray-200 rounded-sm }
+
 .form-shadow {
     box-shadow: 0 0 50px 0 rgba(0,0,0,0.2);
 }
