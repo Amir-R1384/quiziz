@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
 const Quiz = require('../models/Quiz')
 const User = require('../models/User')
-const { handleDatabaseErrors } = require('./functions')
+const { handleDatabaseErrors, getUserId } = require('./functions')
 
 module.exports.createQuiz_get = async (req, res) => {
     res.render('new', { title: 'New Quiz', layout: false })
@@ -55,7 +55,73 @@ module.exports.editQuiz_post = async (req, res) => {
 }
 
 module.exports.playQuiz_get = async (req, res) => {
+    try {
 
+        const { id:quizId } = req.params
+
+        const ObjectId = mongoose.Types.ObjectId
+
+        if (!ObjectId.isValid(quizId) || !await Quiz.exists({ _id: quizId })) {
+            return res.status(400).redirect('/400')
+        }
+
+        const quiz = await Quiz.findById(quizId)
+
+        const { name:creatorName } = await User.findById(quiz.userId)
+    
+        res.render('play', {
+            layout: false,
+            title: 'Play Quiz',
+            quiz,
+            creatorName
+        })
+
+    } catch (err) {
+        console.error(err)
+        res.status(500).redirect('/500')
+    }
+}
+
+module.exports.submitQuiz_post = async (req, res) => {
+    try {
+
+        const answers = req.body
+        const { id:quizId } = req.params
+
+        const { questions } = await Quiz.findById(quizId)
+
+        const questionsNum = questions.length
+        let mistakes = 0
+        
+        questions.forEach((question, i) => {
+            const answer = answers[i]
+
+            if (answer === null || question.answer !== answer) {
+                mistakes++
+            }
+        })
+
+        const scorePercentage = Math.round((questionsNum-mistakes) * 100 / questionsNum)
+        
+
+        const userId = getUserId(req.cookies.jwt)
+        const user = await User.findById(userId)
+        
+        let { quizzesAttended, overallScore } = user
+
+        if (overallScore === 'N/A') overallScore = 0
+        quizzesAttended++
+
+        overallScore = Math.round((overallScore*(quizzesAttended-1) + scorePercentage) / quizzesAttended)
+
+        await User.findByIdAndUpdate(userId, { quizzesAttended, overallScore }, { runValidators: true })
+
+        res.status(200).end()
+
+    } catch (err) {
+        console.error(err)
+        res.status(500).end()
+    }
 }
 
 module.exports.deleteQuiz_delete = async (req, res) => {

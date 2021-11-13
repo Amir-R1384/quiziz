@@ -3,7 +3,7 @@
     <%
         function shortenText(text) {
             if (text.length > 45) {
-                return text.slice(0,Math.min(45, text.length)) + '...'
+                return text.slice(0,45).split(' ').slice(0,-1).join(' ') + '...'
             }
             return text
         }
@@ -45,7 +45,7 @@
                     <div>
                         <div class="flex justify-between w-full">
                             <div class="clr-secondary font-semibold text-lg">Overall score:</div>
-                            <div class="clr-primary font-semibold text-lg"><%= profileInfo.overallScore %> </div>
+                            <div class="clr-primary font-semibold text-lg"><%= profileInfo.overallScore === 'N/A' ? profileInfo.overallScore : profileInfo.overallScore + '%' %> </div>
                         </div>
                         <div class="w-full h-0.5 bg-gray-500"></div>
                     </div>
@@ -67,9 +67,9 @@
                     
                         <% quizzes.forEach(quiz => { %>
     
-                            <div data-id ="<%= quiz._id %>" data-keywords="<%= quiz.keywords.join(' ') %>" class="quiz rounded-2xl h-64 bg-white flex flex-col gap-y-2" style="box-shadow: 0 0 7px 2px rgba(0,0,0,0.2);">
-                                <div class=" flex-1 bg-center bg-no-repeat bg-cover" style="border-top-left-radius: 16px; border-top-right-radius: 16px; background-image: url('<%= quiz.imageEncoded %>');"></div>
-                                <div class="p-3 flex flex-col justify-between flex-1">
+                            <div data-id ="<%= quiz._id %>" data-keywords="<%= quiz.keywords.join(' ') %>" class="quiz rounded-2xl h-64 bg-white flex flex-col" style="box-shadow: 0 0 7px 2px rgba(0,0,0,0.2);">
+                                <div class="bg-center bg-no-repeat bg-cover h-2/5" style="border-top-left-radius: 16px; border-top-right-radius: 16px; background-image: url('<%= quiz.imageEncoded %>');"></div>
+                                <div class="p-3 pt-2 flex flex-col justify-between flex-1">
                                     <div class="quiz-title text-xl font-semibold text-gray-700"><%= quiz.title %></div>
                                     <div class="quiz-description text-sm font-medium text-gray-500 break-words"><%= shortenText(quiz.description) %> </div>
                                     <div class="flex w-full justify-between gap-x-2">

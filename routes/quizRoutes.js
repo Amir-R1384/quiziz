@@ -15,6 +15,7 @@ router.get('/edit/:id', quizController.editQuiz_get)
 router.post('/edit/:id', quizController.editQuiz_post)
 
 router.get('/play/:id', quizController.playQuiz_get)
+router.post('/submit/:id', quizController.submitQuiz_post)
 
 router.delete('/:id', quizController.deleteQuiz_delete)
 
