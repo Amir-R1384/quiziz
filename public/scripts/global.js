@@ -23,3 +23,22 @@ async function displayErrorPage(code) {
     document.documentElement.innerHTML = text
     return
 }
+
+// eslint-disable-next-line no-unused-vars
+async function fetchComponent(path) {
+    try {
+        const raw = await fetch(path)
+        const componentHtml = await raw.text()
+
+        const parent = document.createElement('div')
+
+        parent.innerHTML = componentHtml
+
+        const componentOrComponents = parent.children.length === 1 ? parent.children[0] : parent.children
+
+        return componentOrComponents
+    } catch (err) {
+        console.error(err)
+        displayErrorPage()
+    }
+}

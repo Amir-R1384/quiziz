@@ -310,24 +310,6 @@ function loadQuestion(index) {
     displayQuestion(question.type)
 }
 
-async function fetchComponent(path) {
-    try {
-        const raw = await fetch(path)
-        const componentHtml = await raw.text()
-
-        const parent = document.createElement('div')
-
-        parent.innerHTML = componentHtml
-
-        const componentOrComponents = parent.children.length === 1 ? parent.children[0] : parent.children
-
-        return componentOrComponents
-    } catch (err) {
-        console.error(err)
-        displayErrorPage()
-    }
-}
-
 function displayQuizImage(event) {
 
     if (!this.files.length || !event.isTrusted) {
