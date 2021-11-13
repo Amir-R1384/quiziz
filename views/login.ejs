@@ -78,19 +78,5 @@
                 console.error(err)
             }
         })
-
-        const forgotPasswordBtn = document.getElementById('forgotPasswordBtn')
-
-        forgotPasswordBtn.addEventListener('click', async (e) => {
-            e.preventDefault()
-
-            const res = await fetch('/forgotPassword', { method: 'POST' })
-            
-            if (res.ok) {
-                location.assign('/forgotPassword')
-            } else {
-                displayErrorPage(res.status)
-            }
-        })
     </script>
 </body>
