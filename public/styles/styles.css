@@ -52,6 +52,8 @@ body {
 
 .info.success { @apply text-green-700 }
 
+.rating-star.selected { @apply text-yellow-500 fill-current }
+
 code { @apply px-1 bg-gray-200 rounded-sm }
 
 .form-shadow {

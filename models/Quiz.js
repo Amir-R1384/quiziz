@@ -13,6 +13,14 @@ function validateQuestionType(type) {
     return validQuestionTypes.has(type)
 }
 
+function validateRating(rating) {
+    return [0, 1, 2, 3, 4, 5].indexOf(rating) !== -1
+}
+
+function validateRatingNum(ratingNum) {
+    return ratingNum.isInteger
+}
+
 const quizSchema = new Schema({
     title: {
         type: String,
@@ -41,6 +49,16 @@ const quizSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: [true, 'userId, is required'],
         validate: [validateUserId, 'userId, invalid']
+    },
+    rating: {
+        type: Number,
+        default: 0,
+        validate: [validateRating, 'rating, is invalid']
+    },
+    ratingNum: {
+        type: Number,
+        default: 0,
+        validate: [validateRatingNum, 'number of rates, is not valid']
     },
     questions : [{
         type: {

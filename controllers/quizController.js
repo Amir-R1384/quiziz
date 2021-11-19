@@ -114,9 +114,9 @@ module.exports.submitQuiz_post = async (req, res) => {
 
         overallScore = Math.round((overallScore*(quizzesAttended-1) + scorePercentage) / quizzesAttended)
 
-        await User.findByIdAndUpdate(userId, { quizzesAttended, overallScore }, { runValidators: true })
+        // await User.findByIdAndUpdate(userId, { quizzesAttended, overallScore }, { runValidators: true })
 
-        res.status(200).end()
+        res.status(200).json({score: scorePercentage})
 
     } catch (err) {
         console.error(err)
@@ -135,6 +135,32 @@ module.exports.deleteQuiz_delete = async (req, res) => {
         const user = await User.findById(id)
         const quizzesMade = user.quizzesMade
         await User.findByIdAndUpdate(id, { quizzesMade: quizzesMade-1 })
+
+        res.status(200).end()
+        
+    } catch (err) {
+        console.error(err)
+        res.status(500).end()
+    }
+}
+
+module.exports.rate_post = async (req, res) => {
+    try {
+        const quizId = req.params.id
+        if (!quizId) return res.status(400).end()
+
+        const { rating:newRating } = req.body
+
+        const quiz = await Quiz.findById(quizId)
+        let { rating:oldRating, ratingNum } = quiz
+
+        ratingNum++
+        const finalRating = Math.round((oldRating * (ratingNum - 1) + newRating) / ratingNum)
+        
+        await Quiz.findByIdAndUpdate(quizId, {
+            rating: finalRating,
+            ratingNum
+        })
 
         res.status(200).end()
         

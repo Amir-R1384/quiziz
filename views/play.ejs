@@ -48,6 +48,23 @@
                 </div>
             </div>
         </div>
+        <div id="scoreWrapper" class="absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-50 grid place-items-center hidden">
+            <div class="wrapper h-3/4 bg-white rounded-xl flex flex-col items-center py-5 px-20 gap-y-2 justify-around">
+                <svg class="mb-2" height="150" width="150" style="transform: rotate(-90deg);">
+                    <circle id="progressRing" stroke="blue" stroke-width="10" fill="transparent" r="65" cx="75" cy="75" style="stroke: var(--clr-primary); stroke-dasharray: calc(65 * 3.14 * 2) calc(65 * 3.14 * 2); stroke-dashoffset: calc(65 * 3.14 * 2); stroke-linecap: round; transition: all 1s ease-in-out;"/>
+                </svg>
+                <div class="text-4xl text-gray-600 font-semibold -mt-10">You scored <span id="scoreNumDiv" class="font-bold clr-primary">76%</span> </div>
+                <div class="text-lg font-regular text-gray-500">Rate this quiz</div>
+                <div id="rating" class="flex gap-x-1 -mt-12">
+                    <%- include('./partials/star.ejs') %> 
+                    <%- include('./partials/star.ejs') %> 
+                    <%- include('./partials/star.ejs') %> 
+                    <%- include('./partials/star.ejs') %> 
+                    <%- include('./partials/star.ejs') %> 
+                </div>
+                <button id="returnHomeBtn" class="button bg-secondary text-white hover:opacity-90 transition-opacity shadow-md" style="padding-inline: 5rem;">Return home</button>
+            </div>
+        </div>
     </main>
     <script>
         document.querySelectorAll(".fill-browser-height").forEach(el => {

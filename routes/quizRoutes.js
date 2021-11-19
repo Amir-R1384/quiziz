@@ -19,4 +19,6 @@ router.post('/submit/:id', quizController.submitQuiz_post)
 
 router.delete('/:id', quizController.deleteQuiz_delete)
 
+router.post('/rate/:id', quizController.rate_post)
+
 module.exports = router
