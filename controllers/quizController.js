@@ -4,6 +4,69 @@ const Quiz = require('../models/Quiz')
 const User = require('../models/User')
 const { handleDatabaseErrors, getUserId } = require('./functions')
 
+module.exports.attendQuiz_get = async (req, res) => {
+    const { loc, rating, search, loading } = req.query
+
+    const loadedIdsStringified = req.cookies.loadedIds
+    const loadedIds = loadedIdsStringified && loading === 'true' ? JSON.parse(loadedIdsStringified) : []
+    
+    try {
+        // * Making the query object
+        const query = {
+            isPublic: true,
+            _id: {
+                $nin: loadedIds
+            }
+        }
+        if (rating !== 'default' && rating != undefined) {
+            query.rating = rating
+        }
+        if (search) {
+            const searchRegex = new RegExp(search, 'i')
+
+            query.$or = [
+                { title: searchRegex }, 
+                { description: searchRegex },
+                { keywords: searchRegex }
+            ]
+
+            if (mongoose.Types.ObjectId.isValid(search)) {
+                query.$or.push({
+                    _id: search
+                })
+            }
+        }
+
+        const quizzes = await Quiz.find(query, null, { limit: 20 })
+        
+        // * Keeping track of the loaded documents
+        quizzes.forEach(quiz => {
+            loadedIds.push(quiz._id)
+        })
+        res.cookie('loadedIds', JSON.stringify(loadedIds), {
+            secure: process.env.IS_COOKIE_SECURE === 'true'
+        })
+
+        if (loc === 'js') {
+            return res.json(quizzes)
+        }
+
+        res.render('attend', {
+            title: 'Let\'s play a quiz', 
+            layout: 'layouts/dashboardlayout',
+            quizzes
+        })
+
+    } catch (err) {
+        console.error(err)
+        if (loc === 'js') {
+            return res.sttaus(500).end()
+        }
+        res.status(500).redirect('/500')
+    }
+    
+}
+
 module.exports.createQuiz_get = async (req, res) => {
     res.render('new', { title: 'New Quiz', layout: false })
 }

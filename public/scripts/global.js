@@ -42,3 +42,11 @@ async function fetchComponent(path) {
         displayErrorPage()
     }
 }
+
+// eslint-disable-next-line no-unused-vars
+function shortenText(text, length) {
+    if (text.length > length) {
+        return text.slice(0,length).split(' ').slice(0,-1).join(' ') + '...'
+    }
+    return text
+}

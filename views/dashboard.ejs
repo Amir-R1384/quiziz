@@ -71,7 +71,7 @@
                                 <div class="bg-center bg-no-repeat bg-cover h-2/5" style="border-top-left-radius: 16px; border-top-right-radius: 16px; background-image: url('<%= quiz.imageEncoded %>');"></div>
                                 <div class="p-3 pt-2 flex flex-col justify-between flex-1">
                                     <div class="quiz-title text-xl font-semibold text-gray-700"><%= quiz.title %></div>
-                                    <div class="quiz-description text-sm font-medium text-gray-500 break-words"><%= shortenText(quiz.description) %> </div>
+                                    <div class="quiz-description text-xs font-medium text-gray-500 break-words"><%= shortenText(quiz.description) %> </div>
                                     <div class="flex w-full justify-between gap-x-2">
                                         <button class="sendLinkBtn bg-primary text-white font-semibold text-lg flex-1 rounded-lg transition-opacity hover:opacity-90">Send Link</button>
                                         <button class="quizMenuBtn relative">

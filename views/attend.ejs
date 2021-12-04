@@ -1,0 +1,69 @@
+<body class="h-screen">
+    <%
+        function shortenText(text) {
+            if (text.length > 60) {
+                return text.slice(0,60).split(' ').slice(0,-1).join(' ') + '...'
+            }
+            return text
+        }
+    %>
+    <div id="mainWrapper" class="wrapper p-10 gap-y-10 flex flex-col">
+        <div class="flex items-center gap-x-10 w-full p-2">
+            <div class="bg-white py-2 px-3 flex gap-x-3 items-center shadow-md rounded-lg  relative cursor-pointer">
+                <select id="ratingSelect" class="text-gray-700 font-semibold text-lg pr-3 outline-none cursor-pointer text-center">
+                    <option value="default">Rating</option>
+                    <option value="1">1 star</option>
+                    <option value="2">2 stars</option>
+                    <option value="3">3 stars</option>
+                    <option value="4">4 stars</option>
+                    <option value="5">5 stars</option>
+                </select>
+                <div class="absolute right-0 p-1 bg-white pointer-events-none">
+                    <%- include('./partials/carret-down.ejs') %>
+                </div>
+            </div>
+            <div class="w-full flex shadow-md rounded-lg">
+                <input id="searchInp" type="text" class="flex-1 text-lg font-semibold py-2 px-5 outline-none focus:border-gray-600 text-gray-700" placeholder="Search quizzes" style="border-top-left-radius: 8px; border-bottom-left-radius: 8px;">
+                <button id="searchBtn" class="bg-gray-600 text-white font-medium text-lg px-5 transition-opacity hover:opacity-90" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px;">Search</button>
+            </div>
+        </div>
+
+        <div id="quizWrapper" class="grid grid-cols-4 w-full gap-10">
+                    
+            <% quizzes.forEach(quiz => { %>
+            
+                <div data-id ="<%= quiz._id %>" data-keywords="<%= quiz.keywords.join(' ') %>" class="quiz rounded-2xl h-64 bg-white flex flex-col shadow-lg">
+                    <div class="bg-center bg-no-repeat bg-cover h-2/5" style="border-top-left-radius: 16px; border-top-right-radius: 16px; background-image: url('<%= quiz.imageEncoded %>');"></div>
+                    <div class="p-3 pt-2 flex flex-col justify-between flex-1">
+                        <div class="quiz-title text-xl font-semibold text-gray-700"><%= shortenText(quiz.title) %></div>
+                        <div class="quiz-description text-xs font-medium text-gray-500 break-words"><%= shortenText(quiz.description) %></div>
+                        <div class="flex w-full justify-between gap-x-2">
+                            <a href="/quiz/play/<%= quiz._id %>" class="bg-primary text-center text-white font-semibold text-lg flex-1 rounded-lg transition-opacity hover:opacity-90">Play</a>
+                            <button class="quizMenuBtn relative">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 transition-colors hover:bg-gray-300 rounded-lg cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                                </svg>
+                                <div class="quiz-menu absolute w-28 bottom-full -mb-7 mr-1 right-full bg-gray-600 text-white rounded-lg hidden flex-col border-2 border-gray-700" style="box-shadow: 0 0 10px 1px rgba(0,0,0,0.5);">
+                                    <div class="learnMorebtn text-sm font-medium text-white text-left p-3 transition-colors hover:bg-gray-700 py-1">Learn more</div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            <% }) %>
+        </div>
+        <div id="bottomSection" class="w-full">
+        
+            <div id="loadMore" class="w-full">
+                <div class="w-full border-t-2 border-gray-400 border-dashed mb-7"></div>
+                <button id="loadMoreBtn" class="bg-secondary text-white rounded-lg font-semibold text-lg mx-auto block px-20 py-1 shadow-md hover:opacity-90 transition-opacity">Load more</button>
+            </div>
+        
+            <div id="endMessage" class="w-full pt-5 text-center font-semibold text-gray-500 text-xl border-t-2 border-gray-400 border-dashed hidden">You've reached the end</div>
+           
+        </div>
+        
+    </div>
+    <script src="/scripts/attend.js"></script>
+</body>

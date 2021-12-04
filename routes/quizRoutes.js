@@ -8,6 +8,8 @@ const { authenticate } = require('../controllers/middlewears')
 
 router.use(authenticate)
 
+router.get('/attend', quizController.attendQuiz_get) // Where you can find a quiz and play
+
 router.get('/create', quizController.createQuiz_get)
 router.post('/create', quizController.createQuiz_post)
 
