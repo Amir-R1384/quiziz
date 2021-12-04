@@ -1,6 +1,5 @@
-const bcrypt = require('bcrypt')
 const User = require('../models/User')
-const { getUserId } = require('./functions')
+const { getUserId, comparePasswords } = require('./functions')
 
 module.exports.settings_get = async (req, res) => {
     try {
@@ -74,7 +73,7 @@ module.exports.account_post = async (req, res) => {
         if (oldPassword && newPassword && confirmPassword) {
 
             const { password:currentPassword } = await User.findById(userId)
-            const isSamePassword = await bcrypt.compare(oldPassword, currentPassword)
+            const isSamePassword = await comparePasswords(oldPassword, currentPassword)
 
 
             if (!isSamePassword) {
