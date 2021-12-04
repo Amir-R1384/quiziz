@@ -16,7 +16,7 @@
         ],
         "linebreak-style": [
             "error",
-            "windows"
+            "mac"
         ],
         "quotes": [
             "error",
