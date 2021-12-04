@@ -177,7 +177,7 @@ module.exports.submitQuiz_post = async (req, res) => {
 
         overallScore = Math.round((overallScore*(quizzesAttended-1) + scorePercentage) / quizzesAttended)
 
-        // await User.findByIdAndUpdate(userId, { quizzesAttended, overallScore }, { runValidators: true })
+        await User.findByIdAndUpdate(userId, { quizzesAttended, overallScore }, { runValidators: true })
 
         res.status(200).json({score: scorePercentage})
 
