@@ -1,9 +1,8 @@
 const User = require('../models/User')
-const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
-const { isEmail } = require('validator')
 const getMailOptions = require('../nodemailerOptions')
+const { comparePasswords } = require('./functions')
 
 module.exports.signup_get = (req, res) => {
     res.render('signup', {layout: 'layouts/blankLayout'})
@@ -39,7 +38,7 @@ module.exports.login_post = async (req, res) => {
     if (!user) return res.status(400).json({errors: {email: 'This Email does not exist'}})
 
     const savedPassword = user.password
-    const match = await bcrypt.compare(password, savedPassword)
+    const match = await comparePasswords(password, savedPassword)
 
     if (match) {
         const jwt = createJwt({id: user._id})

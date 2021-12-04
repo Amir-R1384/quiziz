@@ -1,6 +1,6 @@
 const isBase64 = require('is-base64')
 const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
+const crypto = require('crypto')
 const Filter = require('bad-words')
 
 const filter = new Filter()
@@ -60,8 +60,16 @@ module.exports.getUserId = token => {
     return jwt.verify(token, process.env.SECRET_KEY).id
 }
 
-module.exports.hash = async (data) => {
-    return await bcrypt.hash(data, 1)
+function hash(password) {
+    const temporarySalt = 'salt'
+    // TODO Add salt later
+    return crypto.pbkdf2Sync(password, temporarySalt, 1000, 64, 'sha256').toString('hex')
+}
+module.exports.hash = hash
+
+module.exports.comparePasswords = (normalPassword, hashedPassword) => {
+    const newHashedPassword = hash(normalPassword)
+    return newHashedPassword === hashedPassword
 }
 
 module.exports.validateForBadWords = string => {
