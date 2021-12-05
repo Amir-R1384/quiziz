@@ -38,7 +38,8 @@ module.exports.login_post = async (req, res) => {
     if (!user) return res.status(400).json({errors: {email: 'This Email does not exist'}})
 
     const savedPassword = user.password
-    const match = await comparePasswords(password, savedPassword)
+    const salt = user.salt
+    const match = comparePasswords(password, savedPassword, salt)
 
     if (match) {
         const jwt = createJwt({id: user._id})

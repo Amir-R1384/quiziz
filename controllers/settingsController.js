@@ -72,8 +72,8 @@ module.exports.account_post = async (req, res) => {
 
         if (oldPassword && newPassword && confirmPassword) {
 
-            const { password:currentPassword } = await User.findById(userId)
-            const isSamePassword = await comparePasswords(oldPassword, currentPassword)
+            const { password:currentPassword, salt } = await User.findById(userId)
+            const isSamePassword = comparePasswords(oldPassword, currentPassword, salt)
 
 
             if (!isSamePassword) {

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const { isEmail } = require('validator')
-const { validateBase64, hash, validateForBadWords } = require('../controllers/functions')
+const { validateBase64, hash, validateForBadWords, generateSalt } = require('../controllers/functions')
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
         required: [true, 'The password is required'],
         minlength: [6, 'The password is too short']
     },
+    salt: String,
     profileImageEncoded: {
         type: String,
         default: '/assets/images/defaultProfileImage.jpg',
@@ -43,7 +44,8 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.pre('save', async function (next) {
-    this.password = await hash(this.password)
+    this.salt = generateSalt()
+    this.password = await hash(this.password, this.salt)
     next()
 })
 

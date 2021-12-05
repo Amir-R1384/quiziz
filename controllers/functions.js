@@ -60,15 +60,17 @@ module.exports.getUserId = token => {
     return jwt.verify(token, process.env.SECRET_KEY).id
 }
 
-function hash(password) {
-    const temporarySalt = 'salt'
-    // TODO Add salt later
-    return crypto.pbkdf2Sync(password, temporarySalt, 1000, 64, 'sha256').toString('hex')
+module.exports.generateSalt = () => {
+    return crypto.randomBytes(16).toString('base64')
+}
+
+function hash(password, salt) {
+    return crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha256').toString('hex')
 }
 module.exports.hash = hash
 
-module.exports.comparePasswords = (normalPassword, hashedPassword) => {
-    const newHashedPassword = hash(normalPassword)
+module.exports.comparePasswords = (normalPassword, hashedPassword, salt) => {
+    const newHashedPassword = hash(normalPassword, salt)
     return newHashedPassword === hashedPassword
 }
 
