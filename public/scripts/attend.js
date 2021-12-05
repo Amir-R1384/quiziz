@@ -3,7 +3,7 @@ const quizMenuBtns = document.querySelectorAll('.quizMenuBtn')
 
 /* eslint-disable no-undef */
 selects.forEach(select => select.addEventListener('change', () => search(false)))
-searchBtn.addEventListener('mouseup', search)
+searchBtn.addEventListener('mouseup', () => search(false))
 searchInp.addEventListener('keydown', e => e.key === 'Enter' ? search(false) : null)
 loadMoreBtn.addEventListener('mouseup', () => search(true))
 /* eslint-disable no-undef */
@@ -72,14 +72,3 @@ async function search(loading=false) {
         loadMore.classList.add('hidden')
     }
 }
-
-
-
-
-
-
-
-
-
-
-// * WE LEFT OFF WHEN WE WERE LOADING MORE VALUES, WE SHOULD MODIFY THE CODE SO  THAT SEARCH REMOVES OLD SEARCH AND ADDS NEW SEARCH, BUT LOAD FUNCTION DOESNT DELETE OLD SEARCH. ALSO THE PROBLEM WITH THE COOKIE NOT RESETING WHEN REFRESHING PAGE
