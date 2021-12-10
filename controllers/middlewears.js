@@ -19,7 +19,8 @@ function verifyToken(token) {
             resolve()
         }
         catch(err) {
-            reject()
+            reject('Invalid token')
         }
     })
 }
+module.exports.verifyToken = verifyToken
