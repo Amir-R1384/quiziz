@@ -9,6 +9,7 @@ const deashboardRoutes = require('./routes/dashboardRoutes')
 const quizRoutes = require('./routes/quizRoutes')
 const settingsRoutes = require('./routes/settingsRoutes')
 const profileRoutes = require('./routes/profileRoutes')
+const errorRoutes = require('./routes/errorRoutes')
 const { checkUser } = require('./controllers/middlewears')
 const { errorOptions } = require('./appData')
 
@@ -28,6 +29,7 @@ app.use('/dashboard', deashboardRoutes)
 app.use('/quiz', quizRoutes)
 app.use('/settings', settingsRoutes)
 app.use('/profile', profileRoutes)
+app.use(errorRoutes)
 app.use((req, res) => res.status(404).render('error', errorOptions[404]))
 
 // Database connection
