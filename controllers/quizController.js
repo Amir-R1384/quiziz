@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const Quiz = require('../models/Quiz')
 const User = require('../models/User')
 const { handleDatabaseErrors, getUserId } = require('./functions')
+const { errorOptions } = require('../appData')
 
 module.exports.attendQuiz_get = async (req, res) => {
     const { loc, rating, search, loading } = req.query
@@ -62,7 +63,7 @@ module.exports.attendQuiz_get = async (req, res) => {
         if (loc === 'js') {
             return res.sttaus(500).end()
         }
-        res.status(500).redirect('/500')
+        res.status(500).render('error', errorOptions[500])
     }
     
 }
@@ -125,7 +126,7 @@ module.exports.playQuiz_get = async (req, res) => {
         const ObjectId = mongoose.Types.ObjectId
 
         if (!ObjectId.isValid(quizId) || !await Quiz.exists({ _id: quizId })) {
-            return res.status(400).redirect('/400')
+            return res.status(400).render('error', errorOptions[400])
         }
 
         const quiz = await Quiz.findById(quizId)
@@ -141,7 +142,7 @@ module.exports.playQuiz_get = async (req, res) => {
 
     } catch (err) {
         console.error(err)
-        res.status(500).redirect('/500')
+        res.status(500).render('error', errorOptions[500])
     }
 }
 

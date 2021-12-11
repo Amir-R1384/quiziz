@@ -1,6 +1,7 @@
 const User = require('../models/User')
 const Quiz = require('../models/Quiz')
 const jwt = require('jsonwebtoken')
+const { errorOptions } = require('../appData')
 
 module.exports.dashboard_get = async (req, res) => {
     try {
@@ -21,6 +22,6 @@ module.exports.dashboard_get = async (req, res) => {
 
     catch(err) {
         console.error(err)
-        res.status(500).redirect('/500')
+        res.status(500).render('error', errorOptions[500])
     }
 }

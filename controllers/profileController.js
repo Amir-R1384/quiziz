@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { errorOptions } = require('../appData')
 const Quiz = require('../models/Quiz')
 const User = require('../models/User')
 const { verifyToken } = require('./middlewears')
@@ -12,7 +13,7 @@ module.exports.profile_get = async (req, res) => {
 
         const { id:userId } = req.params
         if (!mongoose.Types.ObjectId.isValid(userId)) {
-            return res.status(404).redirect('/404')
+            return res.status(404).render('error', errorOptions[404])
         }
 
         const profileInfo = await User.findById(userId)

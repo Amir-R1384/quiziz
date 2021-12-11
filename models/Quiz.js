@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const User = require('./User')
-const appData = require('../appData.json')
+const appData = require('../appData')
 const { validateBase64, validateForBadWords } = require('../controllers/functions')
 
 async function validateUserId(id) {

@@ -1,3 +1,4 @@
+const { errorOptions } = require('../appData')
 const User = require('../models/User')
 const { getUserId, comparePasswords } = require('./functions')
 
@@ -17,7 +18,7 @@ module.exports.settings_get = async (req, res) => {
     }
     catch(err) {
         console.error(err)
-        res.status(500).redirect('/500')
+        res.status(500).render('error', errorOptions[500])
     }
 }
 
