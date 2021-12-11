@@ -1,5 +1,6 @@
 const { errorOptions } = require('../appData')
 const User = require('../models/User')
+const Quiz = require('../models/Quiz')
 const { getUserId, comparePasswords } = require('./functions')
 
 module.exports.settings_get = async (req, res) => {
@@ -124,5 +125,37 @@ module.exports.account_post = async (req, res) => {
 }
 
 module.exports.data_post = async (req, res) => {
-    // Resting data (for later)
+    try {
+        const userId = getUserId(req.cookies.jwt)
+
+        // * For reseting data
+        const { resetData } = req.body
+        if (resetData === true) {
+            await deleteUserData(userId)
+        }
+        
+        // * For deleting account
+        const { deleteAccount } = req.body
+        if (deleteAccount) {
+            await deleteUserData(userId)
+            await User.findByIdAndDelete(userId)
+            res.cookie('jwt', '', { maxAge: 1 }) // Logging out the user
+        }
+        
+        res.status(200).end()
+        
+    } catch (err) {
+        console.error(err)
+        res.status(500).end()
+    }
+}
+
+async function deleteUserData(userId) {
+    await User.findByIdAndUpdate(userId, {
+        quizzesAttended: 0,
+        quizzesMade: 0,
+        overallScore: 'N/A'
+    })
+
+    await Quiz.deleteMany({ userId })
 }

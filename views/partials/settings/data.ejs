@@ -1,9 +1,58 @@
 <div class="font-bold text-2xl text-gray-800">Data</div>
 <div class="bg-primary rounded-full w-full h-0.5 mt-2 mb-10"></div>
 
-<button onmousedown="clearAutoSaveData()" class="font-medium text-gray-600 border border-gray-600 rounded-md px-1.5 py-1 hover:bg-gray-100 transition-colors active:bg-gray-200">Clear autosave data</button>
+<button onmousedown="clearAutoSaveData()" class="my-10 block font-medium text-gray-600 border border-gray-600 rounded-md px-1.5 py-1 hover:bg-gray-100 transition-colors active:bg-gray-200">Clear autosave data</button>
+<button onmousedown="resetData()" class="my-10 block font-semibold text-red-600 border border-red-600 rounded-md px-1.5 py-1 hover:bg-gray-100 transition-colors active:bg-gray-200">Reset all data</button>
+<button onmousedown="deleteAccount()" class="my-10 block font-semibold text-red-600 border border-red-600 rounded-md px-1.5 py-1 hover:bg-gray-100 transition-colors active:bg-gray-200">Delete account</button>
+
 <script>
     function clearAutoSaveData() {
         localStorage.savedProgress = JSON.stringify({})
+    }
+
+    async function resetData() {
+        const wantsToReset = confirm('Are you sure you want to delete all your data?\nthis means all your quizzes and your stats will be reset.')
+        if (!wantsToReset) return
+
+        const data = {
+            resetData: true
+        }
+
+        const res = await fetch('/settings/data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'Application/json'
+            },
+            body: JSON.stringify(data)
+        })
+
+        if (res.ok) {
+            showUpdateMessage()
+        } else {
+            displayErrorPage(res.status)
+        }
+    }
+
+    async function deleteAccount() {
+        const wantsToDelete = confirm('Are you sure you want to delete your account?')
+        if (!wantsToDelete) return
+
+        const data = {
+            deleteAccount: true
+        }
+
+        const res = await fetch('/settings/data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'Application/json'
+            },
+            body: JSON.stringify(data)
+        })
+
+        if (res.ok) {
+            location.assign('/')
+        } else {
+            displayErrorPage(res.status)
+        }
     }
 </script>
