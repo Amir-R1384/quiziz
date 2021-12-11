@@ -27,6 +27,7 @@ const userSchema = new mongoose.Schema({
         validate: [validateBase64, 'The profile image is not valid']
     },
     showStats: Boolean,
+    showQuizzes: Boolean,
     quizzesAttended: {
         type: Number,
         default: 0,

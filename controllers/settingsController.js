@@ -92,11 +92,11 @@ module.exports.account_post = async (req, res) => {
         }
 
         // * For stats
-        const { showStats } = req.body
+        const { showStats, showQuizzes } = req.body
 
-        if (showStats === true || showStats === false) {
+        if (showStats === true || showStats === false) { // We don't check for showQuizzes because they get sent together
 
-            await User.findByIdAndUpdate(userId, { showStats })
+            await User.findByIdAndUpdate(userId, { showStats, showQuizzes })
             
         }
         

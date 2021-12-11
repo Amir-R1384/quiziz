@@ -30,7 +30,7 @@
                     <div>
                         <div class="flex justify-between w-full">
                             <div class="clr-secondary font-semibold text-lg">Quizzes made:</div>
-                            <div class="clr-primary font-semibold text-lg"><%= profileInfo.quizzesMade %> </div>
+                            <div class="clr-primary font-semibold text-lg"><%= profileInfo.showQuizzes ? profileInfo.quizzesMade : 0 %> </div>
                         </div>
                         <div class="w-full h-0.5 bg-gray-500"></div>
                     </div>
@@ -50,7 +50,7 @@
             </div>
 
             <div class="flex-1 flex flex-col gap-y-12">
-                <% if (quizzes.length) { %>
+                <% if (quizzes.length && profileInfo.showQuizzes) { %>
 
                     <div class="grid grid-cols-3 w-full gap-10">
                     

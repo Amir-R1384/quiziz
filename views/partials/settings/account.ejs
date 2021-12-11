@@ -35,6 +35,13 @@
         </div>
     </div>
 
+    <div class="w-full flex justify-between">   
+        <label for="showQuizzesToggle" class="block text-lg text-gray-700 font-medium mb-2">Show quizzes</label>
+        <div id="showQuizzesToggle" class="toggle <%= userInfo.showQuizzes ? 'active' : '' %> flex items-center w-12 h-6 rounded-2xl bg-gray-400 cursor-pointer transition-colors" style="padding: 2px;" onclick="this.classList.toggle('active')">
+            <div class="bg-white rounded-full w-5 h-5 transition-transform duration-300 ease-in-out"></div>
+        </div>
+    </div>
+
     <div>
         <button onclick="saveStats()" class="bg-primary text-white font-medium text-xl py-1 px-5 rounded-md hover:opacity-90 transition-opacity shadow-sm">Save</button>
     </div>
@@ -81,7 +88,8 @@
     async function saveStats() {
 
         const data = {
-            showStats: statsToggle.classList.contains('active')
+            showStats: statsToggle.classList.contains('active'),
+            showQuizzes: showQuizzesToggle.classList.contains('active')
         }
 
         const res = await fetch('/settings/account', {
