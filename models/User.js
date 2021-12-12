@@ -41,7 +41,9 @@ const userSchema = new mongoose.Schema({
     overallScore: {
         type: String,
         default: 'N/A'
-    }
+    },
+    friends: [],
+    friendRequests: []
 })
 
 userSchema.pre('save', async function (next) {
