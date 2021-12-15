@@ -43,12 +43,13 @@ const userSchema = new mongoose.Schema({
         default: 'N/A'
     },
     friends: [],
-    friendRequests: []
+    friendRequests: [],
+    sharedQuizzes: []
 })
 
 userSchema.pre('save', async function (next) {
     this.salt = generateSalt()
-    this.password = await hash(this.password, this.salt)
+    this.password = hash(this.password, this.salt)
     next()
 })
 

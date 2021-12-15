@@ -1,6 +1,11 @@
 const quizMenuBtns = document.querySelectorAll('.quizMenuBtn')
 const editBtns = document.querySelectorAll('.editBtn')
 const deleteBtns = document.querySelectorAll('.deleteBtn')
+const quizzes = document.querySelectorAll('.quiz')
+const shareBtns = document.querySelectorAll('.shareBtn')
+const friendOptions = document.querySelectorAll('.friendOption')
+
+const searchData = createSearchData()
 
 quizMenuBtns.forEach(btn => {
     btn.addEventListener('mouseup', () => {
@@ -56,13 +61,16 @@ deleteBtns.forEach(btn => {
     })
 })
 
-const quizzes = document.querySelectorAll('.quiz')
-const searchData = createSearchData()
-
-/* eslint-disable no-undef */
+shareContainer.addEventListener('click', e => {
+    if (e.target === e.currentTarget) toggleShareDiv()
+})
+shareBtns.forEach(btn => btn.addEventListener('mouseup', () => {
+    toggleShareDiv(btn.getAttribute('data-quiz-id'))
+}))
+friendSearchInp.addEventListener('input', () => searchFriends(friendSearchInp.value))
+shareBtn.addEventListener('mouseup', shareQuiz)
 searchInp.addEventListener('keydown', e => e.key === 'Enter' ? searchQuiz() : null)
 searchBtn.addEventListener('mouseup', searchQuiz)
-/* eslint-disable no-undef */
 
 function searchQuiz() {
     const query = searchInp.value.toLowerCase()
@@ -97,6 +105,53 @@ function createSearchData() {
     })
 
     return data
+}
+
+function toggleShareDiv(quizId) {
+    shareContainer.classList.toggle('hidden')
+
+    if (!shareContainer.classList.contains('hidden')) {
+        shareDiv.setAttribute('data-shared-quiz-id', quizId)
+    }
+}
+
+function searchFriends(query) {
+
+    if (/^\s*$/.test(query)) {
+        return friendOptions.forEach(el => el.classList.remove('hidden'))
+    }
+
+    friendOptions.forEach(el => {
+        if (el.querySelector('label').innerText.toLowerCase().includes(query)) {
+
+            el.classList.remove('hidden')
+        } else {
+            el.classList.add('hidden')
+        }
+    })
+}
+
+async function shareQuiz() {
+    const toBeShared = Array.from(document.querySelectorAll('input.friendOptionInput:checked'))
+    const receiverIds = toBeShared.map(el => el.id)
+    const quizId = shareDiv.getAttribute('data-shared-quiz-id')
+
+    const res = await fetch('/quiz/share', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ quizId, receiverIds })
+    })
+
+    if (res.ok) {
+        document.querySelectorAll('input.friendOptionInput').forEach(input => {
+            input.checked = false
+        })
+        shareContainer.classList.add('hidden')
+    } else {
+        displayErrorPage(res.status)
+    }
 }
 
 function getQuizId(son) {

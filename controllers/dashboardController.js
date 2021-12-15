@@ -12,11 +12,22 @@ module.exports.dashboard_get = async (req, res) => {
 
         const quizzes = await Quiz.find({ userId })
 
+        const friends = []
+        for (let friendId of profileInfo.friends) {
+            const { name } = await User.findById(friendId)
+
+            friends.push({
+                id: friendId,
+                name
+            })
+        }
+
         res.render('dashboard', {
             layout: 'layouts/dashboardLayout',
             title: `Dashboard (${profileInfo.name})`, 
             quizzes,
-            profileInfo
+            profileInfo,
+            friends
         })
     }
 

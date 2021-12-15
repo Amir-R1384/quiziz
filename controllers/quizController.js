@@ -6,21 +6,28 @@ const { handleDatabaseErrors, getUserId } = require('./functions')
 const { errorOptions } = require('../appData')
 
 module.exports.attendQuiz_get = async (req, res) => {
-    const { loc, rating, search, loading } = req.query
+    const userId = getUserId(req.cookies.jwt)
+
+    const { loc, rating, search, loading, sharedWithMe } = req.query
 
     const loadedIdsStringified = req.cookies.loadedIds
     const loadedIds = loadedIdsStringified && loading === 'true' ? JSON.parse(loadedIdsStringified) : []
-    
+
     try {
         // * Making the query object
         const query = {
             isPublic: true,
             _id: {
-                $nin: loadedIds
+                $nin: loadedIds,
             }
         }
         if (rating !== 'default' && rating != undefined) {
             query.rating = rating
+        }
+        if (sharedWithMe == 'true') {
+            const { sharedQuizzes } = await User.findById(userId)
+            query._id['$in'] = sharedQuizzes
+            delete query.isPublic
         }
         if (search) {
             const searchRegex = new RegExp(search, 'i')
@@ -120,7 +127,7 @@ module.exports.editQuiz_post = async (req, res) => {
 
 module.exports.playQuiz_get = async (req, res) => {
     try {
-
+        const userId = getUserId(req.cookies.jwt)
         const { id:quizId } = req.params
 
         const ObjectId = mongoose.Types.ObjectId
@@ -130,6 +137,14 @@ module.exports.playQuiz_get = async (req, res) => {
         }
 
         const quiz = await Quiz.findById(quizId)
+
+        if (quiz.isPublic === false && quiz.userId.toString() !== userId) {
+            const { sharedQuizzes } = await User.findById(userId)
+
+            if (sharedQuizzes.indexOf(quizId) === -1) {
+                return res.status(400).render('error', errorOptions[403])
+            }
+        }
 
         const { name:creatorName } = await User.findById(quiz.userId)
     
@@ -228,6 +243,32 @@ module.exports.rate_post = async (req, res) => {
 
         res.status(200).end()
         
+    } catch (err) {
+        console.error(err)
+        res.status(500).end()
+    }
+}
+
+module.exports.shareQuiz_post = async (req, res) => {
+    try {
+        const { quizId, receiverIds } = req.body
+        const userId = getUserId(req.cookies.jwt)
+
+        for (let receiverId of receiverIds) {
+            // Checking if they're friend
+            const { friends:receiverFriends, sharedQuizzes } = await User.findById(receiverId)
+            if (receiverFriends.indexOf(userId) === -1) continue
+
+            // Adding to sharedQuizzes if doesn't already exists
+            if (sharedQuizzes.indexOf(quizId) === -1) {
+                sharedQuizzes.push(quizId)
+            }
+
+            await User.findByIdAndUpdate(receiverId, { sharedQuizzes })
+        }
+
+        res.status(200).end()
+
     } catch (err) {
         console.error(err)
         res.status(500).end()

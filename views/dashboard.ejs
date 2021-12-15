@@ -74,7 +74,7 @@
                                     <div class="quiz-title text-xl font-semibold text-gray-700"><%= quiz.title %></div>
                                     <div class="quiz-description text-xs font-medium text-gray-500 break-words"><%= shortenText(quiz.description) %> </div>
                                     <div class="flex w-full justify-between gap-x-2">
-                                        <button class="sendLinkBtn bg-primary text-white font-semibold text-lg flex-1 rounded-lg transition-opacity hover:opacity-90">Send Link</button>
+                                        <button data-quiz-id="<%= quiz._id %>" class="shareBtn bg-primary text-white font-semibold text-lg flex-1 rounded-lg transition-opacity hover:opacity-90">Share quiz</button>
                                         <button class="quizMenuBtn relative">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 transition-colors hover:bg-gray-300 rounded-lg cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
@@ -97,6 +97,38 @@
                 <% } %> 
                 
             </div>
+        </div>
+
+        <div id="shareContainer" class="absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-40 grid place-items-center hidden">
+            <div id="shareDiv" class="w-1/2 h-3/5 bg-gray-200 rounded-xl shadow-2xl p-6 flex flex-col items-center gap-y-10">
+                <div class="w-full flex justify-between gap-x-16">
+                    <input id="friendSearchInp" type="text" class="bg-white flex-1 shadow-md rounded-xl text-lg font-semibold px-3 py-1 outline-none" placeholder="Search">
+                    <button id="shareBtn" class="button button-primary shadow-md hover:opacity-90 transition-opacity">Share</button>
+                </div>
+                <div class="flex-1 rounded-xl bg-white shadow-md w-full p-4 grid grid-cols-3 grid-rows-6 gap-5 overflow-auto">
+
+                    <% friends.forEach(({id, name}) => { %>
+                        <div class="friendOption w-full bg-gray-200 rounded-md shadow-sm py-1 px-2 flex items-center cursor-pointer justify-center">
+                            <input type="checkbox" id="<%= id %>" class="friendOptionInput appearance-none peer">
+                            <div class="w-4 h-4 border border-gray-600 rounded-sm peer-checked:bg-gray-600"></div>
+                            <label for="<%= id %>" class="friendOptionLabel cursor-pointer text-gray-600 ml-4 font-medium"><%= name %></label>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+            <script>
+                document.querySelectorAll('label.friendOptionLabel')
+                    .forEach(label => {
+                        label.addEventListener('click', e => e.preventDefault())
+                    })
+
+                document.querySelectorAll('.friendOption')
+                    .forEach(el => {
+                        el.addEventListener('mouseup', () => {
+                            el.querySelector('input').checked = !el.querySelector('input').checked
+                        })
+                    })
+            </script>
         </div>
     </section>
 </body>

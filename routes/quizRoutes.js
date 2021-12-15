@@ -23,4 +23,6 @@ router.delete('/:id', quizController.deleteQuiz_delete)
 
 router.post('/rate/:id', quizController.rate_post)
 
+router.post('/share', quizController.shareQuiz_post)
+
 module.exports = router

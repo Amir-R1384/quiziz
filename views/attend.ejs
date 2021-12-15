@@ -18,11 +18,19 @@
                     <option value="4">4 stars</option>
                     <option value="5">5 stars</option>
                 </select>
+            
                 <div class="absolute right-0 p-1 bg-white pointer-events-none">
                     <%- include('./partials/carret-down.ejs') %>
                 </div>
             </div>
-            <div class="w-full flex shadow-md rounded-lg">
+            <div class="flex gap-x-4 items-center mr-6 font-semibold text-gray-700 text-lg">
+                Shared with me 
+                <div id="sharedWithMeToggle" class="toggle flex items-center w-12 rounded-2xl bg-gray-400 cursor-pointer transition-colors" style="padding: 2px;">
+                    <div class="bg-white rounded-full w-5 h-5 transition-transform duration-300 ease-in-out"></div>
+                </div>
+            </div>
+            
+            <div class="flex-1 flex shadow-md rounded-lg">
                 <input id="searchInp" type="text" class="flex-1 text-lg font-semibold py-2 px-5 outline-none focus:border-gray-600 text-gray-700" placeholder="Search quizzes" style="border-top-left-radius: 8px; border-bottom-left-radius: 8px;">
                 <button id="searchBtn" class="bg-gray-600 text-white font-medium text-lg px-5 transition-opacity hover:opacity-90" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px;">Search</button>
             </div>

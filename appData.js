@@ -23,6 +23,11 @@ module.exports = {
             layout,
             title: 'Page not found',
             errorMessage: '404 PAGE NOT FOUND'
+        },
+        403: {
+            layout,
+            title: 'Forbidden',
+            errorMessage: '403 FORBIDDEN'
         }
     }
 }

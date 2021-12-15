@@ -1,11 +1,14 @@
 const selects = document.querySelectorAll('select')
 const quizMenuBtns = document.querySelectorAll('.quizMenuBtn')
 
+let sharedWithMe = false
+
 /* eslint-disable no-undef */
 selects.forEach(select => select.addEventListener('change', () => search(false)))
 searchBtn.addEventListener('mouseup', () => search(false))
 searchInp.addEventListener('keydown', e => e.key === 'Enter' ? search(false) : null)
 loadMoreBtn.addEventListener('mouseup', () => search(true))
+sharedWithMeToggle.addEventListener('mouseup', toggleSharedWithMeAndSearch)
 /* eslint-disable no-undef */
 
 quizMenuBtns.forEach(btn => {
@@ -26,11 +29,17 @@ quizMenuBtns.forEach(btn => {
     })
 })
 
+function toggleSharedWithMeAndSearch() {
+    sharedWithMeToggle.classList.toggle('active')
+    search(false)
+}
+
 async function search(loading=false) {
     const rating = ratingSelect.value
     const search = searchInp.value
+    sharedWithMe = sharedWithMeToggle.classList.contains('active')
     
-    const res = await fetch(`?loc=js&rating=${rating}&search=${search}&loading=${loading}`, {
+    const res = await fetch(`?loc=js&rating=${rating}&sharedWithMe=${sharedWithMe}&search=${search}&loading=${loading}`, {
         method: 'GET'
     })
 
