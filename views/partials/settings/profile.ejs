@@ -3,12 +3,12 @@
 
 <form class="flex">
     <div class="flex-1 flex flex-col gap-y-10">
-        <div>   
+        <div>
             <label for="nameInp" class="block text-lg text-gray-700 font-medium mb-2">Name</label>
             <input id="nameInp" type="text" value="<%= userInfo.name %>" class="block w-full px-2 py-1 bg-gray-100 border border-black rounded-md">
             <div class="error-div text-red-500" data-for="name"></div>
         </div>
-        <div>   
+        <div>
             <label for="emailInp" class="block text-lg text-gray-700 font-medium mb-2">Email</label>
             <input id="emailInp" type="email" value="<%= userInfo.email %>" class="block w-full px-2 py-1 bg-gray-100 border border-black rounded-md">
             <div class="error-div text-red-500" data-for="email"></div>
@@ -17,14 +17,15 @@
         <div>
             <button onclick="saveProfile()" type="submit" id="saveSettingsBtn" class="bg-primary text-white font-medium text-xl py-1 px-5 rounded-md hover:opacity-90 transition-opacity shadow-sm">Save</button>
         </div>
-        
+
     </div>
     <div class="flex-1 flex justify-end">
         <div class="w-40 h-40 rounded-full mr-12 bg-center bg-cover" style="background-image: url('<%= userInfo.profileImageEncoded || `/assets/images/defaultProfileImage.jpg` %>')">
             <input type="file" accept="image/*" id="imgInp" hidden>
             <label for="imgInp" class="relative w-full h-full grid place-items-center text-white font-semibold rounded-full bg-primary opacity-0 hover:opacity-100 transition-opacity cursor-pointer duration-300">
                 Choose an image
-                <button id="removeImgBtn" class="absolute bottom-0 left-0 mb-1 px-2 py-1 text-center rounded-md bg-red-500 text-white text-xs font-medium">Remove Image</button>
+                <button id="removeImgBtn" class="absolute bottom-0 left-0 mb-1 px-2 py-1 text-center rounded-md bg-red-500 text-white text-xs font-medium">Remove
+                    Image</button>
             </label>
         </div>
     </div>
@@ -60,7 +61,7 @@
                 const imageEncoded = canvas.toDataURL('image/jpeg', 0.2)
 
                 imgInp.setAttribute('data-value', imageEncoded)
-                
+
                 const imageInputParent = imgInp.parentNode
                 imageInputParent.style.backgroundImage = `url(${imageEncoded})`
             }
@@ -94,7 +95,7 @@
         if (res.ok) {
 
             showUpdateMessage()
-            
+
         } else {
             const err = await res.json()
 

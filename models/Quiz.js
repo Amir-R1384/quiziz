@@ -36,11 +36,13 @@ const quizSchema = new Schema({
         type: String,
         validate: [validateBase64, 'image, is not a valid type']
     },
-    keywords: [{
-        type: String,
-        required: [true, 'keywords, are required'],
-        validate: [validateForBadWords, 'keyword, contains bad words']
-    }],
+    keywords: [
+        {
+            type: String,
+            required: [true, 'keywords, are required'],
+            validate: [validateForBadWords, 'keyword, contains bad words']
+        }
+    ],
     isPublic: {
         type: Boolean,
         required: [true, 'visibility, is required']
@@ -60,27 +62,29 @@ const quizSchema = new Schema({
         default: 0,
         validate: [validateRatingNum, 'number of rates, is not valid']
     },
-    questions : [{
-        type: {
-            type: String,
-            required: [true, 'question type, is required'],
-            validate: [validateQuestionType, 'question type, is invalid']
-        },
-        title: {
-            type: String,
-            required: [true, 'question title, is required'],
-            validate: [validateForBadWords, 'question title, contains bad words']
-        },
-        answer: {
-            type: Schema.Types.Mixed,
-            required: [true, 'question answer, is required'],
-            validate: [validateForBadWords, 'question answer, contains bad words']
+    questions: [
+        {
+            type: {
+                type: String,
+                required: [true, 'question type, is required'],
+                validate: [validateQuestionType, 'question type, is invalid']
+            },
+            title: {
+                type: String,
+                required: [true, 'question title, is required'],
+                validate: [validateForBadWords, 'question title, contains bad words']
+            },
+            answer: {
+                type: Schema.Types.Mixed,
+                required: [true, 'question answer, is required'],
+                validate: [validateForBadWords, 'question answer, contains bad words']
+            }
         }
-    }]
+    ]
 })
 
 quizSchema.pre('validate', function (next) {
-    if (!this.questions.length) throw ({customError: {questions: 'are not enough'}})
+    if (!this.questions.length) throw { customError: { questions: 'are not enough' } }
     next()
 })
 

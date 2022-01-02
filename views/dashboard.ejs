@@ -15,7 +15,7 @@
                 <div class="w-full">
                     <div class="flex items-center justify-between w-full">
                         <div class="bg-gray-600 rounded-full w-16 h-16 flex-shrink-0 bg-center bg-cover" style="background-image: url('<%= profileInfo.profileImageEncoded || `/assets/images/defaultProfileImage.jpg` %>')"></div>
-                        <div class="text-lg font-bold text-gray-500 text-center"> <%= profileInfo.name %>  </div>
+                        <div class="text-lg font-bold text-gray-500 text-center"> <%= profileInfo.name %> </div>
                         <a href="/settings">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9 text-gray-500 cursor-pointer transition-colors hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
@@ -49,8 +49,8 @@
                         </div>
                         <div class="w-full h-0.5 bg-gray-500"></div>
                     </div>
-                    
-                </div>  
+
+                </div>
                 <div class="w-full">
                     <div class="w-full h-0.5 bg-yellow-200 mb-5 rounded-full"></div>
                     <a href="/friends" class="text-center block font-medium text-gray-600 border border-gray-600 rounded-md px-1.5 py-1 hover:bg-gray-100 transition-colors active:bg-gray-200">Friends</a>
@@ -64,38 +64,38 @@
                 </div>
                 <% if (quizzes.length) { %>
 
-                    <div class="grid grid-cols-3 w-full gap-10">
-                    
-                        <% quizzes.forEach(quiz => { %>
-    
-                            <div data-id ="<%= quiz._id %>" data-keywords="<%= quiz.keywords.join(' ') %>" class="quiz rounded-2xl h-64 bg-white flex flex-col" style="box-shadow: 0 0 7px 2px rgba(0,0,0,0.2);">
-                                <div class="bg-center bg-no-repeat bg-cover h-2/5" style="border-top-left-radius: 16px; border-top-right-radius: 16px; background-image: url('<%= quiz.imageEncoded %>');"></div>
-                                <div class="p-3 pt-2 flex flex-col justify-between flex-1">
-                                    <div class="quiz-title text-xl font-semibold text-gray-700"><%= quiz.title %></div>
-                                    <div class="quiz-description text-xs font-medium text-gray-500 break-words"><%= shortenText(quiz.description) %> </div>
-                                    <div class="flex w-full justify-between gap-x-2">
-                                        <button data-quiz-id="<%= quiz._id %>" class="shareBtn bg-primary text-white font-semibold text-lg flex-1 rounded-lg transition-opacity hover:opacity-90">Share quiz</button>
-                                        <button class="quizMenuBtn relative">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 transition-colors hover:bg-gray-300 rounded-lg cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                                            </svg>
-                                            <div class="quiz-menu absolute bottom-full -mb-7 mr-1 right-full  bg-gray-600 text-white rounded-lg hidden flex-col border-2 border-gray-700 overflow-hidden" style="box-shadow: 0 0 10px 1px rgba(0,0,0,0.5);">
-                                                <div class="editBtn text-sm font-medium text-white text-left pl-3 transition-colors hover:bg-gray-700 py-1">Edit</div>
-                                                <div class="w-full bg-gray-800 h-0.5"></div>
-                                                <div class="deleteBtn text-sm font-medium bg-red-500 text-white text-left px-3 transition-colors hover:bg-red-600 py-1">Delete</div>
-                                            </div>
-                                        </button>
+                <div class="grid grid-cols-3 w-full gap-10">
+
+                    <% quizzes.forEach(quiz => { %>
+
+                    <div data-id="<%= quiz._id %>" data-keywords="<%= quiz.keywords.join(' ') %>" class="quiz rounded-2xl h-64 bg-white flex flex-col" style="box-shadow: 0 0 7px 2px rgba(0,0,0,0.2);">
+                        <div class="bg-center bg-no-repeat bg-cover h-2/5" style="border-top-left-radius: 16px; border-top-right-radius: 16px; background-image: url('<%= quiz.imageEncoded %>');"></div>
+                        <div class="p-3 pt-2 flex flex-col justify-between flex-1">
+                            <div class="quiz-title text-xl font-semibold text-gray-700"><%= quiz.title %></div>
+                            <div class="quiz-description text-xs font-medium text-gray-500 break-words"><%= shortenText(quiz.description) %> </div>
+                            <div class="flex w-full justify-between gap-x-2">
+                                <button data-quiz-id="<%= quiz._id %>" class="shareBtn bg-primary text-white font-semibold text-lg flex-1 rounded-lg transition-opacity hover:opacity-90">Share quiz</button>
+                                <button class="quizMenuBtn relative">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 transition-colors hover:bg-gray-300 rounded-lg cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                                    </svg>
+                                    <div class="quiz-menu absolute bottom-full -mb-7 mr-1 right-full  bg-gray-600 text-white rounded-lg hidden flex-col border-2 border-gray-700 overflow-hidden" style="box-shadow: 0 0 10px 1px rgba(0,0,0,0.5);">
+                                        <div class="editBtn text-sm font-medium text-white text-left pl-3 transition-colors hover:bg-gray-700 py-1">Edit</div>
+                                        <div class="w-full bg-gray-800 h-0.5"></div>
+                                        <div class="deleteBtn text-sm font-medium bg-red-500 text-white text-left px-3 transition-colors hover:bg-red-600 py-1">Delete</div>
                                     </div>
-                                </div>
+                                </button>
                             </div>
-    
-                        <% }) %>
+                        </div>
                     </div>
 
-                <% } else { %>  
-                    <div class="text-center text-xl border-2 bg-gray-300 border-gray-600 rounded-lg font-semibold text-gray-500 flex-1 grid place-items-center">You haven't made any quizzes yet</div>
-                <% } %> 
-                
+                    <% }) %>
+                </div>
+
+                <% } else { %>
+                <div class="text-center text-xl border-2 bg-gray-300 border-gray-600 rounded-lg font-semibold text-gray-500 flex-1 grid place-items-center">You haven't made any quizzes yet</div>
+                <% } %>
+
             </div>
         </div>
 
@@ -108,11 +108,11 @@
                 <div class="flex-1 rounded-xl bg-white shadow-md w-full p-4 grid grid-cols-3 grid-rows-6 gap-5 overflow-auto">
 
                     <% friends.forEach(({id, name}) => { %>
-                        <div class="friendOption w-full bg-gray-200 rounded-md shadow-sm py-1 px-2 flex items-center cursor-pointer justify-center">
-                            <input type="checkbox" id="<%= id %>" class="friendOptionInput appearance-none peer">
-                            <div class="w-4 h-4 border border-gray-600 rounded-sm peer-checked:bg-gray-600"></div>
-                            <label for="<%= id %>" class="friendOptionLabel cursor-pointer text-gray-600 ml-4 font-medium"><%= name %></label>
-                        </div>
+                    <div class="friendOption w-full bg-gray-200 rounded-md shadow-sm py-1 px-2 flex items-center cursor-pointer justify-center">
+                        <input type="checkbox" id="<%= id %>" class="friendOptionInput appearance-none peer">
+                        <div class="w-4 h-4 border border-gray-600 rounded-sm peer-checked:bg-gray-600"></div>
+                        <label for="<%= id %>" class="friendOptionLabel cursor-pointer text-gray-600 ml-4 font-medium"><%= name %></label>
+                    </div>
                     <% }) %>
                 </div>
             </div>

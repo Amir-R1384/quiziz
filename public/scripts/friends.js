@@ -17,7 +17,7 @@ function copyUserId() {
     copyDiv.select()
     copyDiv.setSelectionRange(0, 100)
 
-    navigator.clipboard.writeText(copyDiv.value);
+    navigator.clipboard.writeText(copyDiv.value)
 }
 
 function toggleAddFriendDiv() {
@@ -42,7 +42,7 @@ async function sendFriendRequest() {
         toggleAddFriendDiv()
     } else {
         const error = await res.json()
-        
+
         errorDiv.innerText = error.input
     }
 }

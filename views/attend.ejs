@@ -18,18 +18,19 @@
                     <option value="4">4 stars</option>
                     <option value="5">5 stars</option>
                 </select>
-            
+
                 <div class="absolute right-0 p-1 bg-white pointer-events-none">
                     <%- include('./partials/carret-down.ejs') %>
                 </div>
             </div>
             <div class="flex gap-x-4 items-center mr-6 font-semibold text-gray-700 text-lg">
-                Shared with me 
+                Shared with me
                 <div id="sharedWithMeToggle" class="toggle flex items-center w-12 rounded-2xl bg-gray-400 cursor-pointer transition-colors" style="padding: 2px;">
-                    <div class="bg-white rounded-full w-5 h-5 transition-transform duration-300 ease-in-out"></div>
+                    <div class="bg-white rounded-full w-5 h-5 transition-transform duration-300 ease-in-out">
+                    </div>
                 </div>
             </div>
-            
+
             <div class="flex-1 flex shadow-md rounded-lg">
                 <input id="searchInp" type="text" class="flex-1 text-lg font-semibold py-2 px-5 outline-none focus:border-gray-600 text-gray-700" placeholder="Search quizzes" style="border-top-left-radius: 8px; border-bottom-left-radius: 8px;">
                 <button id="searchBtn" class="bg-gray-600 text-white font-medium text-lg px-5 transition-opacity hover:opacity-90" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px;">Search</button>
@@ -37,33 +38,38 @@
         </div>
 
         <div id="quizWrapper" class="grid grid-cols-4 w-full gap-10">
-                    
+
             <% quizzes.forEach(quiz => { %>
-            
-                <div data-id ="<%= quiz._id %>" data-keywords="<%= quiz.keywords.join(' ') %>" class="quiz rounded-2xl h-64 bg-white flex flex-col shadow-lg">
-                    <div class="bg-center bg-no-repeat bg-cover h-2/5" style="border-top-left-radius: 16px; border-top-right-radius: 16px; background-image: url('<%= quiz.imageEncoded %>');"></div>
-                    <div class="p-3 pt-2 flex flex-col justify-between flex-1">
-                        <div class="quiz-title text-xl font-semibold text-gray-700"><%= shortenText(quiz.title) %></div>
-                        <div class="quiz-description text-xs font-medium text-gray-500 break-words"><%= shortenText(quiz.description) %></div>
-                        <div class="w-full">
-                            <a href="/quiz/play/<%= quiz._id %>" class="block w-full bg-primary text-center text-white font-semibold text-lg flex-1 rounded-lg transition-opacity hover:opacity-90">Play</a>
-                        </div>
+
+            <div data-id="<%= quiz._id %>" data-keywords="<%= quiz.keywords.join(' ') %>" class="quiz rounded-2xl h-64 bg-white flex flex-col shadow-lg">
+                <div class="bg-center bg-no-repeat bg-cover h-2/5" style="border-top-left-radius: 16px; border-top-right-radius: 16px; background-image: url('<%= quiz.imageEncoded %>');">
+                </div>
+                <div class="p-3 pt-2 flex flex-col justify-between flex-1">
+                    <div class="quiz-title text-xl font-semibold text-gray-700">
+                        <%= shortenText(quiz.title) %></div>
+                    <div class="quiz-description text-xs font-medium text-gray-500 break-words">
+                        <%= shortenText(quiz.description) %></div>
+                    <div class="w-full">
+                        <a href="/quiz/play/<%= quiz._id %>" class="block w-full bg-primary text-center text-white font-semibold text-lg flex-1 rounded-lg transition-opacity hover:opacity-90">Play</a>
                     </div>
                 </div>
+            </div>
 
             <% }) %>
         </div>
         <div id="bottomSection" class="w-full">
-        
+
             <div id="loadMore" class="w-full">
                 <div class="w-full border-t-2 border-gray-400 border-dashed mb-7"></div>
-                <button id="loadMoreBtn" class="bg-secondary text-white rounded-lg font-semibold text-lg mx-auto block px-20 py-1 shadow-md hover:opacity-90 transition-opacity">Load more</button>
+                <button id="loadMoreBtn" class="bg-secondary text-white rounded-lg font-semibold text-lg mx-auto block px-20 py-1 shadow-md hover:opacity-90 transition-opacity">Load
+                    more</button>
             </div>
-        
-            <div id="endMessage" class="w-full pt-5 text-center font-semibold text-gray-500 text-xl border-t-2 border-gray-400 border-dashed hidden">You've reached the end</div>
-           
+
+            <div id="endMessage" class="w-full pt-5 text-center font-semibold text-gray-500 text-xl border-t-2 border-gray-400 border-dashed hidden">
+                You've reached the end</div>
+
         </div>
-        
+
     </div>
     <script src="/scripts/attend.js"></script>
 </body>

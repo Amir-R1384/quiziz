@@ -11,14 +11,15 @@ module.exports.attendQuiz_get = async (req, res) => {
     const { loc, rating, search, loading, sharedWithMe } = req.query
 
     const loadedIdsStringified = req.cookies.loadedIds
-    const loadedIds = loadedIdsStringified && loading === 'true' ? JSON.parse(loadedIdsStringified) : []
+    const loadedIds =
+        loadedIdsStringified && loading === 'true' ? JSON.parse(loadedIdsStringified) : []
 
     try {
         // * Making the query object
         const query = {
             isPublic: true,
             _id: {
-                $nin: loadedIds,
+                $nin: loadedIds
             }
         }
         if (rating !== 'default' && rating != undefined) {
@@ -33,7 +34,7 @@ module.exports.attendQuiz_get = async (req, res) => {
             const searchRegex = new RegExp(search, 'i')
 
             query.$or = [
-                { title: searchRegex }, 
+                { title: searchRegex },
                 { description: searchRegex },
                 { keywords: searchRegex }
             ]
@@ -46,7 +47,7 @@ module.exports.attendQuiz_get = async (req, res) => {
         }
 
         const quizzes = await Quiz.find(query, null, { limit: 20 })
-        
+
         // * Keeping track of the loaded documents
         quizzes.forEach(quiz => {
             loadedIds.push(quiz._id)
@@ -60,11 +61,10 @@ module.exports.attendQuiz_get = async (req, res) => {
         }
 
         res.render('attend', {
-            title: 'Let\'s play a quiz', 
+            title: "Let's play a quiz",
             layout: 'layouts/dashboardlayout',
             quizzes
         })
-
     } catch (err) {
         console.error(err)
         if (loc === 'js') {
@@ -72,7 +72,6 @@ module.exports.attendQuiz_get = async (req, res) => {
         }
         res.status(500).render('error', errorOptions[500])
     }
-    
 }
 
 module.exports.createQuiz_get = async (req, res) => {
@@ -90,11 +89,10 @@ module.exports.createQuiz_post = async (req, res) => {
 
         const user = await User.findById(id)
         const quizzesMade = user.quizzesMade
-        await User.findByIdAndUpdate(id, { quizzesMade: quizzesMade+1 })
+        await User.findByIdAndUpdate(id, { quizzesMade: quizzesMade + 1 })
 
         res.status(200).end()
-    }
-    catch(err) {
+    } catch (err) {
         handleDatabaseErrors(err, res)
     }
 }
@@ -102,8 +100,13 @@ module.exports.createQuiz_post = async (req, res) => {
 module.exports.editQuiz_get = async (req, res) => {
     const quizId = req.params.id
     const quiz = await Quiz.findById(quizId)
-    
-    res.render('new', { layout: false, title: 'Edit Quiz', editMode: true, quiz })
+
+    res.render('new', {
+        layout: false,
+        title: 'Edit Quiz',
+        editMode: true,
+        quiz
+    })
 }
 
 module.exports.editQuiz_post = async (req, res) => {
@@ -112,14 +115,13 @@ module.exports.editQuiz_post = async (req, res) => {
 
         const data = req.body
 
-        const { id:userId } = jwt.verify(req.cookies.jwt, process.env.SECRET_KEY)
+        const { id: userId } = jwt.verify(req.cookies.jwt, process.env.SECRET_KEY)
         data.userId = new mongoose.Types.ObjectId(userId)
 
-        await Quiz.findByIdAndUpdate(quizId, {...data})
+        await Quiz.findByIdAndUpdate(quizId, { ...data })
 
         res.status(200).end()
-    }
-    catch(err) {
+    } catch (err) {
         console.error(err)
         res.status(500).end()
     }
@@ -128,11 +130,11 @@ module.exports.editQuiz_post = async (req, res) => {
 module.exports.playQuiz_get = async (req, res) => {
     try {
         const userId = getUserId(req.cookies.jwt)
-        const { id:quizId } = req.params
+        const { id: quizId } = req.params
 
         const ObjectId = mongoose.Types.ObjectId
 
-        if (!ObjectId.isValid(quizId) || !await Quiz.exists({ _id: quizId })) {
+        if (!ObjectId.isValid(quizId) || !(await Quiz.exists({ _id: quizId }))) {
             return res.status(400).render('error', errorOptions[400])
         }
 
@@ -146,15 +148,14 @@ module.exports.playQuiz_get = async (req, res) => {
             }
         }
 
-        const { name:creatorName } = await User.findById(quiz.userId)
-    
+        const { name: creatorName } = await User.findById(quiz.userId)
+
         res.render('play', {
             layout: false,
             title: 'Play Quiz',
             quiz,
             creatorName
         })
-
     } catch (err) {
         console.error(err)
         res.status(500).render('error', errorOptions[500])
@@ -163,15 +164,14 @@ module.exports.playQuiz_get = async (req, res) => {
 
 module.exports.submitQuiz_post = async (req, res) => {
     try {
-
         const answers = req.body
-        const { id:quizId } = req.params
+        const { id: quizId } = req.params
 
         const { questions } = await Quiz.findById(quizId)
 
         const questionsNum = questions.length
         let mistakes = 0
-        
+
         questions.forEach((question, i) => {
             const answer = answers[i]
 
@@ -180,23 +180,27 @@ module.exports.submitQuiz_post = async (req, res) => {
             }
         })
 
-        const scorePercentage = Math.round((questionsNum-mistakes) * 100 / questionsNum)
-        
+        const scorePercentage = Math.round(((questionsNum - mistakes) * 100) / questionsNum)
 
         const userId = getUserId(req.cookies.jwt)
         const user = await User.findById(userId)
-        
+
         let { quizzesAttended, overallScore } = user
 
         if (overallScore === 'N/A') overallScore = 0
         quizzesAttended++
 
-        overallScore = Math.round((overallScore*(quizzesAttended-1) + scorePercentage) / quizzesAttended)
+        overallScore = Math.round(
+            (overallScore * (quizzesAttended - 1) + scorePercentage) / quizzesAttended
+        )
 
-        await User.findByIdAndUpdate(userId, { quizzesAttended, overallScore }, { runValidators: true })
+        await User.findByIdAndUpdate(
+            userId,
+            { quizzesAttended, overallScore },
+            { runValidators: true }
+        )
 
-        res.status(200).json({score: scorePercentage})
-
+        res.status(200).json({ score: scorePercentage })
     } catch (err) {
         console.error(err)
         res.status(500).end()
@@ -213,10 +217,9 @@ module.exports.deleteQuiz_delete = async (req, res) => {
         const { id } = jwt.verify(req.cookies.jwt, process.env.SECRET_KEY)
         const user = await User.findById(id)
         const quizzesMade = user.quizzesMade
-        await User.findByIdAndUpdate(id, { quizzesMade: quizzesMade-1 })
+        await User.findByIdAndUpdate(id, { quizzesMade: quizzesMade - 1 })
 
         res.status(200).end()
-        
     } catch (err) {
         console.error(err)
         res.status(500).end()
@@ -228,21 +231,20 @@ module.exports.rate_post = async (req, res) => {
         const quizId = req.params.id
         if (!quizId) return res.status(400).end()
 
-        const { rating:newRating } = req.body
+        const { rating: newRating } = req.body
 
         const quiz = await Quiz.findById(quizId)
-        let { rating:oldRating, ratingNum } = quiz
+        let { rating: oldRating, ratingNum } = quiz
 
         ratingNum++
         const finalRating = Math.round((oldRating * (ratingNum - 1) + newRating) / ratingNum)
-        
+
         await Quiz.findByIdAndUpdate(quizId, {
             rating: finalRating,
             ratingNum
         })
 
         res.status(200).end()
-        
     } catch (err) {
         console.error(err)
         res.status(500).end()
@@ -256,7 +258,7 @@ module.exports.shareQuiz_post = async (req, res) => {
 
         for (let receiverId of receiverIds) {
             // Checking if they're friend
-            const { friends:receiverFriends, sharedQuizzes } = await User.findById(receiverId)
+            const { friends: receiverFriends, sharedQuizzes } = await User.findById(receiverId)
             if (receiverFriends.indexOf(userId) === -1) continue
 
             // Adding to sharedQuizzes if doesn't already exists
@@ -268,7 +270,6 @@ module.exports.shareQuiz_post = async (req, res) => {
         }
 
         res.status(200).end()
-
     } catch (err) {
         console.error(err)
         res.status(500).end()

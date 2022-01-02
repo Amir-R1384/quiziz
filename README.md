@@ -1,4 +1,5 @@
 # quiziz
+
 ### An app that lets you make quizes and other people can participate in it alone.
 
 This project is enspired by the [Kahoot](https://kahoot.com/) website.

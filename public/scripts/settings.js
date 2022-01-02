@@ -5,7 +5,7 @@ selectCorrectTabButton()
 document.querySelectorAll('form button').forEach(el => {
     el.addEventListener('click', e => {
         e.preventDefault()
-        document.querySelectorAll('.error-div').forEach(el => el.innerText = '')
+        document.querySelectorAll('.error-div').forEach(el => (el.innerText = ''))
     })
 })
 document.getElementById('closeUpdateMessageBtn').addEventListener('click', closeUpdateMessage)

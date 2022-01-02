@@ -1,10 +1,8 @@
 const express = require('express')
 const router = new express.Router()
 
-
 const quizController = require('../controllers/quizController')
 const { authenticate } = require('../controllers/middlewears')
-
 
 router.use(authenticate)
 

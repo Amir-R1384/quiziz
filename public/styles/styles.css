@@ -4,13 +4,13 @@
 @tailwind utilities;
 
 :root {
-    --clr-primary: #25A55F;
-    --clr-secondary: #0D6560;
+    --clr-primary: #25a55f;
+    --clr-secondary: #0d6560;
     --clr-light: white;
-    --clr-dark: #484A47;
-    --clr-info: #F7DD72;
-    --clr-blue: #00A1E4;
-    --clr-red: #E5625E;
+    --clr-dark: #484a47;
+    --clr-info: #f7dd72;
+    --clr-blue: #00a1e4;
+    --clr-red: #e5625e;
 
     --br-1: 10px;
     --br-2: 20px;
@@ -21,56 +21,112 @@ body {
 }
 
 @layer utilities {
-    .fill-browser-height {content: ""} /* It's there so that we don't get an error when building the css.*/
+    .fill-browser-height {
+        content: '';
+    } /* It's there so that we don't get an error when building the css.*/
 
-    .bg-primary { background-color: var(--clr-primary); }
-    .bg-secondary { background-color: var(--clr-secondary); }
-    .bg-light { background-color: var(--clr-light); }
-    .bg-dark { background-color: var(--clr-dark); }
+    .bg-primary {
+        background-color: var(--clr-primary);
+    }
+    .bg-secondary {
+        background-color: var(--clr-secondary);
+    }
+    .bg-light {
+        background-color: var(--clr-light);
+    }
+    .bg-dark {
+        background-color: var(--clr-dark);
+    }
 
-    .clr-primary { color: var(--clr-primary); }
-    .clr-secondary { color: var(--clr-secondary); }
-    .clr-light { color: var(--clr-light); }
-    .clr-dark { color: var(--clr-dark); }
+    .clr-primary {
+        color: var(--clr-primary);
+    }
+    .clr-secondary {
+        color: var(--clr-secondary);
+    }
+    .clr-light {
+        color: var(--clr-light);
+    }
+    .clr-dark {
+        color: var(--clr-dark);
+    }
 
-    .border-primary { border-color: var(--clr-primary); }
-    .border-secondary { border-color: var(--clr-secondary); }
-    .border-light { border-color: var(--clr-light); }
-    .border-dark { border-color: var(--clr-dark); }
+    .border-primary {
+        border-color: var(--clr-primary);
+    }
+    .border-secondary {
+        border-color: var(--clr-secondary);
+    }
+    .border-light {
+        border-color: var(--clr-light);
+    }
+    .border-dark {
+        border-color: var(--clr-dark);
+    }
 }
 
-.question-button.selected { @apply bg-gray-600; }
+.question-button.selected {
+    @apply bg-gray-600;
+}
 
-.true-false.selected { @apply bg-primary text-white; }
-.true-false.selected:hover { @apply bg-primary }
+.true-false.selected {
+    @apply bg-primary text-white;
+}
+.true-false.selected:hover {
+    @apply bg-primary;
+}
 
-.tab-button.selected { @apply bg-primary text-white }
-.tab-button.selected:hover { @apply bg-primary text-white }
+.tab-button.selected {
+    @apply bg-primary text-white;
+}
+.tab-button.selected:hover {
+    @apply bg-primary text-white;
+}
 
-.toggle.active { @apply bg-primary }
-.toggle.active > * { @apply translate-x-6 }
+.toggle.active {
+    @apply bg-primary;
+}
+.toggle.active > * {
+    @apply translate-x-6;
+}
 
-.info.success { @apply text-green-700 }
+.info.success {
+    @apply text-green-700;
+}
 
-.rating-star.selected { @apply text-yellow-500 fill-current }
+.rating-star.selected {
+    @apply text-yellow-500 fill-current;
+}
 
-code { @apply px-1 bg-gray-200 rounded-sm }
+code {
+    @apply px-1 bg-gray-200 rounded-sm;
+}
 
 .form-shadow {
-    box-shadow: 0 0 50px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.2);
 }
 
 .input-error {
     @apply border-red-500;
 }
 
-.wrapper { @apply max-w-screen-xl mx-auto; }
+.wrapper {
+    @apply max-w-screen-xl mx-auto;
+}
 
-section { @apply fill-browser-height overflow-y-hidden px-8; }
+section {
+    @apply fill-browser-height overflow-y-hidden px-8;
+}
 
-.button { @apply py-2 px-4 rounded-md font-semibold; }
-.button-primary { @apply bg-primary clr-light; }
-.button-secondary { @apply bg-secondary clr-light; }
+.button {
+    @apply py-2 px-4 rounded-md font-semibold;
+}
+.button-primary {
+    @apply bg-primary clr-light;
+}
+.button-secondary {
+    @apply bg-secondary clr-light;
+}
 .button-outline {
     border-color: var(--clr-light);
     @apply border-2 rounded-md clr-light;

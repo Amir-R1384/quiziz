@@ -34,7 +34,7 @@
         form.addEventListener("keydown", e => {
             if (e.keyCode == 13) e.preventDefault()
         })
-        
+
         submitBtn.addEventListener("click", async e => {
             e.preventDefault()
 
@@ -54,13 +54,13 @@
                         name: name.value,
                         email: email.value,
                         password: password.value
-                    }) 
+                    })
                 })
-                
+
                 if (!res.ok) {
                     const { errors } = await res.json()
                     if (!errors) return console.error(res.statusText)
-                    
+
                     for (let errorType in errors) {
                         const input = document.querySelector(`input[id=${errorType}]`)
                         const errorDiv = document.querySelector(`.error-div[data-for=${errorType}]`)
@@ -71,7 +71,7 @@
                     location.assign("/")
                 }
             }
-            catch(err) {
+            catch (err) {
                 console.error(err)
             }
         })

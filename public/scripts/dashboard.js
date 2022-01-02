@@ -9,25 +9,20 @@ const searchData = createSearchData()
 
 quizMenuBtns.forEach(btn => {
     btn.addEventListener('mouseup', () => {
-        const quizMenu = btn.querySelector('.quiz-menu') 
+        const quizMenu = btn.querySelector('.quiz-menu')
 
         if (quizMenu.classList.contains('hidden')) {
-
             quizMenu.classList.remove('hidden')
             quizMenu.classList.add('flex')
-
         } else {
-
             quizMenu.classList.remove('flex')
             quizMenu.classList.add('hidden')
-
         }
     })
 })
 
 editBtns.forEach(btn => {
-    btn.addEventListener('mouseup', function() {
-
+    btn.addEventListener('mouseup', function () {
         const quizId = getQuizId(this)
 
         location.assign(`/quiz/edit/${quizId}`)
@@ -35,8 +30,7 @@ editBtns.forEach(btn => {
 })
 
 deleteBtns.forEach(btn => {
-    btn.addEventListener('mouseup', async function() {
-
+    btn.addEventListener('mouseup', async function () {
         const wantsToDelete = confirm('Are you sure you want to delete this quiz?')
         if (!wantsToDelete) return
 
@@ -47,29 +41,26 @@ deleteBtns.forEach(btn => {
         })
 
         if (response.ok) {
-
             location.assign('/')
-
         } else {
-
             if (response.status === 400) return location.assign('/400')
             if (response.status === 500) return location.assign('/500')
             location.assign('/error')
-            
         }
-        
     })
 })
 
 shareContainer.addEventListener('click', e => {
     if (e.target === e.currentTarget) toggleShareDiv()
 })
-shareBtns.forEach(btn => btn.addEventListener('mouseup', () => {
-    toggleShareDiv(btn.getAttribute('data-quiz-id'))
-}))
+shareBtns.forEach(btn =>
+    btn.addEventListener('mouseup', () => {
+        toggleShareDiv(btn.getAttribute('data-quiz-id'))
+    })
+)
 friendSearchInp.addEventListener('input', () => searchFriends(friendSearchInp.value))
 shareBtn.addEventListener('mouseup', shareQuiz)
-searchInp.addEventListener('keydown', e => e.key === 'Enter' ? searchQuiz() : null)
+searchInp.addEventListener('keydown', e => (e.key === 'Enter' ? searchQuiz() : null))
 searchBtn.addEventListener('mouseup', searchQuiz)
 
 function searchQuiz() {
@@ -78,12 +69,8 @@ function searchQuiz() {
     if (/^\s*$/.test(query)) return quizzes.forEach(quiz => quiz.classList.remove('hidden'))
 
     quizzes.forEach((quiz, i) => {
-
-        if (searchData[i].includes(query)) 
-            quiz.classList.remove('hidden')
-        else
-            quiz.classList.add('hidden')
-
+        if (searchData[i].includes(query)) quiz.classList.remove('hidden')
+        else quiz.classList.add('hidden')
     })
 }
 
@@ -116,14 +103,12 @@ function toggleShareDiv(quizId) {
 }
 
 function searchFriends(query) {
-
     if (/^\s*$/.test(query)) {
         return friendOptions.forEach(el => el.classList.remove('hidden'))
     }
 
     friendOptions.forEach(el => {
         if (el.querySelector('label').innerText.toLowerCase().includes(query)) {
-
             el.classList.remove('hidden')
         } else {
             el.classList.add('hidden')

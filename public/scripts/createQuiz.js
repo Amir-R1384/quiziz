@@ -16,10 +16,8 @@ const paths = {
 }
 
 // eslint-disable-next-line no-undef
-if (editMode) 
-    preloadDataFromServer()
-else
-    preloadDataFromLocalStorage()
+if (editMode) preloadDataFromServer()
+else preloadDataFromLocalStorage()
 
 // * Event listeners
 
@@ -30,7 +28,9 @@ questionTypeSelect.addEventListener('change', changeQuestionType) // For simulat
 newQuestionBtn.addEventListener('mouseup', () => createQuestion())
 deleteQuestionBtn.addEventListener('mouseup', deleteQuestion)
 
-questionTitleInp.addEventListener('input', function () { questions[currentQuestionIndex].title = this.value })
+questionTitleInp.addEventListener('input', function () {
+    questions[currentQuestionIndex].title = this.value
+})
 
 visibilityToggle.addEventListener('mouseup', toggleVisibility)
 
@@ -38,7 +38,9 @@ saveBtn.addEventListener('mouseup', saveQuiz)
 
 moreBtn.addEventListener('mouseup', toggleMoreSection)
 closeBtn.addEventListener('mouseup', toggleMoreSection)
-moreContainer.addEventListener('click', e => e.target.id === 'moreContainer' ? toggleMoreSection() : null)
+moreContainer.addEventListener('click', e =>
+    e.target.id === 'moreContainer' ? toggleMoreSection() : null
+)
 
 imageInp.addEventListener('change', displayQuizImage)
 removeImgBtn.addEventListener('mouseup', () => imageInp.dispatchEvent(new Event('change')))
@@ -82,9 +84,8 @@ async function preloadDataFromServer() {
         for (let question of preSavedQuiz.questions) {
             createQuestion(question.type, question.title, question.answer)
         }
-
     }
-}  
+}
 
 async function preloadDataFromLocalStorage() {
     // Things to load from localStorage : title, description, keywords, imageEncoded, visibility(isPublic) and questions
@@ -98,7 +99,7 @@ async function preloadDataFromLocalStorage() {
     })
 
     // * For keywords input
-    if (savedProgress.keywords) {   
+    if (savedProgress.keywords) {
         keywordsInp.value = savedProgress.keywords
     }
 
@@ -122,9 +123,8 @@ async function preloadDataFromLocalStorage() {
         for (let question of savedProgress.questions) {
             createQuestion(question.type, question.title, question.answer)
         }
-
     }
-}   
+}
 
 function autoSaveDataToLocalStorage() {
     // Things to save to localStorage: title, description, keywords, imageEncoded, visibility(isPublic) and questions
@@ -132,10 +132,12 @@ function autoSaveDataToLocalStorage() {
     // * For title, description and keywords inputs
     const mainInputs = [titleInp, descriptionInp, keywordsInp]
 
-    mainInputs.forEach(input => input.addEventListener('input', () => {
-        savedProgress[input.getAttribute('data-storage-name')] = input.value
-        save()
-    }))
+    mainInputs.forEach(input =>
+        input.addEventListener('input', () => {
+            savedProgress[input.getAttribute('data-storage-name')] = input.value
+            save()
+        })
+    )
 
     // * For the imageEncoded input, it's done in the 'displayQuizImage' function
     // * For visibility, it's done in the 'toggleVisibility' function
@@ -145,7 +147,7 @@ function autoSaveDataToLocalStorage() {
         [newQuestionBtn, 'mouseup'],
         [deleteQuestionBtn, 'mouseup'],
         [questionTitleInp, 'input'],
-        [leftPanel, 'mouseup'],
+        [leftPanel, 'mouseup']
     ]
 
     createEventListeners(events, () => {
@@ -171,7 +173,7 @@ function toggleMoreSection() {
 function toggleVisibility() {
     visibilityToggle.classList.toggle('active')
     isPublic = visibilityToggle.classList.contains('active')
-    
+
     savedProgress.isPublic = isPublic
     save()
 }
@@ -186,33 +188,36 @@ function displayQuestion(questionType) {
     questionSetting.innerHTML = ''
     questionBoard.innerHTML = ''
 
-    switch(questionType) {
-
-    case 'true/false': 
-        fetchComponent(paths.trueFalse)
-            .then(components => {
-
+    switch (questionType) {
+        case 'true/false':
+            fetchComponent(paths.trueFalse).then(components => {
                 for (let child of components[1].children) {
                     child.addEventListener('mouseup', () => {
                         // Removing the selected class and adding it to the selected value
-                        for (let child of document.querySelectorAll('.true-false')) child.classList.remove('selected')
+                        for (let child of document.querySelectorAll('.true-false'))
+                            child.classList.remove('selected')
                         child.classList.add('selected')
                         // Changing the answer in the question array
-                        questions[currentQuestionIndex].answer = child.getAttribute('data-value') === 'true'
+                        questions[currentQuestionIndex].answer =
+                            child.getAttribute('data-value') === 'true'
                     })
                 }
 
                 // Selecting on of the options if there is an answer
-                if (questions[currentQuestionIndex].answer !== null) components[1].querySelector(`[data-value='${questions[currentQuestionIndex].answer}']`).classList.add('selected')
-                
-                while(components.length !== 0) {
+                if (questions[currentQuestionIndex].answer !== null)
+                    components[1]
+                        .querySelector(`[data-value='${questions[currentQuestionIndex].answer}']`)
+                        .classList.add('selected')
+
+                while (components.length !== 0) {
                     questionSetting.appendChild(components[0]) // When appending from an HTML collection, it removes the element so we use a while loop
                 }
 
-                fetchComponent(paths.trueFalseDesign)
-                    .then(component => questionBoard.appendChild(component))
+                fetchComponent(paths.trueFalseDesign).then(component =>
+                    questionBoard.appendChild(component)
+                )
             })
-        break
+            break
     }
 }
 
@@ -240,10 +245,9 @@ async function createQuestion(type = null, title = '', answer = null) {
 
         // Autoloading if it's the first question
         if (questions.length === 1) loadQuestion(0)
-         
+
         savedProgress.questions = questions
         save()
-
     } catch (err) {
         console.error(err)
         displayErrorPage()
@@ -264,26 +268,20 @@ function deleteQuestion() {
     // Recalculating the questions' number
     const questionElements = document.querySelectorAll('.question-button')
 
-    for (let i=index; i<questions.length; i++) {
+    for (let i = index; i < questions.length; i++) {
         questionElements[i].setAttribute('data-index', i)
         questionElements[i].innerText = i + 1
     }
 
-
     if (index >= questions.length) {
         if (questions.length) {
-
-            currentQuestionIndex = questions.length-1
+            currentQuestionIndex = questions.length - 1
             loadQuestion(currentQuestionIndex)
-
         } else {
-
             currentQuestionIndex = null
             deselectQuestions()
-
         }
-    } else
-        loadQuestion(currentQuestionIndex)
+    } else loadQuestion(currentQuestionIndex)
 
     savedProgress.questions = questions
     save()
@@ -291,12 +289,16 @@ function deleteQuestion() {
 
 function loadQuestion(index) {
     // Removing the selected class from previously selected question button
-    document.querySelector(`.question-button[data-index='${currentQuestionIndex}']`)?.classList.remove('selected')
+    document
+        .querySelector(`.question-button[data-index='${currentQuestionIndex}']`)
+        ?.classList.remove('selected')
 
     currentQuestionIndex = parseInt(index)
-    
-    // Selecting the new question button   
-    document.querySelector(`.question-button[data-index='${currentQuestionIndex}']`).classList.add('selected')
+
+    // Selecting the new question button
+    document
+        .querySelector(`.question-button[data-index='${currentQuestionIndex}']`)
+        .classList.add('selected')
 
     const question = questions[currentQuestionIndex]
 
@@ -311,7 +313,6 @@ function loadQuestion(index) {
 }
 
 function displayQuizImage(event) {
-
     if (!this.files.length || !event.isTrusted) {
         quizImageEncoded = null
 
@@ -325,17 +326,15 @@ function displayQuizImage(event) {
     }
 
     const imageFile = this.files[0]
-    
+
     const fileReader = new FileReader()
     fileReader.readAsDataURL(imageFile)
 
     fileReader.onload = () => {
-
         const img = new Image()
         img.src = fileReader.result
-        
-        img.onload = () => {
 
+        img.onload = () => {
             const canvas = document.createElement('canvas')
             const ctx = canvas.getContext('2d')
             canvas.height = img.height
@@ -381,7 +380,7 @@ async function saveQuiz() {
         questions,
         description: descriptionInp.value,
         keywords: keywordsInp.value.split(/\s+/),
-        imageEncoded: quizImageEncoded 
+        imageEncoded: quizImageEncoded
     }
 
     const url = editMode ? `/quiz/edit/${preSavedQuiz._id}` : '/quiz/create'
@@ -395,13 +394,10 @@ async function saveQuiz() {
     })
 
     if (response.ok) {
-
         savedProgress = {}
         save()
         location.assign('/')
-
     } else {
-
         if (response.status === 500) return location.assign('/500')
 
         try {
@@ -415,8 +411,7 @@ async function saveQuiz() {
             }
 
             alert(errorMessage)
-        }
-        catch(err) {
+        } catch (err) {
             console.error(err)
             displayErrorPage()
         }

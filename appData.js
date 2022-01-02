@@ -1,17 +1,17 @@
 const layout = 'layouts/blankLayout'
 
 module.exports = {
-    questionTypes: ["true/false"],
-    
+    questionTypes: ['true/false'],
+
     errorOptions: {
         default: {
             layout,
-            title: 'Error', 
+            title: 'Error',
             errorMessage: 'UNCAUGHT ERROR'
         },
         400: {
             layout,
-            title: '400 Error', 
+            title: '400 Error',
             errorMessage: '400 BAD REQUEST'
         },
         500: {

@@ -17,8 +17,7 @@ function verifyToken(token) {
         try {
             jwt.verify(token, process.env.SECRET_KEY)
             resolve()
-        }
-        catch(err) {
+        } catch (err) {
             reject('Invalid token')
         }
     })

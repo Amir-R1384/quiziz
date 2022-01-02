@@ -5,7 +5,7 @@ const { getUserId } = require('./functions')
 module.exports.friends_get = async (req, res) => {
     const userId = getUserId(req.cookies.jwt)
 
-    const { name:userName, friends, friendRequests } = await User.findById(userId)
+    const { name: userName, friends, friendRequests } = await User.findById(userId)
 
     const friendsData = []
     const friendRequestsData = []
@@ -13,14 +13,14 @@ module.exports.friends_get = async (req, res) => {
     for (let friendId of friends) {
         const { _id, name } = await User.findById(friendId)
         friendsData.push({
-            id : _id,
+            id: _id,
             name
         })
     }
     for (let strangerId of friendRequests) {
         const { _id, name } = await User.findById(strangerId)
         friendRequestsData.push({
-            id : _id,
+            id: _id,
             name
         })
     }
@@ -28,7 +28,7 @@ module.exports.friends_get = async (req, res) => {
     res.render('friends', {
         title: `Friends (${userName})`,
         layout: 'layouts/dashboardLayout.ejs',
-        friends : friendsData,
+        friends: friendsData,
         friendRequests: friendRequestsData,
         userId
     })
@@ -37,27 +37,27 @@ module.exports.friends_get = async (req, res) => {
 module.exports.sendRequest_post = async (req, res) => {
     try {
         const userId = getUserId(req.cookies.jwt)
-        const { id:receiverId } = req.body
+        const { id: receiverId } = req.body
 
         if (userId === receiverId) {
-            return res.status(400).json({input: 'The entered ID is the same as your ID.'})
+            return res.status(400).json({ input: 'The entered ID is the same as your ID.' })
         }
         if (!mongoose.Types.ObjectId.isValid(receiverId)) {
-            return res.status(400).json({input: 'The entered ID is not a valid ID.'})
+            return res.status(400).json({ input: 'The entered ID is not a valid ID.' })
         }
-        if (!await User.exists({_id : receiverId})) {
-            return res.status(400).json({input: 'There are no users with this ID.'})
+        if (!(await User.exists({ _id: receiverId }))) {
+            return res.status(400).json({ input: 'There are no users with this ID.' })
         }
 
         const { friends } = await User.findById(userId)
         if (friends.indexOf(receiverId) !== -1) {
-            return res.status(400).json({input: 'You are already friend with this user.'})
+            return res.status(400).json({ input: 'You are already friend with this user.' })
         }
 
         const { friendRequests } = await User.findById(receiverId)
 
         if (friendRequests.indexOf(userId) !== -1) {
-            return res.status(400).json({input: 'You have already send a request to this user.'})
+            return res.status(400).json({ input: 'You have already send a request to this user.' })
         }
 
         friendRequests.push(userId)
@@ -65,7 +65,6 @@ module.exports.sendRequest_post = async (req, res) => {
         await User.findByIdAndUpdate(receiverId, { friendRequests })
 
         res.status(200).end()
-
     } catch (err) {
         console.error(err)
         res.status(500).end()
@@ -75,9 +74,9 @@ module.exports.sendRequest_post = async (req, res) => {
 module.exports.acceptRequest_post = async (req, res) => {
     try {
         const userId = getUserId(req.cookies.jwt)
-        const { id:strangerId } = req.body
-        const { friends:userFriends, friendRequests } = await User.findById(userId)
-        const { friends:friendFriends } = await User.findById(strangerId)
+        const { id: strangerId } = req.body
+        const { friends: userFriends, friendRequests } = await User.findById(userId)
+        const { friends: friendFriends } = await User.findById(strangerId)
 
         // Removing from friend requests
         friendRequests.splice(friendRequests.indexOf(strangerId), 1)
@@ -90,7 +89,7 @@ module.exports.acceptRequest_post = async (req, res) => {
 
         // Saving to the database
         await User.findByIdAndUpdate(userId, {
-            friends: userFriends, 
+            friends: userFriends,
             friendRequests
         })
         await User.findByIdAndUpdate(strangerId, {
@@ -98,7 +97,6 @@ module.exports.acceptRequest_post = async (req, res) => {
         })
 
         res.status(200).end()
-
     } catch (err) {
         console.error(err)
         res.status(500).end()
@@ -108,7 +106,7 @@ module.exports.acceptRequest_post = async (req, res) => {
 module.exports.rejectRequest_post = async (req, res) => {
     try {
         const userId = getUserId(req.cookies.jwt)
-        const { id:strangerId } = req.body
+        const { id: strangerId } = req.body
         const { friendRequests } = await User.findById(userId)
 
         friendRequests.splice(friendRequests.indexOf(strangerId), 1)
@@ -116,7 +114,6 @@ module.exports.rejectRequest_post = async (req, res) => {
         await User.findByIdAndUpdate(userId, { friendRequests })
 
         res.status(200).end()
-
     } catch (err) {
         console.error(err)
         res.status(500).end()
@@ -126,7 +123,7 @@ module.exports.rejectRequest_post = async (req, res) => {
 module.exports.friends_delete = async (req, res) => {
     try {
         const userId = getUserId(req.cookies.jwt)
-        const { id:friendId } = req.body
+        const { id: friendId } = req.body
         const { friends: userFriends } = await User.findById(userId)
         const { friends: friendFriends } = await User.findById(friendId)
 
@@ -135,9 +132,8 @@ module.exports.friends_delete = async (req, res) => {
 
         await User.findByIdAndUpdate(userId, { friends: userFriends })
         await User.findByIdAndUpdate(friendId, { friends: friendFriends })
-        
-        res.status(200).end()
 
+        res.status(200).end()
     } catch (err) {
         console.error(err)
         res.status(500).end()

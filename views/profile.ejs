@@ -13,8 +13,10 @@
             <div class="flex flex-col justify-between p-4 items-center w-72 h-96 bg-light rounded-lg shadow-md">
                 <div class="w-full">
                     <div class="flex items-center justify-between w-full">
-                        <div class="bg-gray-600 rounded-full w-16 h-16 flex-shrink-0 bg-center bg-cover" style="background-image: url('<%= profileInfo.profileImageEncoded || `/assets/images/defaultProfileImage.jpg` %>')"></div>
-                        <div class="text-lg font-bold text-gray-500 text-center flex-1"> <%= profileInfo.name %>  </div>
+                        <div class="bg-gray-600 rounded-full w-16 h-16 flex-shrink-0 bg-center bg-cover" style="background-image: url('<%= profileInfo.profileImageEncoded || `/assets/images/defaultProfileImage.jpg` %>')">
+                        </div>
+                        <div class="text-lg font-bold text-gray-500 text-center flex-1">
+                            <%= profileInfo.name %> </div>
                     </div>
                     <div class="w-full h-0.5 bg-yellow-200 mt-5 rounded-full"></div>
                 </div>
@@ -22,7 +24,9 @@
                     <div>
                         <div class="flex justify-between w-full">
                             <div class="clr-secondary font-semibold text-lg">Quizzes attended:</div>
-                            <div class="clr-primary font-semibold text-lg"><%= profileInfo.showStats ? profileInfo.quizzesAttended : 0 %> </div>
+                            <div class="clr-primary font-semibold text-lg">
+                                <%= profileInfo.showStats ? profileInfo.quizzesAttended : 0 %>
+                            </div>
                         </div>
                         <div class="w-full h-0.5 bg-gray-500"></div>
                     </div>
@@ -30,7 +34,8 @@
                     <div>
                         <div class="flex justify-between w-full">
                             <div class="clr-secondary font-semibold text-lg">Quizzes made:</div>
-                            <div class="clr-primary font-semibold text-lg"><%= profileInfo.showQuizzes ? quizzes.length : 0 %> </div>
+                            <div class="clr-primary font-semibold text-lg">
+                                <%= profileInfo.showQuizzes ? quizzes.length : 0 %> </div>
                         </div>
                         <div class="w-full h-0.5 bg-gray-500"></div>
                     </div>
@@ -38,12 +43,14 @@
                     <div>
                         <div class="flex justify-between w-full">
                             <div class="clr-secondary font-semibold text-lg">Overall score:</div>
-                            <div class="clr-primary font-semibold text-lg"><%= !profileInfo.showStats ? 'N/A' : profileInfo.overallScore === 'N/A' ? profileInfo.overallScore : profileInfo.overallScore + '%' %> </div>
+                            <div class="clr-primary font-semibold text-lg">
+                                <%= !profileInfo.showStats ? 'N/A' : profileInfo.overallScore === 'N/A' ? profileInfo.overallScore : profileInfo.overallScore + '%' %>
+                            </div>
                         </div>
                         <div class="w-full h-0.5 bg-gray-500"></div>
                     </div>
-                    
-                </div>  
+
+                </div>
                 <div class="w-full">
                     <div class="w-full h-0.5 bg-yellow-200 mb-5 rounded-full"></div>
                 </div>
@@ -52,28 +59,32 @@
             <div class="flex-1 flex flex-col gap-y-12">
                 <% if (quizzes.length) { %>
 
-                    <div class="grid grid-cols-3 w-full gap-10">
-                    
-                        <% quizzes.forEach(quiz => { %>
-    
-                            <div class="quiz rounded-2xl h-64 bg-white flex flex-col shadow-lg">
-                                <div class="bg-center bg-no-repeat bg-cover h-2/5" style="border-top-left-radius: 16px; border-top-right-radius: 16px; background-image: url('<%= quiz.imageEncoded %>');"></div>
-                                <div class="p-3 pt-2 flex flex-col justify-between flex-1">
-                                    <div class="quiz-title text-xl font-semibold text-gray-700"><%= shortenText(quiz.title) %></div>
-                                    <div class="quiz-description text-xs font-medium text-gray-500 break-words"><%= shortenText(quiz.description) %></div>
-                                    <div class="w-full">
-                                        <a href="/quiz/play/<%= quiz._id %>" class="block w-full bg-primary text-center text-white font-semibold text-lg flex-1 rounded-lg transition-opacity hover:opacity-90">Play</a>
-                                    </div>
-                                </div>
+                <div class="grid grid-cols-3 w-full gap-10">
+
+                    <% quizzes.forEach(quiz => { %>
+
+                    <div class="quiz rounded-2xl h-64 bg-white flex flex-col shadow-lg">
+                        <div class="bg-center bg-no-repeat bg-cover h-2/5" style="border-top-left-radius: 16px; border-top-right-radius: 16px; background-image: url('<%= quiz.imageEncoded %>');">
+                        </div>
+                        <div class="p-3 pt-2 flex flex-col justify-between flex-1">
+                            <div class="quiz-title text-xl font-semibold text-gray-700">
+                                <%= shortenText(quiz.title) %></div>
+                            <div class="quiz-description text-xs font-medium text-gray-500 break-words">
+                                <%= shortenText(quiz.description) %></div>
+                            <div class="w-full">
+                                <a href="/quiz/play/<%= quiz._id %>" class="block w-full bg-primary text-center text-white font-semibold text-lg flex-1 rounded-lg transition-opacity hover:opacity-90">Play</a>
                             </div>
-    
-                        <% }) %>
+                        </div>
                     </div>
 
-                <% } else { %>  
-                    <div class="text-center text-xl border-2 bg-gray-300 border-gray-600 rounded-lg font-semibold text-gray-500 flex-1 grid place-items-center">This user doesn't have any quizzes yet</div>
-                <% } %> 
-                
+                    <% }) %>
+                </div>
+
+                <% } else { %>
+                <div class="text-center text-xl border-2 bg-gray-300 border-gray-600 rounded-lg font-semibold text-gray-500 flex-1 grid place-items-center">
+                    This user doesn't have any quizzes yet</div>
+                <% } %>
+
             </div>
         </div>
     </section>

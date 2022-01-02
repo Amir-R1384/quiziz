@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 const { isEmail } = require('validator')
-const { validateBase64, hash, validateForBadWords, generateSalt } = require('../controllers/functions')
+const {
+    validateBase64,
+    hash,
+    validateForBadWords,
+    generateSalt
+} = require('../controllers/functions')
 
 const userSchema = new mongoose.Schema({
     name: {

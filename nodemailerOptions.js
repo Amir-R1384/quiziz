@@ -1,11 +1,10 @@
 const ejs = require('ejs')
 const fs = require('fs')
 
-module.exports = (receiverEmail) =>  {
-    
+module.exports = receiverEmail => {
     const template = fs.readFileSync('./views/changePassword.email.ejs').toString()
     const mailContent = ejs.render(template, { email: receiverEmail })
-    
+
     return {
         transport: {
             service: process.env.MAIL_SERVICE,
@@ -17,7 +16,7 @@ module.exports = (receiverEmail) =>  {
                 rejectUnauthorized: false
             }
         },
-    
+
         emailOptions: {
             from: process.env.MAIL_USER,
             to: receiverEmail,

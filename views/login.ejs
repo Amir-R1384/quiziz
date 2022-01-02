@@ -12,9 +12,10 @@
                 <input class="w-full border-b-2 border-primary focus:border-gray-900 focus:outline-none focus:bg-gray-100 focus:duration-200 transition  pb-1 my-1 rounded-t-md text-lg px-2" type="password" name="password" id="password" placeholder="Enter you password">
                 <div class="error-div text-red-500" data-for="password"></div>
             </div>
-            <a href="/forgotPassword" class="text-gray-400 text-center underline cursor-pointer hover:text-gray-500 relative top-10">Forgot password?</a>
+            <a href="/forgotPassword" class="text-gray-400 text-center underline cursor-pointer hover:text-gray-500 relative top-10">Forgot
+                password?</a>
         </div>
-        
+
         <button id="submitBtn" class="button button-secondary w-full hover:opacity-95 transition-all">Login</button>
     </form>
     <script src="/scripts/auth.js"></script>
@@ -31,7 +32,7 @@
         form.addEventListener("keydown", e => {
             if (e.keyCode == 13) e.preventDefault()
         })
-        
+
         submitBtn.addEventListener("click", async e => {
             e.preventDefault()
 
@@ -50,13 +51,13 @@
                     body: JSON.stringify({
                         email: email.value,
                         password: password.value
-                    }) 
+                    })
                 })
-                
+
                 if (!res.ok) {
                     const { errors } = await res.json()
                     if (!errors) return console.error(res.statusText)
-                    
+
                     for (let errorType in errors) {
                         const input = document.querySelector(`input[id=${errorType}]`)
                         const errorDiv = document.querySelector(`.error-div[data-for=${errorType}]`)
@@ -68,13 +69,13 @@
                     try {
                         location.assign(route)
                     }
-                    catch(err) {
+                    catch (err) {
                         console.error(err)
                         location.assign("/")
                     }
                 }
             }
-            catch(err) {
+            catch (err) {
                 console.error(err)
             }
         })

@@ -10,7 +10,9 @@ window.addEventListener('beforeunload', cancelQuiz)
 skipQuestionBtn.addEventListener('mouseup', () => answerQuestion(null))
 cancelBtn.addEventListener('mouseup', cancelQuiz)
 returnHomeBtn.addEventListener('mouseup', () => location.assign('/'))
-document.querySelectorAll('.rating-star').forEach(star => star.addEventListener('mouseup', rateQuiz))
+document
+    .querySelectorAll('.rating-star')
+    .forEach(star => star.addEventListener('mouseup', rateQuiz))
 /* eslint-disable no-undef */
 
 // * Setup
@@ -26,14 +28,19 @@ function startQuiz() {
 }
 
 function numerateRatingStars() {
-    document.querySelectorAll('.rating-star').forEach((star, i) => star.setAttribute('data-index', i))
+    document
+        .querySelectorAll('.rating-star')
+        .forEach((star, i) => star.setAttribute('data-index', i))
 }
 
 async function nextQuestion() {
-
     // Hover effect on the buttons
-    document.querySelectorAll('.question-button').forEach(button => button.classList.remove('selected'))
-    const currentQuestionButton = document.querySelector(`.question-button[data-index='${questionIndex}']`)
+    document
+        .querySelectorAll('.question-button')
+        .forEach(button => button.classList.remove('selected'))
+    const currentQuestionButton = document.querySelector(
+        `.question-button[data-index='${questionIndex}']`
+    )
     currentQuestionButton.classList.add('selected')
 
     // The question title and board
@@ -42,35 +49,34 @@ async function nextQuestion() {
     questionTitle.innerText = title
     questionBoard.innerHTML = ''
 
-    switch (type) {    
-    case 'true/false': {
+    switch (type) {
+        case 'true/false': {
+            const designElement = await fetchComponent(
+                '/components/true-false/true-false-design.html'
+            )
 
-        const designElement = await fetchComponent('/components/true-false/true-false-design.html')
+            for (let i = 0; i < 2; i++) {
+                const button = designElement.children[i]
 
-        for (let i=0; i<2; i++) {
-            const button = designElement.children[i]
+                // Styling
+                button.style.cursor = 'pointer'
+                button.addEventListener('mouseover', () => (button.style.opacity = 0.9))
+                button.addEventListener('mouseout', () => (button.style.opacity = 1))
+                button.style.transition = 'opacity 0.2s'
 
-            // Styling
-            button.style.cursor = 'pointer'
-            button.addEventListener('mouseover', () => button.style.opacity = 0.9)
-            button.addEventListener('mouseout', () => button.style.opacity = 1)
-            button.style.transition = 'opacity 0.2s'
+                // The event listener for answering the question
+                button.addEventListener('mouseup', () => {
+                    const valueString = button.getAttribute('data-value')
+                    const valueBoolean = valueString === 'true'
+                    answerQuestion(valueBoolean)
+                })
+            }
 
-            // The event listener for answering the question
-            button.addEventListener('mouseup', () => {
-                const valueString = button.getAttribute('data-value')
-                const valueBoolean = valueString === 'true'
-                answerQuestion(valueBoolean)
-            })
-
+            questionBoard.appendChild(designElement)
+            break
         }
-
-        questionBoard.appendChild(designElement)
-        break
-
-    }
-    default:
-        throw new Error('Invalid question type')
+        default:
+            throw new Error('Invalid question type')
     }
 }
 
@@ -85,16 +91,16 @@ function answerQuestion(answer) {
     }
 }
 
-async function submitQuiz() { 
-
-    const res = await fetch(`/quiz/submit/${quizId}`, { // quizId is gotten from the ejs file
+async function submitQuiz() {
+    const res = await fetch(`/quiz/submit/${quizId}`, {
+        // quizId is gotten from the ejs file
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(answers)
     })
-    
+
     if (res.ok) {
         const { score } = await res.json()
         showScorePage(score)
@@ -105,22 +111,22 @@ async function submitQuiz() {
 
 function showScorePage(score) {
     scoreWrapper.classList.remove('hidden')
-    
+
     scoreNumDiv.innerText = score + '%'
 
     // For the ring
     const ringRadius = 65
-    const scoreInRadian = (100-score) * 360 / 100 * Math.PI / 180
-    setTimeout(() => progressRing.style.strokeDashoffset = ringRadius * scoreInRadian, 100)
+    const scoreInRadian = ((((100 - score) * 360) / 100) * Math.PI) / 180
+    setTimeout(() => (progressRing.style.strokeDashoffset = ringRadius * scoreInRadian), 100)
 }
 
 function cancelQuiz() {
     if (!answers.length) return location.assign('/')
-    
+
     const wantsToQuit = confirm('Are you sure you want to quit? All your progress will be lost.')
     if (wantsToQuit) {
         location.assign('/')
-    } 
+    }
 }
 
 async function rateQuiz() {
@@ -129,7 +135,7 @@ async function rateQuiz() {
     const stars = document.querySelectorAll('.rating-star')
     const selectedStarsNum = document.querySelectorAll('.rating-star.selected').length
     let rating
-    
+
     if (currentIndex == selectedStarsNum - 1) {
         stars.forEach(star => star.classList.remove('selected'))
         rating = 0

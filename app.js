@@ -20,11 +20,11 @@ app.set('view engine', 'ejs')
 app.set('layout', 'layouts/mainLayout.ejs')
 app.use(expressEjsLayouts)
 app.use(express.static('./public'))
-app.use(express.urlencoded({extended: true, limit: '1mb'}))
-app.use(express.json({limit: '1mb'}))
+app.use(express.urlencoded({ extended: true, limit: '1mb' }))
+app.use(express.json({ limit: '1mb' }))
 app.use(cookieParser())
 
-app.get('/', checkUser, (req, res) => res.render('index', {route:'/'}))
+app.get('/', checkUser, (req, res) => res.render('index', { route: '/' }))
 app.use(authRoutes)
 app.use('/dashboard', deashboardRoutes)
 app.use('/quiz', quizRoutes)
@@ -36,7 +36,10 @@ app.use((req, res) => res.status(404).render('error', errorOptions[404]))
 
 // Database connection
 const { DB_NAME, DB_USERNAME, DB_PASSWORD } = process.env
-mongoose.connect(`mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@production.zedy7.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`)
-    .then(() => {       
+mongoose
+    .connect(
+        `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@production.zedy7.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
+    )
+    .then(() => {
         app.listen(process.env.port || 3000, () => console.log('Listening for requests'))
     })

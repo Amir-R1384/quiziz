@@ -1,12 +1,12 @@
 // eslint-disable-next-line no-unused-vars
 function boldOut(el) {
     const originalFontWeight = window.getComputedStyle(el).getPropertyValue('font-weight')
-    el.style.fontWeight = Number(originalFontWeight) + 200 
+    el.style.fontWeight = Number(originalFontWeight) + 200
 }
 
 // eslint-disable-next-line no-unused-vars
 function stretchToBrowserHeight(el) {
-    const {top} = el.getBoundingClientRect()
+    const { top } = el.getBoundingClientRect()
     el.style.height = `${window.innerHeight - top}px`
 }
 
@@ -34,7 +34,8 @@ async function fetchComponent(path) {
 
         parent.innerHTML = componentHtml
 
-        const componentOrComponents = parent.children.length === 1 ? parent.children[0] : parent.children
+        const componentOrComponents =
+            parent.children.length === 1 ? parent.children[0] : parent.children
 
         return componentOrComponents
     } catch (err) {
@@ -46,7 +47,7 @@ async function fetchComponent(path) {
 // eslint-disable-next-line no-unused-vars
 function shortenText(text, length) {
     if (text.length > length) {
-        return text.slice(0,length).split(' ').slice(0,-1).join(' ') + '...'
+        return text.slice(0, length).split(' ').slice(0, -1).join(' ') + '...'
     }
     return text
 }

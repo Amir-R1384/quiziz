@@ -24,14 +24,12 @@ module.exports.dashboard_get = async (req, res) => {
 
         res.render('dashboard', {
             layout: 'layouts/dashboardLayout',
-            title: `Dashboard (${profileInfo.name})`, 
+            title: `Dashboard (${profileInfo.name})`,
             quizzes,
             profileInfo,
             friends
         })
-    }
-
-    catch(err) {
+    } catch (err) {
         console.error(err)
         res.status(500).render('error', errorOptions[500])
     }
