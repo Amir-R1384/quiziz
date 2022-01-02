@@ -12,7 +12,7 @@ function stretchToBrowserHeight(el) {
 
 // eslint-disable-next-line no-unused-vars
 async function displayErrorPage(code) {
-    const supportedErrorCodes = new Set([400, 500])
+    const supportedErrorCodes = new Set([400, 500, 404, 403])
 
     if (!supportedErrorCodes.has(code)) {
         code = 'error'

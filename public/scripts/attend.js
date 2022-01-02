@@ -1,5 +1,4 @@
 const selects = document.querySelectorAll('select')
-const quizMenuBtns = document.querySelectorAll('.quizMenuBtn')
 
 let sharedWithMe = false
 
@@ -10,24 +9,6 @@ searchInp.addEventListener('keydown', e => e.key === 'Enter' ? search(false) : n
 loadMoreBtn.addEventListener('mouseup', () => search(true))
 sharedWithMeToggle.addEventListener('mouseup', toggleSharedWithMeAndSearch)
 /* eslint-disable no-undef */
-
-quizMenuBtns.forEach(btn => {
-    btn.addEventListener('mouseup', () => {
-        const quizMenu = btn.querySelector('.quiz-menu') 
-
-        if (quizMenu.classList.contains('hidden')) {
-
-            quizMenu.classList.remove('hidden')
-            quizMenu.classList.add('flex')
-
-        } else {
-
-            quizMenu.classList.remove('flex')
-            quizMenu.classList.add('hidden')
-
-        }
-    })
-})
 
 function toggleSharedWithMeAndSearch() {
     sharedWithMeToggle.classList.toggle('active')
@@ -51,26 +32,76 @@ async function search(loading=false) {
     if (!loading) quizWrapper.innerHTML = ''
 
     quizzes.forEach(quiz => {
-        quizWrapper.innerHTML += 
-        `<div data-id ="${quiz._id}" data-keywords="${quiz.keywords.join(' ')}" class="quiz rounded-2xl h-64 bg-white flex flex-col shadow-lg">
-            <div class="bg-center bg-no-repeat bg-cover h-2/5" style="border-top-left-radius: 16px; border-top-right-radius: 16px; background-image: url('${quiz.imageEncoded}');"></div>
-                <div class="p-3 pt-2 flex flex-col justify-between flex-1">
-                    <div class="quiz-title text-xl font-semibold text-gray-700">${shortenText(quiz.title, 45)}</div>
-                    <div class="quiz-description text-xs font-medium text-gray-500 break-words">${shortenText(quiz.description, 60)}</div>
-                    <div class="flex w-full justify-between gap-x-2">
-                    <a href="/quiz/play/${quiz._id}" class="bg-primary text-center text-white font-semibold text-lg flex-1 rounded-lg transition-opacity hover:opacity-90">Play</a>
-                    <button class="quizMenuBtn relative">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 transition-colors hover:bg-gray-300 rounded-lg cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                        </svg>
-                        <div class="quiz-menu absolute w-28 bottom-full -mb-7 mr-1 right-full bg-gray-600 text-white rounded-lg hidden flex-col border-2 border-gray-700" style="box-shadow: 0 0 10px 1px rgba(0,0,0,0.5);">
-                            <div class="learnMorebtn text-sm font-medium text-white text-left p-3 transition-colors hover:bg-gray-700 py-1">Learn more</div>
-                        </div>
-                    </button>
+
+        if (sharedWithMe) {
+
+            quizWrapper.innerHTML +=
+            `<div data-id ="${quiz._id}" data-keywords="${quiz.keywords.join(' ')}" class="quiz rounded-2xl h-64 bg-white flex flex-col shadow-lg">
+                <div class="bg-center bg-no-repeat bg-cover h-2/5" style="border-top-left-radius: 16px; border-top-right-radius: 16px; background-image: url('${quiz.imageEncoded}');"></div>
+                    <div class="p-3 pt-2 flex flex-col justify-between flex-1">
+                        <div class="quiz-title text-xl font-semibold text-gray-700">${shortenText(quiz.title, 45)}</div>
+                        <div class="quiz-description text-xs font-medium text-gray-500 break-words">${shortenText(quiz.description, 60)}</div>
+                        <div class="flex w-full justify-between gap-x-2">
+                        <a href="/quiz/play/${quiz._id}" class="bg-primary text-center text-white font-semibold text-lg flex-1 rounded-lg transition-opacity hover:opacity-90">Play</a>
+                        <button class="quizMenuBtn relative">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 transition-colors hover:bg-gray-300 rounded-lg cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                            </svg>
+                            <div class="quiz-menu absolute bottom-full -mb-7 mr-1 right-full  bg-gray-600 text-white rounded-lg hidden flex-col border-2 border-gray-700 overflow-hidden" style="box-shadow: 0 0 10px 1px rgba(0,0,0,0.5);">
+                                <div data-quiz-id ="${quiz._id}" class="removeSharedQuizBtn text-sm font-medium bg-red-500 text-white text-left px-3 transition-colors hover:bg-red-600 py-1">Remove</div>
+                            </div>
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </div>`
+            </div>`
+
+        } else {
+
+            quizWrapper.innerHTML +=
+            `<div data-id ="${quiz._id}" data-keywords="${quiz.keywords.join(' ')}" class="quiz rounded-2xl h-64 bg-white flex flex-col shadow-lg">
+                <div class="bg-center bg-no-repeat bg-cover h-2/5" style="border-top-left-radius: 16px; border-top-right-radius: 16px; background-image: url('${quiz.imageEncoded}');"></div>
+                    <div class="p-3 pt-2 flex flex-col justify-between flex-1">
+                        <div class="quiz-title text-xl font-semibold text-gray-700">${shortenText(quiz.title, 45)}</div>
+                        <div class="quiz-description text-xs font-medium text-gray-500 break-words">${shortenText(quiz.description, 60)}</div>
+                        <div class="w-full">
+                        <a href="/quiz/play/${quiz._id}" class="block w-full bg-primary text-center text-white font-semibold text-lg flex-1 rounded-lg transition-opacity hover:opacity-90">Play</a>
+                    </div>
+                </div>
+            </div>`
+        }
     })
+
+    if (sharedWithMe) {
+        const quizMenuBtns = document.querySelectorAll('.quizMenuBtn')
+        const removeSharedQuizBtns = document.querySelectorAll('.removeSharedQuizBtn')
+        
+        quizMenuBtns.forEach(btn => {
+            btn.addEventListener('mouseup', () => {
+                const quizMenu = btn.querySelector('.quiz-menu') 
+        
+                if (quizMenu.classList.contains('hidden')) {
+        
+                    quizMenu.classList.remove('hidden')
+                    quizMenu.classList.add('flex')
+        
+                } else {
+        
+                    quizMenu.classList.remove('flex')
+                    quizMenu.classList.add('hidden')
+        
+                }
+            })
+        })
+
+        removeSharedQuizBtns.forEach(btn => {
+            btn.addEventListener('mouseup', () => {
+                const quizId = btn.getAttribute('data-quiz-id')
+
+                removeSharedQuiz(quizId)
+            })
+        })
+        
+    }
 
     if (quizzes.length) {
         endMessage.classList.add('hidden')
@@ -80,4 +111,20 @@ async function search(loading=false) {
         endMessage.classList.remove('hidden')
         loadMore.classList.add('hidden')
     }
+}
+
+async function removeSharedQuiz(quizId) {
+    const res = await fetch('/quiz/attend/sharedQuiz', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ quizId })
+    })
+
+    if (!res.ok)
+        return displayErrorPage(res.status)
+
+    const removedQuiz = document.querySelector(`.quiz[data-id="${quizId}"]`)
+    quizWrapper.removeChild(removedQuiz)
 }

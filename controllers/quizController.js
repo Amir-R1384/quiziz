@@ -274,3 +274,19 @@ module.exports.shareQuiz_post = async (req, res) => {
         res.status(500).end()
     }
 }
+
+module.exports.removeSharedQuiz_delete = async (req, res) => {
+    try {
+        const userId = getUserId(req.cookies.jwt)
+        const { quizId } = req.body
+
+        const { sharedQuizzes } = await User.findById(userId)
+        sharedQuizzes.splice(quizId, 1)
+        await User.findByIdAndUpdate(userId, { sharedQuizzes })
+
+        res.status(200).end()
+    } catch (err) {
+        console.error(err)
+        res.sttaus(500).end()
+    }
+}
