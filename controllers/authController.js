@@ -3,6 +3,9 @@ const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
 const getMailOptions = require('../nodemailerOptions')
 const { comparePasswords } = require('./functions')
+const PassResetId = require('../models/PassResetId')
+const mongoose = require('mongoose')
+const { errorOptions } = require('../appData')
 
 module.exports.signup_get = (req, res) => {
     res.render('signup', { layout: 'layouts/blankLayout' })
@@ -75,12 +78,14 @@ module.exports.forgotPassword_post = async (req, res) => {
         if (!(await User.exists({ email }))) {
             return res.status(400).json({
                 inputs: {
-                    email: 'There is not user with this email.'
+                    email: 'There is no user with this email.'
                 }
             })
         }
 
-        await sendEmail(email)
+        const { _id: passResetId } = await PassResetId.create({ userEmail: email })
+
+        await sendEmail(email, passResetId)
 
         res.status(200).end()
     } catch (err) {
@@ -89,10 +94,22 @@ module.exports.forgotPassword_post = async (req, res) => {
     }
 }
 
-module.exports.changePassword_get = (req, res) => {
+module.exports.changePassword_get = async (req, res) => {
+    const { id: passResetId } = req.params
+
+    if (
+        !mongoose.Types.ObjectId.isValid(passResetId) ||
+        !(await PassResetId.exists({ _id: passResetId }))
+    ) {
+        return res.status(401).render('error', errorOptions[401])
+    }
+
+    const { userEmail } = await PassResetId.findById(passResetId)
+
     res.render('changePassword', {
         title: 'Reset password',
-        layout: 'layouts/blankLayout'
+        layout: 'layouts/blankLayout',
+        userEmail
     })
 }
 
@@ -115,8 +132,8 @@ module.exports.changePassword_post = async (req, res) => {
     }
 }
 
-async function sendEmail(reciever) {
-    const mailOptions = getMailOptions(reciever)
+async function sendEmail(reciever, PassResetId) {
+    const mailOptions = getMailOptions(reciever, PassResetId)
     const { transport, emailOptions } = mailOptions
 
     const transporter = nodemailer.createTransport(transport)

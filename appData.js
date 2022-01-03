@@ -28,6 +28,11 @@ module.exports = {
             layout,
             title: 'Forbidden',
             errorMessage: '403 FORBIDDEN'
+        },
+        401: {
+            layout,
+            title: 'Unauthorized',
+            errorMessage: '401 UNAUTHORIZED'
         }
     }
 }

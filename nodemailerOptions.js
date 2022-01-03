@@ -1,9 +1,9 @@
 const ejs = require('ejs')
 const fs = require('fs')
 
-module.exports = receiverEmail => {
+module.exports = (receiverEmail, passResetId) => {
     const template = fs.readFileSync('./views/changePassword.email.ejs').toString()
-    const mailContent = ejs.render(template, { email: receiverEmail })
+    const mailContent = ejs.render(template, { passResetId })
 
     return {
         transport: {
