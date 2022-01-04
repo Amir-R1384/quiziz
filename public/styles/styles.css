@@ -81,3 +81,17 @@ section {
 .button-filled {
     @apply font-semibold text-white transition-opacity shadow-md button hover:opacity-90;
 }
+
+.loader {
+    @apply w-16 h-16 border-gray-200 rounded-full border-6 border-t-primary animate-rotate;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate((0deg));
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

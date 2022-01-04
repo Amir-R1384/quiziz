@@ -16,6 +16,11 @@ function toggleSharedWithMeAndSearch() {
 }
 
 async function search(loading = false) {
+    if (!loading) quizWrapper.innerHTML = ''
+
+    // Showing the loading animation
+    document.querySelector('.loader').classList.remove('hidden')
+
     const rating = ratingSelect.value
     const search = searchInp.value
     sharedWithMe = sharedWithMeToggle.classList.contains('active')
@@ -29,9 +34,10 @@ async function search(loading = false) {
 
     if (!res.ok) return displayErrorPage(res.status)
 
-    const quizzes = await res.json()
+    // Hiding the loader
+    document.querySelector('.loader').classList.add('hidden')
 
-    if (!loading) quizWrapper.innerHTML = ''
+    const quizzes = await res.json()
 
     quizzes.forEach(quiz => {
         if (sharedWithMe) {
