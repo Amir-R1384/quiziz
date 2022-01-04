@@ -1,28 +1,27 @@
-<body class="bg-primary h-screen flex items-center justify-center">
-    <form class="bg-light p-5 w-1/3 h-5/6 rounded-2xl form-shadow flex flex-col justify-between items-center">
-        <h1 class="font-bold text-2xl clr-primary">Sign Up</h1>
+<body class="flex items-center justify-center h-screen bg-primary">
+    <form class="flex flex-col items-center justify-between w-1/3 p-5 bg-white h-5/6 rounded-2xl form-shadow">
+        <h1 class="text-2xl font-bold text-primary">Sign Up</h1>
         <div class="flex flex-col justify-around w-full gap-y-10">
             <div>
-                <label for="name" class="clr-secondary">Name</label>
-                <input class="w-full border-b-2 border-primary focus:border-gray-900 focus:outline-none focus:bg-gray-100 focus:duration-200 transition pb-1 my-1 rounded-t-md text-lg px-2" type="text" name="name" id="name" placeholder="Ex: John Smith">
-                <div class="error-div text-red-500" data-for="name"></div>
+                <label for="name" class="text-secondary">Name</label>
+                <input class="w-full px-2 pb-1 my-1 text-lg transition border-b-2 border-primary focus:border-gray-900 focus:outline-none focus:bg-gray-100 focus:duration-200 rounded-t-md" type="text" name="name" id="name" placeholder="Ex: John Smith">
+                <div class="text-red-500 error-div" data-for="name"></div>
             </div>
             <div>
-                <label for="email" class="clr-secondary">Email</label>
-                <input class="w-full border-b-2 border-primary focus:border-gray-900 focus:outline-none focus:bg-gray-100 focus:duration-200 transition pb-1 my-1 rounded-t-md text-lg px-2" type="email" name="email" id="email" placeholder="Ex: john.smith@example.com">
-                <div class="error-div text-red-500" data-for="email"></div>
+                <label for="email" class="text-secondary">Email</label>
+                <input class="w-full px-2 pb-1 my-1 text-lg transition border-b-2 border-primary focus:border-gray-900 focus:outline-none focus:bg-gray-100 focus:duration-200 rounded-t-md" type="email" name="email" id="email" placeholder="Ex: john.smith@example.com">
+                <div class="text-red-500 error-div" data-for="email"></div>
             </div>
             <div>
-                <label for="password" class="clr-secondary">Password</label>
-                <input class="w-full border-b-2 border-primary focus:border-gray-900 focus:outline-none focus:bg-gray-100 focus:duration-200 transition  pb-1 my-1 rounded-t-md text-lg px-2" type="password" name="password" id="password" placeholder="6 characters or more">
-                <div class="error-div text-red-500" data-for="password"></div>
+                <label for="password" class="text-secondary">Password</label>
+                <input class="w-full px-2 pb-1 my-1 text-lg transition border-b-2 border-primary focus:border-gray-900 focus:outline-none focus:bg-gray-100 focus:duration-200 rounded-t-md" type="password" name="password" id="password" placeholder="6 characters or more">
+                <div class="text-red-500 error-div" data-for="password"></div>
             </div>
         </div>
-        <button id="submitBtn" class="button button-secondary w-full hover:opacity-95 transition-all">Sign Up</button>
+        <button id="submitBtn" class="w-full button-filled bg-secondary">Sign Up</button>
     </form>
     <script src="/scripts/auth.js"></script>
     <script defer>
-
         const inputsOrder = ["name", "email", "password"]
         const submitBtn = document.getElementById("submitBtn")
         const form = document.querySelector("form")
@@ -42,7 +41,11 @@
             document.querySelectorAll(".error-div").forEach(div => div.textContent = "")
             document.querySelectorAll("input").forEach(div => div.classList.remove("input-error"))
 
-            const { name, email, password } = form
+            const {
+                name,
+                email,
+                password
+            } = form
 
             try {
                 const res = await fetch("/signup", {
@@ -58,7 +61,9 @@
                 })
 
                 if (!res.ok) {
-                    const { errors } = await res.json()
+                    const {
+                        errors
+                    } = await res.json()
                     if (!errors) return console.error(res.statusText)
 
                     for (let errorType in errors) {
@@ -70,8 +75,7 @@
                 } else {
                     location.assign("/")
                 }
-            }
-            catch (err) {
+            } catch (err) {
                 console.error(err)
             }
         })

@@ -7,35 +7,38 @@
             question.answer = undefined
     }) %>
     <script>
-        const quizId = <% - JSON.stringify(quiz._id) %>
-        const questions = <% - JSON.stringify(quiz.questions) %>
+        const quizId = <%- JSON.stringify(quiz._id) %>
+        const questions = <%- JSON.stringify(quiz.questions) %>
     </script>
     <script src="/scripts/playQuiz.js" defer></script>
 </head>
 
-<body class="bg-gray-200 h-screen bg-no-repeat bg-cover bg-center" style="background-image: linear-gradient(rgba(229, 231, 235, 0.8), rgba(229, 231, 235, 0.8)), url('<%= quiz.imageEncoded %>');">
-    <header class="w-full px-8 py-4 bg-light drop-shadow-md">
-        <div class="wrapper flex items-center justify-between">
+<body class="h-screen bg-gray-200 bg-center bg-no-repeat bg-cover" style="background-image: linear-gradient(rgba(229, 231, 235, 0.8), rgba(229, 231, 235, 0.8)), url('<%= quiz.imageEncoded %>');">
+    <header class="w-full px-8 py-4 bg-white drop-shadow-md">
+        <div class="flex items-center justify-between wrapper">
             <div class="flex flex-col" style="min-width: 50%; max-width: 80%;">
-                <h1 class="clr-primary font-semibold text-2xl overflow-hidden"><%= quiz.title %>
+                <h1 class="overflow-hidden text-2xl font-semibold text-primary">
+                    <%= quiz.title %>
                 </h1>
-                <p class="text-sm text-gray-600">Made By <%= creatorName %> </p>
+                <p class="text-sm text-gray-600">Made By
+                    <%= creatorName %>
+                </p>
             </div>
             <div class="flex items-center gap-x-7">
 
-                <a href="/quiz/report/<%= quiz._id %>" class="text-red-500 font-medium">Report
+                <a href="/quiz/report/<%= quiz._id %>" class="text-red-500 button">Report
                     Quiz</a>
-                <button id="cancelBtn" class="button clr-light bg-red-500 text-md border-2 border-red-500 h-10 flex items-center hover:opacity-90 transition-opacity">Cancel</button>
+                <button id="cancelBtn" class="bg-red-500 button-filled">Cancel</button>
             </div>
         </div>
     </header>
     <main class="flex items-center fill-browser-height">
-        <div class="wrapper flex items-center h-full w-full">
-            <div class="w-full h-full pt-8 px-32 flex flex-col items-center">
-                <div class="bg-white w-full h-full rounded-lg p-4 flex flex-col" style="box-shadow: 0 0 10px 1px rgba(0,0,0,0.25);">
-                    <div class="w-full flex justify-between items-center gap-x-5">
-                        <div id="questionTitle" class="text-2xl text-gray-700 font-semibold mt-1" style="max-width: 80%;">One plus one is equal to 2</div>
-                        <button id="skipQuestionBtn" class="button bg-yellow-500 text-white hover:opacity-90 transition-opacity">Skip
+        <div class="flex items-center w-full h-full wrapper">
+            <div class="flex flex-col items-center w-full h-full px-32 pt-8">
+                <div class="flex flex-col w-full h-full p-4 bg-white rounded-lg" style="box-shadow: 0 0 10px 1px rgba(0,0,0,0.25);">
+                    <div class="flex items-center justify-between w-full gap-x-5">
+                        <div id="questionTitle" class="mt-1 text-2xl font-semibold text-gray-700" style="max-width: 80%;">One plus one is equal to 2</div>
+                        <button id="skipQuestionBtn" class="bg-yellow-500 button-filled">Skip
                             Question</button>
                     </div>
                     <div class="w-full h-0.5 bg-primary my-4"></div>
@@ -44,31 +47,32 @@
                     </div>
                 </div>
 
-                <div class="mt-8 h-28 flex bg-white gap-x-2" style="border-top-right-radius: 12px; border-top-left-radius: 12px; box-shadow: 0 0 10px 1px rgba(0,0,0,0.25);">
-                    <div id="questionsList" class="flex p-2 gap-x-2 items-center overflow-x-auto" style="max-width: 70vw;">
+                <div class="flex mt-8 bg-white h-28 gap-x-2" style="border-top-right-radius: 12px; border-top-left-radius: 12px; box-shadow: 0 0 10px 1px rgba(0,0,0,0.25);">
+                    <div id="questionsList" class="flex items-center p-2 overflow-x-auto gap-x-2" style="max-width: 70vw;">
                         <% quiz.questions.forEach((question, i) => { %>
-                        <div data-index="<%= i %>" class="question-button bg-gray-500 text-white text-2xl font-bold h-full px-3 flex items-center rounded-md cursor-default transition-colors">
-                            <%= i+1 %> </div>
+                        <div data-index="<%= i %>" class="flex items-center h-full px-3 text-2xl font-bold text-white transition-colors bg-gray-500 rounded-md cursor-default question-button">
+                            <%= i+1 %>
+                        </div>
                         <% }) %>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="scoreWrapper" class="absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-50 grid place-items-center hidden">
-            <div class="wrapper h-3/4 bg-white rounded-xl flex flex-col items-center py-5 px-20 gap-y-2 justify-around">
+        <div id="scoreWrapper" class="absolute top-0 left-0 grid hidden w-screen h-screen bg-black bg-opacity-50 place-items-center">
+            <div class="flex flex-col items-center justify-around px-20 py-5 bg-white wrapper h-3/4 rounded-xl gap-y-2">
                 <svg class="mb-2" height="150" width="150" style="transform: rotate(-90deg);">
-                    <circle id="progressRing" stroke="blue" stroke-width="10" fill="transparent" r="65" cx="75" cy="75" style="stroke: var(--clr-primary); stroke-dasharray: calc(65 * 3.14 * 2) calc(65 * 3.14 * 2); stroke-dashoffset: calc(65 * 3.14 * 2); stroke-linecap: round; transition: all 1s ease-in-out;" />
+                    <circle id="progressRing" class=" stroke-primary" stroke="blue" stroke-width="10" fill="transparent" r="65" cx="75" cy="75" style="stroke-dasharray: calc(65 * 3.14 * 2) calc(65 * 3.14 * 2); stroke-dashoffset: calc(65 * 3.14 * 2); stroke-linecap: round; transition: all 1s ease-in-out;" />
                 </svg>
-                <div class="text-4xl text-gray-600 font-semibold -mt-10">You scored <span id="scoreNumDiv" class="font-bold clr-primary">76%</span> </div>
-                <div class="text-lg font-regular text-gray-500">Rate this quiz</div>
-                <div id="rating" class="flex gap-x-1 -mt-12">
+                <div class="-mt-10 text-4xl font-semibold text-gray-600">You scored <span id="scoreNumDiv" class="font-bold text-primary">76%</span> </div>
+                <div class="text-lg text-gray-500 font-regular">Rate this quiz</div>
+                <div id="rating" class="flex -mt-12 gap-x-1">
                     <%- include('./partials/star.ejs') %>
                     <%- include('./partials/star.ejs') %>
                     <%- include('./partials/star.ejs') %>
                     <%- include('./partials/star.ejs') %>
                     <%- include('./partials/star.ejs') %>
                 </div>
-                <button id="returnHomeBtn" class="button bg-secondary text-white hover:opacity-90 transition-opacity shadow-md" style="padding-inline: 5rem;">Return home</button>
+                <button id="returnHomeBtn" class="px-10 button-filled bg-secondary">Return home</button>
             </div>
         </div>
     </main>

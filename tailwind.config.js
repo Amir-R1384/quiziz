@@ -1,12 +1,12 @@
 module.exports = {
-    mode: 'jit',
-    purge: ['./views/**/*.ejs', './public/**/*.html'],
-    darkMode: false, // or 'media' or 'class'
+    content: ['./views/**/*.ejs', './public/**/*.html'],
     theme: {
-        extend: {}
+        extend: {
+            colors: {
+                primary: '#25a55f',
+                secondary: '#0d6560'
+            }
+        }
     },
-    variants: {
-        extend: {}
-    },
-    plugins: []
+    important: true
 }

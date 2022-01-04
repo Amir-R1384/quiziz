@@ -3,79 +3,80 @@
 
 <head>
     <%- include("./partials/head.ejs") %>
+
     <script src="/scripts/createQuiz.js" defer></script>
     <script>
-        const editMode = <% - locals.editMode || false %>
-        const preSavedQuiz = <% - locals.quiz ? JSON.stringify(locals.quiz) : false %>
+        const editMode = <%= locals.editMode || false %>
+        const preSavedQuiz = <%- locals.quiz ? JSON.stringify(locals.quiz) : false %>
     </script>
 </head>
 
-<body class="bg-gray-200 h-screen">
-    <header class="w-full px-8 py-4 bg-light drop-shadow-md">
-        <div class="wrapper flex items-center justify-between">
+<body class="h-screen bg-gray-200">
+    <header class="w-full px-8 py-4 bg-white drop-shadow-md">
+        <div class="flex items-center justify-between wrapper">
             <div class="flex items-center gap-x-3" style="min-width: 50%;">
-                <input id="titleInp" data-storage-name="title" type="text" class="bg-gray-200 py-2 px-4 rounded-md text-lg clr-primary font-semibold w-full box-border h-10" placeholder="Write your title">
-                <button id="moreBtn" class="button border-gray-600 text-gray-700 border-2 text-md h-10 flex items-center hover:bg-gray-100">More</button>
+                <input id="titleInp" data-storage-name="title" type="text" class="box-border w-full h-10 px-4 py-2 text-lg font-semibold bg-gray-200 rounded-md text-primary" placeholder="Write your title">
+                <button id="moreBtn" class="text-gray-600 border-2 border-gray-600 button-outline">More</button>
             </div>
             <div class="flex items-center gap-x-3">
 
-                <div class="flex gap-x-2 items-center mr-6">
+                <div class="flex items-center mr-6 gap-x-2">
                     Public
-                    <div id="visibilityToggle" class="toggle flex items-center w-12 rounded-2xl bg-gray-400 cursor-pointer transition-colors" style="padding: 2px;">
-                        <div class="bg-white rounded-full w-5 h-5 transition-transform duration-300 ease-in-out">
+                    <div id="visibilityToggle" class="flex items-center w-12 transition-colors bg-gray-400 cursor-pointer toggle rounded-2xl" style="padding: 2px;">
+                        <div class="w-5 h-5 transition-transform duration-300 ease-in-out bg-white rounded-full">
                         </div>
                     </div>
                 </div>
 
-                <a href="/dashboard" class="button clr-light bg-red-500 text-md border-2 border-red-500 h-10 flex items-center hover:opacity-90 transition-opacity">Cencel</a>
-                <button id="saveBtn" class="button clr-light bg-primary text-md border-2 border-primary h-10 flex items-center hover:opacity-90 transition-opacity">Save</button>
+                <a href="/dashboard" class="bg-red-500 button-filled">Cencel</a>
+                <button id="saveBtn" class="button-filled bg-primary">Save</button>
             </div>
         </div>
     </header>
     <main class="flex items-center fill-browser-height">
-        <div class="wrapper flex items-center h-full w-full">
-            <div id="leftPanel" class=" pt-4 pr-4 h-full flex flex-col gap-y-4 bg-gray-100" style="box-shadow: 1px 0px 8px 0px rgba(0,0,0,0.2)">
-                <select id="questionTypeSelect" disabled class="ml-4 mb-3 p-1 border-b-2 border-gray-700 font-semibold text-gray-700 bg-transparent outline-none cursor-pointer disabled:cursor-not-allowed">
-                    <option value="default" class="bg-gray-800 text-white">Question Type
+        <div class="flex items-center w-full h-full wrapper">
+            <div id="leftPanel" class="flex flex-col h-full pt-4 pr-4 bg-gray-100 gap-y-4" style="box-shadow: 1px 0px 8px 0px rgba(0,0,0,0.2)">
+                <select id="questionTypeSelect" disabled class="p-1 mb-3 ml-4 font-semibold text-gray-700 bg-transparent border-b-2 border-gray-700 outline-none cursor-pointer disabled:cursor-not-allowed">
+                    <option value="default" class="text-white bg-gray-800">Question Type
                     </option>
-                    <option value="true/false" class="bg-gray-800 text-white">True/False
+                    <option value="true/false" class="text-white bg-gray-800">True/False
                     </option>
                 </select>
 
-                <div id="questionSetting" class="h-full border-t border-r border-gray-400 bg-gray-200 flex flex-col items-center gap-y-2 p-2" style="border-top-right-radius: 8px;"></div>
+                <div id="questionSetting" class="flex flex-col items-center h-full p-2 bg-gray-200 border-t border-r border-gray-400 gap-y-2" style="border-top-right-radius: 8px;"></div>
 
             </div>
-            <div class="w-full h-full pt-8 px-10 flex flex-col items-center">
-                <div class="bg-white w-full h-full rounded-lg p-4 flex flex-col gap-y-5" style="box-shadow: 0 0 10px 1px rgba(0,0,0,0.25);">
-                    <input id="questionTitleInp" disabled type="text" placeholder="Write your question" class="py-2 px-3 bg-gray-200 rounded-md font-semibold text-gray-700 disabled:cursor-not-allowed disabled:placeholder-transparent">
+            <div class="flex flex-col items-center w-full h-full px-10 pt-8">
+                <div class="flex flex-col w-full h-full p-4 bg-white rounded-lg gap-y-5" style="box-shadow: 0 0 10px 1px rgba(0,0,0,0.25);">
+                    <input id="questionTitleInp" disabled type="text" placeholder="Write your question" class="px-3 py-2 font-semibold text-gray-700 bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:placeholder-transparent">
                     <div id="questionBoard" class="w-full h-full px-12 py-5"></div>
                 </div>
 
-                <div class="mt-8 flex py-1 bg-white gap-x-2" style="border-top-right-radius: 12px; border-top-left-radius: 12px; box-shadow: 0 0 10px 1px rgba(0,0,0,0.25);">
-                    <div id="questionsList" class="flex py-1 pr-1 pl-3 gap-x-2 items-center overflow-x-auto" style="max-width: 70vw;">
+                <div class="flex py-1 mt-8 bg-white gap-x-2" style="border-top-right-radius: 12px; border-top-left-radius: 12px; box-shadow: 0 0 10px 1px rgba(0,0,0,0.25);">
+                    <div id="questionsList" class="flex items-center py-1 pl-3 pr-1 overflow-x-auto gap-x-2" style="max-width: 70vw;">
                     </div>
-                    <div class="px-3 py-1 flex flex-col justify-around gap-y-1 border-l border-gray-300">
+                    <div class="flex flex-col justify-around px-3 py-1 border-l border-gray-300 gap-y-1">
                         <div id="newQuestionBtn" class="rounded-full bg-primary grid place-items-center p-0.5 w-8 h-8 transition-colors hover:bg-green-500 cursor-pointer" style="box-shadow: 0 0 5px 1px rgba(0,0,0,0.2);"> <img src="/assets/icons/plus.svg" alt="New Question"> </div>
                         <div id="deleteQuestionBtn" class="rounded-full bg-red-500 grid place-items-center p-0.5 w-8 h-8 transition-colors hover:bg-red-400 cursor-pointer" style="box-shadow: 0 0 5px 1px rgba(0,0,0,0.2);"> <img src="/assets/icons/trash.svg" alt="New Question"> </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="moreContainer" class="absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-40 hidden">
-            <div id="more" class="absolute w-3/4 h-3/5 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-2xl px-5 py-3 overflow-auto max-w-screen-md max-h-96">
+        <div id="moreContainer" class="absolute top-0 left-0 hidden w-screen h-screen bg-black bg-opacity-40">
+            <div id="more" class="absolute w-3/4 max-w-screen-md px-5 py-3 overflow-auto -translate-x-1/2 -translate-y-1/2 bg-white shadow-2xl h-3/5 top-1/2 left-1/2 rounded-xl max-h-96">
                 <div class="flex justify-end">
-                    <img src="/assets/icons/close.svg" alt="close" id="closeBtn" class="self-end cursor-pointer mb-3">
+                    <img src="/assets/icons/close.svg" alt="close" id="closeBtn" class="self-end mb-3 cursor-pointer">
                 </div>
                 <label class="font-semibold text-gray-700" for="descriptionInp">Description</label>
-                <textarea class="block w-full py-2 px-3 bg-gray-200 rounded-md font-medium text-gray-700 resize-y mb-6" name="description" data-storage-name="description" id="descriptionInp" maxlength="100"></textarea>
+                <textarea class="block w-full px-3 py-2 mb-6 font-medium text-gray-700 bg-gray-200 rounded-md resize-y" name="description" data-storage-name="description" id="descriptionInp" maxlength="100"></textarea>
                 <label class="font-semibold text-gray-700" for="keywordsInp">Keywords</label>
-                <textarea class="block w-full py-2 px-3 bg-gray-200 rounded-md font-medium text-gray-700 resize-y h-10 mb-11" name="keywords" data-storage-name="keywords" id="keywordsInp"></textarea>
-                <div id="imgInpContainer" class="py-2 px-3 bg-gray-200 rounded-md font-medium text-gray-700 flex-1 grid place-items-center hover:bg-gray-300 transition-colors">
+                <textarea class="block w-full h-10 px-3 py-2 font-medium text-gray-700 bg-gray-200 rounded-md resize-y mb-11" name="keywords" data-storage-name="keywords" id="keywordsInp"></textarea>
+                <div id="imgInpContainer" class="grid flex-1 px-3 py-2 font-medium text-gray-700 transition-colors bg-gray-200 rounded-md place-items-center hover:bg-gray-300">
                     <div id="imgContainer" class="relative w-full p-1 cursor-pointer">
                         <label id="imageInpLabel" class="font-semibold text-gray-700 cursor-pointer" for="imageInp">Choose an image...</label>
-                        <input class="block overflow-hidden opacity-0 w-full h-full absolute top-0 left-0 cursor-pointer" onclick="this.value=null;" type="file" name="image" id="imageInp" accept="image/*"></input>
+                        <input class="absolute top-0 left-0 block w-full h-full overflow-hidden opacity-0 cursor-pointer" onclick="this.value=null;" type="file" name="image" id="imageInp" accept="image/*"></input>
                     </div>
-                    <button id="removeImgBtn" class=" mt-2 w-full p-2 bg-red-500 text-white font-semibold text-md rounded-md hover:bg-red-400 transition-colors duration-200 hidden">Remove
+                    <button id="removeImgBtn" class="hidden w-full p-2 mt-2 font-semibold text-white transition-colors duration-200 bg-red-500 rounded-md text-md hover:bg-red-400">Remove
                         image</button>
                 </div>
             </div>

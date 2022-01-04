@@ -1,22 +1,22 @@
 <body>
     <script defer src="/scripts/settings.js"></script>
-    <div id="updateMessage" class="w-full bg-blue-400 hidden">
-        <div class="wrapper w-full bg-blue-400  py-1 px-5 flex justify-between items-center">
-            <div class="text-white font-semibold">The settings were succesfuly updated :)</div>
+    <div id="updateMessage" class="hidden w-full bg-blue-400">
+        <div class="flex items-center justify-between w-full px-5 py-1 bg-blue-400 wrapper ">
+            <div class="font-semibold text-white">The settings were succesfuly updated :)</div>
             <button id="closeUpdateMessageBtn">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white rounded-md" fill="white" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white rounded-md" fill="white" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
         </div>
     </div>
-    <div class="wrapper flex px-32 py-10 gap-x-10">
+    <div class="flex px-32 py-10 wrapper gap-x-10">
         <div class="flex flex-col gap-y-3">
-            <a href="/settings/profile" id="profileBtn" class="tab-button text-center px-8 py-2 text-gray-800 font-medium text-xl rounded-md hover:bg-gray-300 transition-colors">Profile</a>
-            <a href="/settings/account" id="accountBtn" class="tab-button text-center px-8 py-2 text-gray-800 font-medium text-xl rounded-md hover:bg-gray-300 transition-colors">Account</a>
-            <a href="/settings/data" id="dataBtn" class="tab-button text-center px-8 py-2 text-gray-800 font-medium text-xl rounded-md hover:bg-gray-300 transition-colors">Data</a>
+            <a href="/settings/profile" id="profileBtn" class="px-8 py-2 text-xl font-medium text-center text-gray-800 transition-colors rounded-md tab-button hover:bg-gray-300">Profile</a>
+            <a href="/settings/account" id="accountBtn" class="px-8 py-2 text-xl font-medium text-center text-gray-800 transition-colors rounded-md tab-button hover:bg-gray-300">Account</a>
+            <a href="/settings/data" id="dataBtn" class="px-8 py-2 text-xl font-medium text-center text-gray-800 transition-colors rounded-md tab-button hover:bg-gray-300">Data</a>
         </div>
-        <div class="flex-1 bg-white rounded-lg px-5 pt-2 pb-10 shadow-md">
+        <div class="flex-1 px-5 pt-2 pb-10 bg-white rounded-lg shadow-md">
             <%- include(`partials/settings/${path}.ejs`) %>
         </div>
     </div>

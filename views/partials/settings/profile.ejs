@@ -1,30 +1,30 @@
-<div class="font-bold text-2xl text-gray-800">Visible profile</div>
+<div class="text-2xl font-bold text-gray-800">Visible profile</div>
 <div class="bg-primary rounded-full w-full h-0.5 mt-2 mb-10"></div>
 
 <form class="flex">
-    <div class="flex-1 flex flex-col gap-y-10">
+    <div class="flex flex-col flex-1 gap-y-10">
         <div>
-            <label for="nameInp" class="block text-lg text-gray-700 font-medium mb-2">Name</label>
+            <label for="nameInp" class="block mb-2 text-lg font-medium text-gray-700">Name</label>
             <input id="nameInp" type="text" value="<%= userInfo.name %>" class="block w-full px-2 py-1 bg-gray-100 border border-black rounded-md">
-            <div class="error-div text-red-500" data-for="name"></div>
+            <div class="text-red-500 error-div" data-for="name"></div>
         </div>
         <div>
-            <label for="emailInp" class="block text-lg text-gray-700 font-medium mb-2">Email</label>
+            <label for="emailInp" class="block mb-2 text-lg font-medium text-gray-700">Email</label>
             <input id="emailInp" type="email" value="<%= userInfo.email %>" class="block w-full px-2 py-1 bg-gray-100 border border-black rounded-md">
-            <div class="error-div text-red-500" data-for="email"></div>
+            <div class="text-red-500 error-div" data-for="email"></div>
         </div>
 
         <div>
-            <button onclick="saveProfile()" type="submit" id="saveSettingsBtn" class="bg-primary text-white font-medium text-xl py-1 px-5 rounded-md hover:opacity-90 transition-opacity shadow-sm">Save</button>
+            <button onclick="saveProfile()" type="submit" id="saveSettingsBtn" class="px-5 py-1 text-xl font-medium text-white transition-opacity rounded-md shadow-sm bg-primary hover:opacity-90">Save</button>
         </div>
 
     </div>
-    <div class="flex-1 flex justify-end">
-        <div class="w-40 h-40 rounded-full mr-12 bg-center bg-cover" style="background-image: url('<%= userInfo.profileImageEncoded || `/assets/images/defaultProfileImage.jpg` %>')">
+    <div class="flex justify-end flex-1">
+        <div class="w-40 h-40 mr-12 bg-center bg-cover rounded-full" style="background-image: url('<%= userInfo.profileImageEncoded || `/assets/images/defaultProfileImage.jpg` %>')">
             <input type="file" accept="image/*" id="imgInp" hidden>
-            <label for="imgInp" class="relative w-full h-full grid place-items-center text-white font-semibold rounded-full bg-primary opacity-0 hover:opacity-100 transition-opacity cursor-pointer duration-300">
+            <label for="imgInp" class="relative grid w-full h-full font-semibold text-white transition-opacity duration-300 rounded-full opacity-0 cursor-pointer place-items-center bg-primary hover:opacity-100">
                 Choose an image
-                <button id="removeImgBtn" class="absolute bottom-0 left-0 mb-1 px-2 py-1 text-center rounded-md bg-red-500 text-white text-xs font-medium">Remove
+                <button id="removeImgBtn" class="absolute bottom-0 left-0 px-2 py-1 mb-1 text-xs font-medium text-center text-white bg-red-500 rounded-md">Remove
                     Image</button>
             </label>
         </div>

@@ -1,105 +1,57 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @tailwind base;
-@tailwind components;
 @tailwind utilities;
-
-:root {
-    --clr-primary: #25a55f;
-    --clr-secondary: #0d6560;
-    --clr-light: white;
-    --clr-dark: #484a47;
-    --clr-info: #f7dd72;
-    --clr-blue: #00a1e4;
-    --clr-red: #e5625e;
-
-    --br-1: 10px;
-    --br-2: 20px;
-}
 
 body {
     font-family: 'Poppins', sans-serif;
 }
 
-@layer utilities {
-    .fill-browser-height {
-        content: '';
-    } /* It's there so that we don't get an error when building the css.*/
+code {
+    @apply px-1 bg-gray-200 rounded-sm !important;
+}
 
-    .bg-primary {
-        background-color: var(--clr-primary);
-    }
-    .bg-secondary {
-        background-color: var(--clr-secondary);
-    }
-    .bg-light {
-        background-color: var(--clr-light);
-    }
-    .bg-dark {
-        background-color: var(--clr-dark);
-    }
+section {
+    @apply px-8 overflow-y-hidden fill-browser-height !important;
+}
 
-    .clr-primary {
-        color: var(--clr-primary);
-    }
-    .clr-secondary {
-        color: var(--clr-secondary);
-    }
-    .clr-light {
-        color: var(--clr-light);
-    }
-    .clr-dark {
-        color: var(--clr-dark);
-    }
-
-    .border-primary {
-        border-color: var(--clr-primary);
-    }
-    .border-secondary {
-        border-color: var(--clr-secondary);
-    }
-    .border-light {
-        border-color: var(--clr-light);
-    }
-    .border-dark {
-        border-color: var(--clr-dark);
-    }
+.fill-browser-height {
+    content: '';
 }
 
 .question-button.selected {
-    @apply bg-gray-600;
+    @apply bg-gray-600 !important;
 }
 
 .true-false.selected {
-    @apply bg-primary text-white;
+    @apply text-white bg-primary !important;
 }
+
 .true-false.selected:hover {
-    @apply bg-primary;
+    @apply bg-primary !important;
 }
 
 .tab-button.selected {
-    @apply bg-primary text-white;
+    @apply text-white bg-primary !important;
 }
+
 .tab-button.selected:hover {
-    @apply bg-primary text-white;
+    @apply text-white bg-primary !important;
 }
 
 .toggle.active {
-    @apply bg-primary;
+    @apply bg-primary !important;
 }
+
 .toggle.active > * {
-    @apply translate-x-6;
+    @apply translate-x-6 !important;
 }
 
 .info.success {
-    @apply text-green-700;
+    @apply text-green-700 !important;
 }
 
 .rating-star.selected {
-    @apply text-yellow-500 fill-current;
-}
-
-code {
-    @apply px-1 bg-gray-200 rounded-sm;
+    @apply text-yellow-500 fill-current !important;
 }
 
 .form-shadow {
@@ -114,20 +66,18 @@ code {
     @apply max-w-screen-xl mx-auto;
 }
 
-section {
-    @apply fill-browser-height overflow-y-hidden px-8;
+.button {
+    @apply inline-flex items-center justify-center px-4 py-2 text-center rounded-md cursor-pointer;
 }
 
-.button {
-    @apply py-2 px-4 rounded-md font-semibold;
-}
-.button-primary {
-    @apply bg-primary clr-light;
-}
-.button-secondary {
-    @apply bg-secondary clr-light;
-}
 .button-outline {
-    border-color: var(--clr-light);
-    @apply border-2 rounded-md clr-light;
+    @apply font-medium border button;
+}
+
+.button-outline-live {
+    @apply transition-colors button-outline hover:bg-gray-100 active:bg-gray-200;
+}
+
+.button-filled {
+    @apply font-semibold text-white transition-opacity shadow-md button hover:opacity-90;
 }

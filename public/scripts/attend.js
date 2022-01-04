@@ -39,31 +39,31 @@ async function search(loading = false) {
                 quiz._id
             }" data-keywords="${quiz.keywords.join(
                 ' '
-            )}" class="quiz rounded-2xl h-64 bg-white flex flex-col shadow-lg">
+            )}" class="flex flex-col h-64 bg-white shadow-lg quiz rounded-2xl">
                 <div class="bg-center bg-no-repeat bg-cover h-2/5" style="border-top-left-radius: 16px; border-top-right-radius: 16px; background-image: url('${
                     quiz.imageEncoded
                 }');"></div>
-                    <div class="p-3 pt-2 flex flex-col justify-between flex-1">
-                        <div class="quiz-title text-xl font-semibold text-gray-700">${shortenText(
+                    <div class="flex flex-col justify-between flex-1 p-3 pt-2">
+                        <div class="text-xl font-semibold text-gray-700 quiz-title">${shortenText(
                             quiz.title,
                             45
                         )}</div>
-                        <div class="quiz-description text-xs font-medium text-gray-500 break-words">${shortenText(
+                        <div class="text-xs font-medium text-gray-500 break-words quiz-description">${shortenText(
                             quiz.description,
                             60
                         )}</div>
-                        <div class="flex w-full justify-between gap-x-2">
+                        <div class="flex justify-between w-full gap-x-2">
                         <a href="/quiz/play/${
                             quiz._id
-                        }" class="bg-primary text-center text-white font-semibold text-lg flex-1 rounded-lg transition-opacity hover:opacity-90">Play</a>
-                        <button class="quizMenuBtn relative">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 transition-colors hover:bg-gray-300 rounded-lg cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        }" class="flex-1 py-0.5 button-filled bg-primary">Play</a>
+                        <button class="relative quizMenuBtn">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 rounded-lg cursor-pointer transition-colors hover:bg-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                             </svg>
-                            <div class="quiz-menu absolute bottom-full -mb-7 mr-1 right-full  bg-gray-600 text-white rounded-lg hidden flex-col border-2 border-gray-700 overflow-hidden" style="box-shadow: 0 0 10px 1px rgba(0,0,0,0.5);">
+                            <div class="absolute flex-col hidden mr-1 overflow-hidden text-white bg-gray-600 border-2 border-gray-700 rounded-lg quiz-menu bottom-full -mb-7 right-full " style="box-shadow: 0 0 10px 1px rgba(0,0,0,0.5);">
                                 <div data-quiz-id ="${
                                     quiz._id
-                                }" class="removeSharedQuizBtn text-sm font-medium bg-red-500 text-white text-left px-3 transition-colors hover:bg-red-600 py-1">Remove</div>
+                                }" class="px-3 py-1 text-sm font-medium text-left text-white bg-red-500 removeSharedQuizBtn transition-colors hover:bg-red-600">Remove</div>
                             </div>
                         </button>
                     </div>
@@ -74,23 +74,23 @@ async function search(loading = false) {
                 quiz._id
             }" data-keywords="${quiz.keywords.join(
                 ' '
-            )}" class="quiz rounded-2xl h-64 bg-white flex flex-col shadow-lg">
+            )}" class="flex flex-col h-64 bg-white shadow-lg quiz rounded-2xl">
                 <div class="bg-center bg-no-repeat bg-cover h-2/5" style="border-top-left-radius: 16px; border-top-right-radius: 16px; background-image: url('${
                     quiz.imageEncoded
                 }');"></div>
-                    <div class="p-3 pt-2 flex flex-col justify-between flex-1">
-                        <div class="quiz-title text-xl font-semibold text-gray-700">${shortenText(
+                    <div class="flex flex-col justify-between flex-1 p-3 pt-2">
+                        <div class="text-xl font-semibold text-gray-700 quiz-title">${shortenText(
                             quiz.title,
                             45
                         )}</div>
-                        <div class="quiz-description text-xs font-medium text-gray-500 break-words">${shortenText(
+                        <div class="text-xs font-medium text-gray-500 break-words quiz-description">${shortenText(
                             quiz.description,
                             60
                         )}</div>
                         <div class="w-full">
                         <a href="/quiz/play/${
                             quiz._id
-                        }" class="block w-full bg-primary text-center text-white font-semibold text-lg flex-1 rounded-lg transition-opacity hover:opacity-90">Play</a>
+                        }" class="flex-1 block w-full text-lg font-semibold text-center text-white rounded-lg bg-primary transition-opacity hover:opacity-90">Play</a>
                     </div>
                 </div>
             </div>`
