@@ -14,6 +14,14 @@ module.exports.error_404 = (req, res) => {
     res.render('error', errorOptions[404])
 }
 
+module.exports.error_403 = (req, res) => {
+    res.render('error', errorOptions[403])
+}
+
+module.exports.error_401 = (req, res) => {
+    res.render('error', errorOptions[401])
+}
+
 module.exports.error_default = (req, res) => {
     res.render('error', errorOptions.default)
 }

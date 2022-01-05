@@ -8,6 +8,8 @@ const errorController = require('../controllers/errorController')
 router.get('/400', errorController.error_400)
 router.get('/500', errorController.error_500)
 router.get('/404', errorController.error_404)
+router.get('/403', errorController.error_403)
+router.get('/401', errorController.error_401)
 router.get('/error', errorController.error_default)
 
 module.exports = router
