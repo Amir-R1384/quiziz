@@ -34,5 +34,21 @@ module.exports = {
             title: 'Unauthorized',
             errorMessage: '401 UNAUTHORIZED'
         }
+    },
+
+    emailTypes: {
+        changePassword: {
+            templatePath: 'changePassword.email.ejs',
+            subject: 'Password Reset Instructions'
+        },
+
+        confirmEmail: {
+            templatePath: 'confirmEmail.email.ejs',
+            subject: 'Confirm Your Email'
+        }
+    },
+
+    infos: {
+        emailConfirm: 'Your email has been confirmed :)'
     }
 }

@@ -20,7 +20,7 @@
             background-color: #25A55F;
             padding: 5px 10px;
             border-radius: 5px;
-            color: white;
+            color: white !important;
         }
 
     </style>
@@ -33,15 +33,15 @@
         <% } %>
 
         <p class="message">
-            You received this email because you wanted to change your password.
-            <br /> If it's not you, just ignore this email.
+            Thanks for signing up.
+            <br /> <br /> <br /> You have 30 minutes to click the link below in order to confirm your account.
+            <br /> <br /> If it's not you, just ignore this email.
         </p>
 
         <% if (process.env.NODE_ENV === 'development') { %>
-        <a href="http://localhost:3000/changePassword/<%= passResetId %>" class="link">Reset Password</a>
+        <a href="http://localhost:3000/confirmEmail/<%= token %>" target="_blank" class="link">Confirm Email</a>
         <% } else { %>
-        <a href="https://quiziz.herokuapp.com/changePassword/<%= passResetId %>" class="link">Reset
-            Password</a>
+        <a href="https://quiziz.herokuapp.com/confirmEmail/<%= token %>" target="_blank" class="link">Confirm Email</a>
         <% } %>
     </div>
 </body>

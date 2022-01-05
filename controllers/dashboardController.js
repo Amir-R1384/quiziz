@@ -7,6 +7,7 @@ module.exports.dashboard_get = async (req, res) => {
     try {
         const token = req.cookies.jwt
         const { id: userId } = jwt.verify(token, process.env.SECRET_KEY)
+        const { emailNotice } = req.query
 
         const profileInfo = await User.findById(userId)
 
@@ -27,7 +28,8 @@ module.exports.dashboard_get = async (req, res) => {
             title: `Dashboard (${profileInfo.name})`,
             quizzes,
             profileInfo,
-            friends
+            friends,
+            emailNotice: emailNotice || false
         })
     } catch (err) {
         console.error(err)

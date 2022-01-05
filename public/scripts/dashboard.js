@@ -5,6 +5,16 @@ const quizzes = document.querySelectorAll('.quiz')
 const shareBtns = document.querySelectorAll('.shareBtn')
 const friendOptions = document.querySelectorAll('.friendOption')
 
+// emailNotice comes from ejs
+if (emailNotice == 'true') {
+    window.onload = () => {
+        alert(
+            `In order to access the full features of quiziz, you have to confirm your email address.
+If your email provider is not yahoo, you may not receive any email.`
+        )
+    }
+}
+
 const searchData = createSearchData()
 
 quizMenuBtns.forEach(btn => {
@@ -62,6 +72,8 @@ friendSearchInp.addEventListener('input', () => searchFriends(friendSearchInp.va
 shareBtn.addEventListener('mouseup', shareQuiz)
 searchInp.addEventListener('keydown', e => (e.key === 'Enter' ? searchQuiz() : null))
 searchBtn.addEventListener('mouseup', searchQuiz)
+closeConfirmEmailBtn.addEventListener('mouseup', closeConfirmEmailMessage)
+resendEmailConfirmBtn.addEventListener('mouseup', resendEmailConfirm)
 
 function searchQuiz() {
     const query = searchInp.value.toLowerCase()
@@ -151,4 +163,18 @@ function getParent(son, generation) {
     son = son.parentNode
     generation--
     return getParent(son, generation)
+}
+
+function closeConfirmEmailMessage() {
+    // eslint-disable-next-line no-undef
+    confirmEmailMessage.classList.add('hidden')
+}
+
+async function resendEmailConfirm() {
+    const res = await fetch('/resendEmailConfirm')
+
+    if (!res.ok) return displayErrorPage(res.status)
+
+    // The text div itself
+    confirmEmail_self.innerText = 'A new email has been sent. Check your inbox.'
 }

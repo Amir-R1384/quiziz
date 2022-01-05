@@ -1,9 +1,12 @@
 const ejs = require('ejs')
 const fs = require('fs')
+const appData = require('./appData')
 
-module.exports = (receiverEmail, passResetId) => {
-    const template = fs.readFileSync('./views/changePassword.email.ejs').toString()
-    const mailContent = ejs.render(template, { passResetId })
+module.exports = (receiver, token, emailType) => {
+    const { templatePath, subject } = appData.emailTypes[emailType]
+
+    const template = fs.readFileSync(`./views/emails/${templatePath}`).toString()
+    const mailContent = ejs.render(template, { token })
 
     return {
         transport: {
@@ -19,8 +22,8 @@ module.exports = (receiverEmail, passResetId) => {
 
         emailOptions: {
             from: process.env.MAIL_USER,
-            to: receiverEmail,
-            subject: 'Password Reset Instructions',
+            to: receiver,
+            subject: subject,
             html: mailContent
         }
     }

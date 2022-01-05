@@ -86,6 +86,10 @@ section {
     @apply w-16 h-16 border-gray-200 rounded-full border-6 border-t-primary animate-rotate;
 }
 
+.link {
+    @apply mx-auto font-semibold bg-primary px-2.5 py-1 rounded-md text-white;
+}
+
 @keyframes rotate {
     0% {
         transform: rotate((0deg));

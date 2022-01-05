@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
         minlength: [6, 'The password is too short']
     },
     salt: String,
+    isEmailConfirmed: {
+        type: Boolean,
+        default: false
+    },
     profileImageEncoded: {
         type: String,
         default: '/assets/images/defaultProfileImage.jpg',

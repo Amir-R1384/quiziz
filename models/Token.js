@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const PassResetIdSchema = new mongoose.Schema({
+const TokenSchema = new mongoose.Schema({
     userEmail: {
         type: String,
         required: true,
@@ -13,6 +13,6 @@ const PassResetIdSchema = new mongoose.Schema({
     }
 })
 
-const PassResetId = mongoose.model('password reset id', PassResetIdSchema)
+const Token = mongoose.model('token', TokenSchema)
 
-module.exports = PassResetId
+module.exports = Token

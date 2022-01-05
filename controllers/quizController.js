@@ -81,15 +81,13 @@ module.exports.createQuiz_get = async (req, res) => {
 module.exports.createQuiz_post = async (req, res) => {
     try {
         const data = req.body
+        const userId = getUserId(req.cookies.jwt)
 
-        const { id } = jwt.verify(req.cookies.jwt, process.env.SECRET_KEY)
-        data.userId = new mongoose.Types.ObjectId(id)
-
+        data.userId = new mongoose.Types.ObjectId(userId)
         await Quiz.create(data)
 
-        const user = await User.findById(id)
-        const quizzesMade = user.quizzesMade
-        await User.findByIdAndUpdate(id, { quizzesMade: quizzesMade + 1 })
+        const { quizzesMade } = await User.findById(userId)
+        await User.findByIdAndUpdate(userId, { quizzesMade: quizzesMade + 1 })
 
         res.status(200).end()
     } catch (err) {

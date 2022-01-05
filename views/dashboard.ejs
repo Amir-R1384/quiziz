@@ -1,5 +1,8 @@
 <body class="h-screen bg-gray-200">
     <script src="/scripts/dashboard.js" defer></script>
+    <script>
+        const emailNotice = '<%= emailNotice %>'
+    </script>
     <%
         function shortenText(text) {
             if (text.length > 45) {
@@ -8,6 +11,21 @@
             return text
         }
     %>
+    <% if (!profileInfo.isEmailConfirmed) { %>
+    <div id="confirmEmailMessage" class="w-full bg-blue-400">
+        <div class="flex items-center justify-between w-full px-5 py-2 wrapper">
+            <div id="confirmEmail_self" class="text-lg font-semibold text-white">Confirm your email to access all features of quiziz.</div>
+            <div class="flex items-center gap-x-10">
+                <button id="resendEmailConfirmBtn" class="py-1 text-white button-outline">Resend email confirmation</button>
+                <button id="closeConfirmEmailBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white rounded-md" fill="white" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <% } %>
     <section class="my-10">
         <div class="flex pb-10 wrapper gap-x-12">
             <!-- Profile board -->

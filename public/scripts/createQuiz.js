@@ -398,8 +398,6 @@ async function saveQuiz() {
         save()
         location.assign('/')
     } else {
-        if (response.status === 500) return location.assign('/500')
-
         try {
             const errors = await response.json()
 
@@ -412,8 +410,7 @@ async function saveQuiz() {
 
             alert(errorMessage)
         } catch (err) {
-            console.error(err)
-            displayErrorPage()
+            displayErrorPage(response.status)
         }
     }
 }

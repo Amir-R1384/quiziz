@@ -2,10 +2,10 @@ const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
 const getMailOptions = require('../nodemailerOptions')
-const { comparePasswords } = require('./functions')
-const PassResetId = require('../models/PassResetId')
+const { comparePasswords, getUserId } = require('./functions')
+const Token = require('../models/Token')
 const mongoose = require('mongoose')
-const { errorOptions } = require('../appData')
+const { errorOptions, infos } = require('../appData')
 
 module.exports.signup_get = (req, res) => {
     res.render('signup', { layout: 'layouts/blankLayout' })
@@ -21,8 +21,9 @@ module.exports.signup_post = async (req, res) => {
         const user = await User.create({ name, email, password })
 
         const jwt = createJwt({ id: user._id })
-
         sendJwt(jwt, res)
+
+        await sendEmailConfirmation(email)
 
         res.status(200).end()
     } catch (err) {
@@ -83,9 +84,9 @@ module.exports.forgotPassword_post = async (req, res) => {
             })
         }
 
-        const { _id: passResetId } = await PassResetId.create({ userEmail: email })
+        const { _id: token } = await Token.create({ userEmail: email })
 
-        await sendEmail(email, passResetId)
+        await sendEmail(email, token, 'changePassword')
 
         res.status(200).end()
     } catch (err) {
@@ -95,16 +96,13 @@ module.exports.forgotPassword_post = async (req, res) => {
 }
 
 module.exports.changePassword_get = async (req, res) => {
-    const { id: passResetId } = req.params
+    const { token } = req.params
 
-    if (
-        !mongoose.Types.ObjectId.isValid(passResetId) ||
-        !(await PassResetId.exists({ _id: passResetId }))
-    ) {
+    if (!(await isTokenValid(token))) {
         return res.status(401).render('error', errorOptions[401])
     }
 
-    const { userEmail } = await PassResetId.findById(passResetId)
+    const { userEmail } = await Token.findById(token)
 
     res.render('changePassword', {
         title: 'Reset password',
@@ -132,12 +130,54 @@ module.exports.changePassword_post = async (req, res) => {
     }
 }
 
-async function sendEmail(reciever, PassResetId) {
-    const mailOptions = getMailOptions(reciever, PassResetId)
+module.exports.confirmEmail_get = async (req, res) => {
+    try {
+        const { token } = req.params
+
+        if (!(await isTokenValid(token))) {
+            return res.status(401).render('error', errorOptions[401])
+        }
+
+        const { userEmail } = await Token.findById(token)
+        await User.findOneAndUpdate({ email: userEmail }, { isEmailConfirmed: true })
+
+        res.render('info', { message: infos.emailConfirm, layout: 'layouts/blankLayout.ejs' })
+    } catch (err) {
+        console.error(err)
+        res.status(500).render('error', errorOptions[500])
+    }
+}
+
+module.exports.resendEmailConfirm_get = async (req, res) => {
+    // get request with fetch API
+    try {
+        const userId = getUserId(req.cookies.jwt)
+        const { email } = await User.findById(userId)
+
+        await sendEmailConfirmation(email)
+
+        res.status(200).end()
+    } catch (err) {
+        console.error(err)
+        res.status(500).end()
+    }
+}
+
+async function sendEmail(receiver, token, emailType) {
+    const mailOptions = getMailOptions(receiver, token, emailType)
     const { transport, emailOptions } = mailOptions
 
     const transporter = nodemailer.createTransport(transport)
     await transporter.sendMail(emailOptions)
+}
+
+async function sendEmailConfirmation(email) {
+    const token = await Token.create({ userEmail: email })
+    await sendEmail(email, token._id, 'confirmEmail')
+}
+
+async function isTokenValid(token) {
+    return mongoose.Types.ObjectId.isValid(token) && (await Token.exists({ _id: token }))
 }
 
 function handleDatabaseErrors(err, res) {
