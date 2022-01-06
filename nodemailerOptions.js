@@ -2,11 +2,11 @@ const ejs = require('ejs')
 const fs = require('fs')
 const appData = require('./appData')
 
-module.exports = (receiver, token, emailType) => {
+module.exports = (receiver, emailType, options) => {
     const { templatePath, subject } = appData.emailTypes[emailType]
 
     const template = fs.readFileSync(`./views/emails/${templatePath}`).toString()
-    const mailContent = ejs.render(template, { token })
+    const mailContent = ejs.render(template, { ...options })
 
     return {
         transport: {

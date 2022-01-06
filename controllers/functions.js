@@ -2,6 +2,8 @@ const isBase64 = require('is-base64')
 const jwt = require('jsonwebtoken')
 const crypto = require('crypto')
 const Filter = require('bad-words')
+const nodemailer = require('nodemailer')
+const getMailOptions = require('../nodemailerOptions')
 
 const filter = new Filter()
 
@@ -75,4 +77,12 @@ module.exports.comparePasswords = (normalPassword, hashedPassword, salt) => {
 
 module.exports.validateForBadWords = string => {
     return !filter.isProfane(string)
+}
+
+module.exports.sendEmail = async (receiver, emailType, options) => {
+    const mailOptions = getMailOptions(receiver, emailType, options)
+    const { transport, emailOptions } = mailOptions
+
+    const transporter = nodemailer.createTransport(transport)
+    await transporter.sendMail(emailOptions)
 }

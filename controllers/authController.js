@@ -1,11 +1,9 @@
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
-const nodemailer = require('nodemailer')
-const getMailOptions = require('../nodemailerOptions')
-const { comparePasswords, getUserId } = require('./functions')
 const Token = require('../models/Token')
 const mongoose = require('mongoose')
 const { errorOptions, infos } = require('../appData')
+const { comparePasswords, getUserId, sendEmail } = require('./functions')
 
 module.exports.signup_get = (req, res) => {
     res.render('signup', { layout: 'layouts/blankLayout' })
@@ -86,7 +84,7 @@ module.exports.forgotPassword_post = async (req, res) => {
 
         const { _id: token } = await Token.create({ userEmail: email })
 
-        await sendEmail(email, token, 'changePassword')
+        await sendEmail(email, 'changePassword', { token })
 
         res.status(200).end()
     } catch (err) {
@@ -163,17 +161,9 @@ module.exports.resendEmailConfirm_get = async (req, res) => {
     }
 }
 
-async function sendEmail(receiver, token, emailType) {
-    const mailOptions = getMailOptions(receiver, token, emailType)
-    const { transport, emailOptions } = mailOptions
-
-    const transporter = nodemailer.createTransport(transport)
-    await transporter.sendMail(emailOptions)
-}
-
 async function sendEmailConfirmation(email) {
-    const token = await Token.create({ userEmail: email })
-    await sendEmail(email, token._id, 'confirmEmail')
+    const { _id: token } = await Token.create({ userEmail: email })
+    await sendEmail(email, 'confirmEmail', { token })
 }
 
 async function isTokenValid(token) {
