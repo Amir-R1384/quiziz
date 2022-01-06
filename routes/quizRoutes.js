@@ -2,9 +2,9 @@ const express = require('express')
 const router = new express.Router()
 
 const quizController = require('../controllers/quizController')
-const { authenticate, isUserConfirmed } = require('../controllers/middlewears')
+const { authenticate, isUserConfirmed, isUserBanned } = require('../controllers/middlewears')
 
-router.use(authenticate, isUserConfirmed)
+router.use(authenticate, isUserConfirmed, isUserBanned)
 
 router.get('/attend', quizController.attendQuiz_get) // Where you can find a quiz and play
 router.delete('/attend/sharedQuiz', quizController.removeSharedQuiz_delete)
@@ -20,6 +20,7 @@ router.post('/submit/:id', quizController.submitQuiz_post)
 
 router.delete('/:id', quizController.deleteQuiz_delete)
 
+router.get('/report/:id', quizController.reportQuiz_get)
 router.post('/rate/:id', quizController.rate_post)
 
 router.post('/share', quizController.shareQuiz_post)

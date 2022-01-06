@@ -72,7 +72,7 @@ friendSearchInp.addEventListener('input', () => searchFriends(friendSearchInp.va
 shareBtn.addEventListener('mouseup', shareQuiz)
 searchInp.addEventListener('keydown', e => (e.key === 'Enter' ? searchQuiz() : null))
 searchBtn.addEventListener('mouseup', searchQuiz)
-closeConfirmEmailBtn.addEventListener('mouseup', closeConfirmEmailMessage)
+closeInfoBtn.addEventListener('mouseup', closeInfo)
 resendEmailConfirmBtn.addEventListener('mouseup', resendEmailConfirm)
 
 function searchQuiz() {
@@ -165,16 +165,21 @@ function getParent(son, generation) {
     return getParent(son, generation)
 }
 
-function closeConfirmEmailMessage() {
+function closeInfo() {
     // eslint-disable-next-line no-undef
-    confirmEmailMessage.classList.add('hidden')
+    info.classList.add('hidden')
 }
 
 async function resendEmailConfirm() {
+    document.querySelector('.loader').classList.remove('hidden')
+    resendEmailConfirmBtn.classList.add('hidden')
+
     const res = await fetch('/resendEmailConfirm')
 
     if (!res.ok) return displayErrorPage(res.status)
 
     // The text div itself
     confirmEmail_self.innerText = 'A new email has been sent. Check your inbox.'
+    document.querySelector('.loader').classList.add('hidden')
+    resendEmailConfirmBtn.classList.remove('hidden')
 }

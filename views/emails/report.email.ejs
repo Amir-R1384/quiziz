@@ -1,0 +1,20 @@
+<body>
+    <h1>New report</h1>
+    <h3>Quiz info</h3>
+    <ul>
+        <li>Id: <%= quiz._id %></li>
+        <li>Title: <%= quiz.title %></li>
+        <li>Description: <%= quiz.description %></li>
+        <li>Is public: <%= quiz.isPublic %></li>
+        <li>Creator: <%= quiz.userId %></li>
+    </ul>
+
+    <h3>From:</h3>
+    <ul>
+        <li>Id: <%= user._id %></li>
+        <li>Email: <%= user.email %></li>
+        <li>Quizzes attended: <%= user.quizzesAttended %></li>
+        <li>Quizzes made: <%= user.quizzesMade %></li>
+    </ul>
+    </p>
+</body>

@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const { getUserId } = require('./functions')
+const { infos } = require('../appData')
 
 module.exports.authenticate = async (req, res, next) => {
     verifyToken(req.cookies.jwt)
@@ -23,6 +24,17 @@ module.exports.isUserConfirmed = async (req, res, next) => {
         next()
     } else {
         res.redirect('/dashboard?emailNotice=true')
+    }
+}
+
+module.exports.isUserBanned = async (req, res, next) => {
+    const userId = getUserId(req.cookies.jwt)
+    const { isBanned } = await User.findById(userId)
+
+    if (isBanned) {
+        res.status(403).render('info', { message: infos.banned, layout: 'layouts/blankLayout.ejs' })
+    } else {
+        next()
     }
 }
 

@@ -2,9 +2,9 @@ const express = require('express')
 const router = new express.Router()
 
 const friendsController = require('../controllers/friendsController')
-const { authenticate, isUserConfirmed } = require('../controllers/middlewears')
+const { authenticate, isUserConfirmed, isUserBanned } = require('../controllers/middlewears')
 
-router.use(authenticate, isUserConfirmed)
+router.use(authenticate, isUserConfirmed, isUserBanned)
 
 router.get('/', friendsController.friends_get)
 router.delete('/', friendsController.friends_delete)

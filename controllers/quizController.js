@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
 const Quiz = require('../models/Quiz')
 const User = require('../models/User')
-const { handleDatabaseErrors, getUserId } = require('./functions')
-const { errorOptions } = require('../appData')
+const { handleDatabaseErrors, getUserId, sendEmail } = require('./functions')
+const { errorOptions, infos } = require('../appData')
 
 module.exports.attendQuiz_get = async (req, res) => {
     const userId = getUserId(req.cookies.jwt)
@@ -221,6 +221,25 @@ module.exports.deleteQuiz_delete = async (req, res) => {
     } catch (err) {
         console.error(err)
         res.status(500).end()
+    }
+}
+
+module.exports.reportQuiz_get = async (req, res) => {
+    try {
+        const userId = getUserId(req.cookies.jwt)
+        const { id: quizId } = req.params
+
+        const user = await User.findById(userId)
+        const quiz = await Quiz.findById(quizId)
+
+        const receiver = process.env.ADMIN_MAIL
+
+        await sendEmail(receiver, 'report', { user, quiz })
+
+        res.render('info', { message: infos.reportSuccess, layout: 'layouts/blankLayout.ejs' })
+    } catch (err) {
+        console.error(err)
+        res.status(500).render('error', errorOptions[500])
     }
 }
 

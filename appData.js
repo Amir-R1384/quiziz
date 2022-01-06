@@ -45,10 +45,17 @@ module.exports = {
         confirmEmail: {
             templatePath: 'confirmEmail.email.ejs',
             subject: 'Confirm Your Email'
+        },
+
+        report: {
+            templatePath: 'report.email.ejs',
+            subject: 'New report'
         }
     },
 
     infos: {
-        emailConfirm: 'Your email has been confirmed :)'
+        emailConfirm: 'Your email has been confirmed :)',
+        reportSuccess: "Your report has been sent. We'll take care of it soon.",
+        banned: 'You are banned from Quiziz.'
     }
 }
