@@ -42,7 +42,7 @@
     </div>
     <% } %>
     <section class="my-10">
-        <div class="flex pb-10 wrapper gap-x-12">
+        <div class="flex flex-col items-center pb-10 wrapper gap-x-5 md:flex-row gap-y-10 lg:gap-x-12 md:items-stretch">
             <!-- Profile board -->
             <div class="flex flex-col items-center justify-between p-4 bg-white rounded-lg shadow-md w-72 h-96">
                 <div class="w-full">
@@ -98,14 +98,14 @@
                 </div>
             </div>
 
-            <div class="flex flex-col flex-1 gap-y-12">
+            <div class="flex flex-col flex-1 px-4 gap-y-12">
                 <div class="flex w-full shadow-md">
                     <input id="searchInp" type="text" class="flex-1 px-5 py-2 text-xl font-medium text-gray-700 border-2 border-white outline-none focus:border-gray-600" placeholder="Search quizzes" style="border-top-left-radius: 8px; border-bottom-left-radius: 8px;">
                     <button id="searchBtn" class="px-5 text-white bg-gray-600 rounded-l-none button-filled" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px;">Search</button>
                 </div>
                 <% if (quizzes.length) { %>
 
-                <div class="grid w-full grid-cols-3 gap-10">
+                <div class="grid w-full grid-cols-1 gap-10 lg:grid-cols-2 xl:grid-cols-3">
 
                     <% quizzes.forEach(quiz => { %>
 
@@ -118,7 +118,7 @@
                             <div class="text-xs font-medium text-gray-500 break-words quiz-description">
                                 <%= shortenText(quiz.description) %>
                             </div>
-                            <div class="flex justify-between w-full gap-x-2">
+                            <div class="flex justify-between w-full gap-x-1">
                                 <button data-quiz-id="<%= quiz._id %>" class="shareBtn flex-1 text-white button-filled bg-primary py-0.5">Share quiz</button>
                                 <button class="relative quizMenuBtn">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 transition-colors rounded-lg cursor-pointer hover:bg-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -138,19 +138,19 @@
                 </div>
 
                 <% } else { %>
-                <div class="grid flex-1 text-xl font-semibold text-center text-gray-500 bg-gray-300 border-2 border-gray-600 rounded-lg place-items-center">You haven't made any quizzes yet</div>
+                <div class="grid flex-1 p-3 text-xl font-semibold text-center text-gray-500 bg-gray-300 border-2 border-gray-600 rounded-lg place-items-center">You haven't made any quizzes yet</div>
                 <% } %>
 
             </div>
         </div>
 
-        <div id="shareContainer" class="absolute top-0 left-0 grid hidden w-screen h-screen bg-black bg-opacity-40 place-items-center">
-            <div id="shareDiv" class="flex flex-col items-center w-1/2 p-6 bg-gray-200 shadow-2xl h-3/5 rounded-xl gap-y-10">
-                <div class="flex justify-between w-full gap-x-16">
-                    <input id="friendSearchInp" type="text" class="flex-1 px-3 py-1 text-lg font-semibold text-gray-600 bg-white shadow-md outline-none rounded-xl" placeholder="Search">
-                    <button id="shareBtn" class="button-filled bg-primary">Share</button>
+        <div id="shareContainer" class="fixed top-0 left-0 grid hidden w-screen h-screen bg-black bg-opacity-40 place-items-center">
+            <div id="shareDiv" class="flex flex-col items-center p-6 bg-gray-200 shadow-2xl md:w-1/2 h-3/5 rounded-xl gap-y-10">
+                <div class="flex flex-col justify-between w-full gap-x-8 gap-y-5 md:flex-row lg:gap-x-16">
+                    <input id="friendSearchInp" type="text" class="flex-1 w-full px-3 py-1 text-lg font-semibold text-center text-gray-600 bg-white rounded-md shadow-md outline-none md:w-auto md:text-left" placeholder="Search">
+                    <button id="shareBtn" class="w-full button-filled bg-primary md:w-auto">Share</button>
                 </div>
-                <div class="grid flex-1 w-full grid-cols-3 grid-rows-6 gap-5 p-4 overflow-auto bg-white shadow-md rounded-xl">
+                <div class="grid flex-1 w-full grid-cols-1 gap-5 p-4 overflow-auto bg-white shadow-md sm:grid-cols-2 lg:grid-cols-3 rounded-xl">
 
                     <% friends.forEach(({id, name}) => { %>
                     <div class="flex items-center justify-center w-full px-2 py-1 bg-gray-200 rounded-md shadow-sm cursor-pointer friendOption">

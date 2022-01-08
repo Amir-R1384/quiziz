@@ -8,7 +8,7 @@
         }
     %>
     <section class="my-10">
-        <div class="flex pb-10 wrapper gap-x-12">
+        <div class="flex flex-col items-center pb-10 wrapper gap-x-5 md:flex-row gap-y-10 lg:gap-x-12 md:items-stretch">
             <!-- Profile board -->
             <div class="flex flex-col items-center justify-between p-4 bg-white rounded-lg shadow-md w-72 h-96">
                 <div class="w-full">
@@ -61,7 +61,7 @@
             <div class="flex flex-col flex-1 gap-y-12">
                 <% if (quizzes.length) { %>
 
-                <div class="grid w-full grid-cols-3 gap-10">
+                <div class="grid w-full grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
 
                     <% quizzes.forEach(quiz => { %>
 
@@ -85,8 +85,7 @@
                 </div>
 
                 <% } else { %>
-                <div class="grid flex-1 text-xl font-semibold text-center text-gray-500 bg-gray-300 border-2 border-gray-600 rounded-lg place-items-center">
-                    This user doesn't have any quizzes yet</div>
+                <div class="grid flex-1 p-3 text-xl font-semibold text-center text-gray-500 bg-gray-300 border-2 border-gray-600 rounded-lg place-items-center">The user doesn't have any quizzes yet</div>
                 <% } %>
 
             </div>

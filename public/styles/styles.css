@@ -11,7 +11,7 @@ code {
 }
 
 section {
-    @apply px-8 overflow-y-hidden fill-browser-height !important;
+    @apply sm:px-8 px-3 overflow-y-hidden fill-browser-height !important;
 }
 
 .fill-browser-height {
@@ -67,7 +67,7 @@ section {
 }
 
 .button {
-    @apply inline-flex items-center justify-center px-4 py-2 text-center rounded-md cursor-pointer;
+    @apply inline-flex items-center justify-center px-2 py-1 text-base text-center rounded-md cursor-pointer md:text-lg md:px-4 md:py-2;
 }
 
 .button-outline {

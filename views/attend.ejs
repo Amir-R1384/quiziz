@@ -7,37 +7,40 @@
             return text
         }
     %>
-    <div id="mainWrapper" class="flex flex-col items-center p-10 wrapper gap-y-10">
-        <div class="flex items-center w-full p-2 gap-x-10">
-            <div class="relative flex items-center px-3 py-2 bg-white rounded-lg shadow-md cursor-pointer gap-x-3">
-                <select id="ratingSelect" class="pr-3 text-lg font-semibold text-center text-gray-700 outline-none cursor-pointer">
-                    <option value="default">Rating</option>
-                    <option value="1">1 star</option>
-                    <option value="2">2 stars</option>
-                    <option value="3">3 stars</option>
-                    <option value="4">4 stars</option>
-                    <option value="5">5 stars</option>
-                </select>
+    <div id="mainWrapper" class="flex flex-col items-center p-3 pb-8 sm:p-10 wrapper gap-y-10">
+        <div class="flex flex-col items-center w-full gap-10 p-2 lg:flex-row">
+            <div class="flex flex-col items-baseline gap-y-5 sm:gap-x-10 sm:flex-row">
+                <div class="relative flex items-center px-3 py-2 mx-auto bg-white rounded-lg shadow-md cursor-pointer gap-x-3">
+                    <select id="ratingSelect" class="pr-3 text-lg font-semibold text-center text-gray-700 outline-none cursor-pointer">
+                        <option value="default">Rating</option>
+                        <option value="1">1 star</option>
+                        <option value="2">2 stars</option>
+                        <option value="3">3 stars</option>
+                        <option value="4">4 stars</option>
+                        <option value="5">5 stars</option>
+                    </select>
 
-                <div class="absolute right-0 p-1 bg-white pointer-events-none">
-                    <%- include('./partials/carret-down.ejs') %>
+                    <div class="absolute right-0 p-1 bg-white pointer-events-none">
+                        <%- include('./partials/carret-down.ejs') %>
+                    </div>
                 </div>
-            </div>
-            <div class="flex items-center mr-6 text-lg font-semibold text-gray-700 gap-x-4">
-                Shared with me
-                <div id="sharedWithMeToggle" class="flex items-center w-12 transition-colors bg-gray-400 cursor-pointer toggle rounded-2xl" style="padding: 2px;">
-                    <div class="w-5 h-5 transition-transform duration-300 ease-in-out bg-white rounded-full">
+                <div class="flex items-center mr-6 text-lg font-semibold text-gray-700 gap-x-4">
+                    Shared with me
+                    <div id="sharedWithMeToggle" class="flex items-center w-12 transition-colors bg-gray-400 cursor-pointer toggle rounded-2xl" style="padding: 2px;">
+                        <div class="w-5 h-5 transition-transform duration-300 ease-in-out bg-white rounded-full">
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="flex flex-1 rounded-lg shadow-md">
+
+            <div class="flex flex-1 w-full rounded-lg shadow-md lg:w-auto">
                 <input id="searchInp" type="text" class="flex-1 px-5 py-2 text-lg font-semibold text-gray-700 outline-none focus:border-gray-600" placeholder="Search quizzes" style="border-top-left-radius: 8px; border-bottom-left-radius: 8px;">
                 <button id="searchBtn" class="px-5 bg-gray-600 rounded-l-none button-filled" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px;">Search</button>
             </div>
         </div>
 
-        <div id="quizWrapper" class="grid w-full grid-cols-4 gap-10">
+        <div id="quizWrapper" class="grid w-full grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 
             <% quizzes.forEach(quiz => { %>
 

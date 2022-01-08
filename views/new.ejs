@@ -13,7 +13,7 @@
 
 <body class="h-screen bg-gray-200">
     <header class="w-full px-8 py-4 bg-white drop-shadow-md">
-        <div class="flex items-center justify-between wrapper">
+        <div class="flex flex-col items-center justify-between wrapper md:flex-row gap-y-5">
             <div class="flex items-center gap-x-3" style="min-width: 50%;">
                 <input id="titleInp" data-storage-name="title" type="text" class="box-border w-full h-10 px-4 py-2 text-lg font-semibold bg-gray-200 rounded-md text-primary" placeholder="Write your title">
                 <button id="moreBtn" class="text-gray-600 border-2 border-gray-600 button-outline">More</button>
@@ -34,22 +34,22 @@
         </div>
     </header>
     <main class="flex items-center fill-browser-height">
-        <div class="flex items-center w-full h-full wrapper">
-            <div id="leftPanel" class="flex flex-col h-full pt-4 pr-4 bg-gray-100 gap-y-4" style="box-shadow: 1px 0px 8px 0px rgba(0,0,0,0.2)">
-                <select id="questionTypeSelect" disabled class="p-1 mb-3 ml-4 font-semibold text-gray-700 bg-transparent border-b-2 border-gray-700 outline-none cursor-pointer disabled:cursor-not-allowed">
+        <div class="flex flex-col items-center w-full h-full wrapper md:flex-row">
+            <div id="leftPanel" class="flex flex-col w-full h-auto p-3 bg-gray-100 border-l border-gray-500 md:w-auto md:h-full md:p-0 md:pt-4 md:pr-4 gap-y-4" style="box-shadow: 1px 0px 8px 0px rgba(0,0,0,0.2)">
+                <select id="questionTypeSelect" disabled class="p-1 font-semibold text-gray-700 bg-transparent border-b-2 border-gray-700 outline-none cursor-pointer md:mb-3 md:ml-4 disabled:cursor-not-allowed">
                     <option value="default" class="text-white bg-gray-800">Question Type
                     </option>
                     <option value="true/false" class="text-white bg-gray-800">True/False
                     </option>
                 </select>
 
-                <div id="questionSetting" class="flex flex-col items-center h-full p-2 bg-gray-200 border-t border-r border-gray-400 gap-y-2" style="border-top-right-radius: 8px;"></div>
+                <div id="questionSetting" class="flex flex-col items-center h-full p-4 bg-gray-200 border border-gray-400 rounded-lg md:rounded-b-none md:border-0 md:border-t md:border-r gap-y-2 md:rounded-l-none" style="border-top-right-radius: 8px;"></div>
 
             </div>
-            <div class="flex flex-col items-center w-full h-full px-10 pt-8">
+            <div class="flex flex-col items-center w-full h-full px-3 pt-8 md:px-10">
                 <div class="flex flex-col w-full h-full p-4 bg-white rounded-lg gap-y-5" style="box-shadow: 0 0 10px 1px rgba(0,0,0,0.25);">
                     <input id="questionTitleInp" disabled type="text" placeholder="Write your question" class="px-3 py-2 font-semibold text-gray-700 bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:placeholder-transparent">
-                    <div id="questionBoard" class="w-full h-full px-12 py-5"></div>
+                    <div id="questionBoard" class="w-full h-full md:px-12 md:py-5"></div>
                 </div>
 
                 <div class="flex py-1 mt-8 bg-white gap-x-2" style="border-top-right-radius: 12px; border-top-left-radius: 12px; box-shadow: 0 0 10px 1px rgba(0,0,0,0.25);">
