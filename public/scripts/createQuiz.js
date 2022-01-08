@@ -12,7 +12,9 @@ let currentQuestionIndex = null
 const paths = {
     button: '/components/button.html',
     trueFalse: '/components/true-false/true-false.html',
-    trueFalseDesign: '/components/true-false/true-false-design.html'
+    trueFalseDesign: '/components/true-false/true-false-design.html',
+    multipleChoice: '/components/multiple-choice/multiple-choice.html',
+    multipleChoiceDesign: '/components/multiple-choice/multiple-choice-design.html'
 }
 
 // eslint-disable-next-line no-undef
@@ -82,7 +84,7 @@ async function preloadDataFromServer() {
     // * Questions
     if (preSavedQuiz.questions) {
         for (let question of preSavedQuiz.questions) {
-            createQuestion(question.type, question.title, question.answer)
+            createQuestion(question.type, question.title, question.answer, question.choices)
         }
     }
 }
@@ -121,7 +123,7 @@ async function preloadDataFromLocalStorage() {
     // * Questions
     if (savedProgress.questions) {
         for (let question of savedProgress.questions) {
-            createQuestion(question.type, question.title, question.answer)
+            createQuestion(question.type, question.title, question.answer, question.choices)
         }
     }
 }
@@ -203,8 +205,11 @@ function displayQuestion(questionType) {
                     })
                 }
 
-                // Selecting on of the options if there is an answer
-                if (questions[currentQuestionIndex].answer !== null)
+                // Selecting one of the options if there is an answer
+                if (
+                    questions[currentQuestionIndex].answer === true ||
+                    questions[currentQuestionIndex].answer === false
+                )
                     components[1]
                         .querySelector(`[data-value='${questions[currentQuestionIndex].answer}']`)
                         .classList.add('selected')
@@ -218,10 +223,79 @@ function displayQuestion(questionType) {
                 )
             })
             break
+
+        case 'multiple-choice':
+            fetchComponent(paths.multipleChoice).then(components => {
+                const validChoices = [] // for preloading an answer
+
+                for (let child of components[1].children) {
+                    child.addEventListener('mouseup', () => {
+                        document
+                            .querySelectorAll('.choice')
+                            .forEach(el => el.classList.remove('selected'))
+                        child.classList.add('selected')
+
+                        questions[currentQuestionIndex].answer = child.getAttribute('data-index') // We're saving the index instead of the value
+                    })
+                    validChoices.push(child.getAttribute('data-value'))
+                }
+
+                // For auto selecting an answer when loadeding data
+                if (
+                    questions[currentQuestionIndex].answer !== null &&
+                    validChoices.indexOf(questions[currentQuestionIndex].answer) !== -1
+                ) {
+                    components[1]
+                        .querySelector(`[data-value='${questions[currentQuestionIndex].answer}']`)
+                        .classList.add('selected')
+                }
+
+                // For the choice inputs
+                for (let parent of components[2].children) {
+                    const child = parent.querySelector('input')
+                    child.addEventListener('input', () => {
+                        document
+                            .querySelector(
+                                `.choice[data-index="${child.getAttribute('data-index')}"]`
+                            )
+                            .setAttribute('data-value', child.value)
+
+                        document.querySelector(
+                            `.choice-design[data-index="${child.getAttribute('data-index')}"]`
+                        ).innerText = child.value
+
+                        questions[currentQuestionIndex].choices[child.getAttribute('data-index')] =
+                            child.value
+                        savedProgress.questions = questions
+                        save()
+                    })
+                }
+
+                while (components.length !== 0) {
+                    questionSetting.appendChild(components[0]) // When appending from an HTML collection, it removes the element so we use a while loop
+                }
+
+                document.querySelectorAll('.choice-input').forEach((input, i) => {
+                    input.value = questions[currentQuestionIndex].choices[i]
+                })
+
+                fetchComponent(paths.multipleChoiceDesign).then(component => {
+                    Array.from(component.children).forEach((child, i) => {
+                        child.innerText = questions[currentQuestionIndex].choices[i] || i + 1
+                    })
+                    questionBoard.appendChild(component)
+                })
+            })
+            break
     }
 }
 
-async function createQuestion(type = null, title = '', answer = null) {
+async function createQuestion(
+    type = null,
+    title = '',
+    answer = null,
+    choices = [null, null, null, null]
+) {
     try {
         // Creating and appending the button
         const button = await fetchComponent(paths.button)
@@ -236,7 +310,8 @@ async function createQuestion(type = null, title = '', answer = null) {
         questions.push({
             type,
             title,
-            answer
+            answer,
+            choices
         })
 
         // Making disabled components interactive

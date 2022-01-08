@@ -1,7 +1,7 @@
 const layout = 'layouts/blankLayout'
 
 module.exports = {
-    questionTypes: ['true/false'],
+    questionTypes: ['true/false', 'multiple-choice'],
 
     errorOptions: {
         default: {

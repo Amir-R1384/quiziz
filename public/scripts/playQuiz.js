@@ -75,6 +75,32 @@ async function nextQuestion() {
             questionBoard.appendChild(designElement)
             break
         }
+
+        case 'multiple-choice': {
+            const designElement = await fetchComponent(
+                '/components/multiple-choice/multiple-choice-design.html'
+            )
+
+            for (let i = 0; i < 4; i++) {
+                const button = designElement.children[i]
+
+                // Styling
+                button.style.cursor = 'pointer'
+                button.addEventListener('mouseover', () => (button.style.opacity = 0.9))
+                button.addEventListener('mouseout', () => (button.style.opacity = 1))
+                button.style.transition = 'opacity 0.2s'
+                button.innerText = questions[questionIndex].choices[i]
+
+                // The event listener for answering the question
+                button.addEventListener('mouseup', () => {
+                    const value = button.getAttribute('data-index')
+                    answerQuestion(value)
+                })
+            }
+
+            questionBoard.appendChild(designElement)
+            break
+        }
         default:
             throw new Error('Invalid question type')
     }

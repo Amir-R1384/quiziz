@@ -22,11 +22,13 @@ section {
     @apply bg-gray-600 !important;
 }
 
-.true-false.selected {
+.true-false.selected,
+.choice.selected {
     @apply text-white bg-primary !important;
 }
 
-.true-false.selected:hover {
+.true-false.selected:hover,
+.choice.selected:hover {
     @apply bg-primary !important;
 }
 

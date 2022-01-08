@@ -78,7 +78,14 @@ const quizSchema = new Schema({
                 type: Schema.Types.Mixed,
                 required: [true, 'question answer, is required'],
                 validate: [validateForBadWords, 'question answer, contains bad words']
-            }
+            },
+            choices: [
+                {
+                    type: String,
+                    required: false,
+                    validate: [validateForBadWords, 'choices, contain bad words.']
+                }
+            ]
         }
     ]
 })
