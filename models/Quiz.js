@@ -25,12 +25,14 @@ const quizSchema = new Schema({
     title: {
         type: String,
         required: [true, 'title, is required'],
-        validate: [validateForBadWords, 'title, contains bad words']
+        validate: [validateForBadWords, 'title, contains bad words'],
+        maxlength: [100, 'title, is too long.']
     },
     description: {
         type: String,
         required: [true, 'description, is required'],
-        validate: [validateForBadWords, 'description, contains bad words']
+        validate: [validateForBadWords, 'description, contains bad words'],
+        maxlength: [200, 'description, is too long.']
     },
     imageEncoded: {
         type: String,
@@ -40,7 +42,8 @@ const quizSchema = new Schema({
         {
             type: String,
             required: [true, 'keywords, are required'],
-            validate: [validateForBadWords, 'keyword, contains bad words']
+            validate: [validateForBadWords, 'keyword, contains bad words'],
+            maxlength: [20, 'keyword, is too long.']
         }
     ],
     isPublic: {
@@ -72,7 +75,8 @@ const quizSchema = new Schema({
             title: {
                 type: String,
                 required: [true, 'question title, is required'],
-                validate: [validateForBadWords, 'question title, contains bad words']
+                validate: [validateForBadWords, 'question title, contains bad words'],
+                maxlength: [150, 'title, is too long.']
             },
             answer: {
                 type: Schema.Types.Mixed,

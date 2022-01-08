@@ -11,7 +11,8 @@ const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'The name is required'],
-        validate: [validateForBadWords, 'The name contains bad words']
+        validate: [validateForBadWords, 'The name contains bad words'],
+        maxlength: [20, 'The maximum length of characters is 20.']
     },
     email: {
         type: String,
@@ -23,7 +24,8 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, 'The password is required'],
-        minlength: [6, 'The password is too short']
+        minlength: [6, 'The password is too short'],
+        maxlength: [50, 'The maximum length of characters is 50.']
     },
     salt: String,
     isEmailConfirmed: {
