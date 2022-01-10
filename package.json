@@ -1,7 +1,7 @@
 {
     "name": "quiziz",
     "version": "1.0.0",
-    "description": "An app where you can create quizes and then other people can take the quiz.",
+    "description": "Create and play quizzes.",
     "main": "app.js",
     "scripts": {
         "start": "bash cmd/prod.sh",
@@ -17,7 +17,7 @@
         "quiz",
         "tests"
     ],
-    "author": "Amirreza Ranjbar",
+    "author": "Amir-R1384",
     "license": "GPL-3.0",
     "bugs": {
         "url": "https://github.com/Amir-R1384/quiziz/issues"
