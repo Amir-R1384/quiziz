@@ -6,7 +6,8 @@
     "scripts": {
         "start": "bash cmd/prod.sh",
         "test": "bash cmd/dev.sh",
-        "build": "bash cmd/build.sh"
+        "build": "bash cmd/build.sh",
+        "build-test": "bash cmd/build-test.sh"
     },
     "repository": {
         "type": "git",

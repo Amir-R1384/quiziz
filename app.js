@@ -41,5 +41,5 @@ mongoose
         `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@production.zedy7.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
     )
     .then(() => {
-        app.listen(process.env.port || 3000, () => console.log('Listening for requests'))
+        app.listen(process.env.PORT || 3000, () => console.log('Listening for requests'))
     })

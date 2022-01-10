@@ -29,7 +29,7 @@
         <% if (process.env.NODE_ENV === 'development') { %>
         <img src="http://localhost:3000/assets/images/logo-primary.svg" alt="Quiziz">
         <% } else { %>
-        <img src="https://quiziz.herokuapp.com/assets/images/logo-primary.svg" alt="Quiziz">
+        <img src="https://quiziz-app.herokuapp.com/assets/images/logo-primary.svg" alt="Quiziz">
         <% } %>
 
         <p class="message">
@@ -41,7 +41,7 @@
         <% if (process.env.NODE_ENV === 'development') { %>
         <a href="http://localhost:3000/confirmEmail/<%= token %>" target="_blank" class="link">Confirm Email</a>
         <% } else { %>
-        <a href="https://quiziz.herokuapp.com/confirmEmail/<%= token %>" target="_blank" class="link">Confirm Email</a>
+        <a href="https://quiziz-app.herokuapp.com/confirmEmail/<%= token %>" target="_blank" class="link">Confirm Email</a>
         <% } %>
     </div>
 </body>
