@@ -62,7 +62,7 @@ module.exports.attendQuiz_get = async (req, res) => {
 
         res.render('attend', {
             title: "Let's play a quiz",
-            layout: 'layouts/dashboardlayout',
+            layout: 'layouts/dashboardLayout',
             quizzes
         })
     } catch (err) {
