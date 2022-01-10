@@ -1,14 +1,82 @@
-<body class="">
-    <section class="bg-primary section fill-browser-height">
-        <div class="wrapper">
-            <div class="flex flex-col justify-between w-full mt-20 text-white md:flex-row gap-x-5 gap-y-20">
-                <div class="flex-1">
-                    <h1 class="text-4xl font-bold mb-7" style="line-height: 60px">Taking quizes to the <br> Next Level🚀</h1>
-                    <p class=" mb-11">Quiziz lets you create quizes and other <br> people can then attend it.</p>
-                    <a href="/signup" class="button-filled bg-secondary">Sign Up for free</a>
-                </div>
-                <img src="/assets/images/form-sekeleton.svg" alt="Skeleton image of a question in Quiziz" class="md:p-0">
+<body>
+    <section class="p-5 bg-primary sm:p-20">
+        <div class="flex flex-col items-center text-white wrapper gap-y-10">
+            <h1 class="mb-5 text-4xl font-bold leading-tight text-center text-white md:text-6xl gap-y-0 sm:gap-y-5">
+                Taking quizzes to the <br>
+                Next Level🚀
+            </h1>
+            <p class="text-lg text-center text-gray-100">Create quizzes and let others play them.</p>
+            <div class="flex items-stretch gap-x-10">
+                <a href="/signup" class="font-medium button-filled bg-secondary">Start creating</a>
+                <a href="#first-section" class="button-outline">Learn more</a>
             </div>
         </div>
     </section>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class=" -translate-y-0.5">
+        <path class=" fill-primary" fill-opacity="1" d="M0,64L80,74.7C160,85,320,107,480,133.3C640,160,800,192,960,186.7C1120,181,1280,139,1360,117.3L1440,96L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path>
+    </svg>
+    <!-- Creating -->
+    <section class="two-column" id="first-section">
+        <div class="two-column_first">
+            <h2 class="two-column_heading">Answering may be hard, but <span class="text-primary">creating</span> isn't.</h2>
+            <p class="mr-10 two-column_text">Add a few questions, choose their types, choose the answer, add a title, a description, some keywords. <br />Done!</p>
+        </div>
+        <img src="/assets/images/new.png" alt="Screenshot of the creating quizzes process." class="two-column_image">
+    </section>
+    <!-- Playing -->
+    <section class="md:flex-row-reverse two-column">
+        <div class="two-column_first">
+            <h2 class="two-column_heading"><span class="text-secondary">Answer</span> with a click.</h2>
+            <p class="two-column_text">Just click on the right answer, <br>or skip it if you don't know.</p>
+        </div>
+        <img src="/assets/images/play.png" alt="Screenshot of the creating quizzes process." class="two-column_image">
+
+    </section>
+    <!-- Friends -->
+    <section class="two-column">
+        <div class="two-column_first">
+            <h2 class="two-column_heading"><span class="text-secondary">Make friends</span>, share your quizzes.</h2>
+            <p class="mr-10 two-column_text">Add your friends to Quiziz in a few steps to unlock the full potential such as sharing quizzes, playing shared quizzes and seeing each other's profile.</p>
+        </div>
+        <img src="/assets/images/friends.png" alt="Screenshot of the creating quizzes process." class="two-column_image">
+    </section>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path class="fill-secondary" fill-opacity="1" d="M0,64L80,74.7C160,85,320,107,480,133.3C640,160,800,192,960,186.7C1120,181,1280,139,1360,117.3L1440,96L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
+    </svg>
+    <!-- Privacy -->
+    <section class="flex justify-between px-4 bg-secondary">
+        <div class="flex flex-col items-center text-white wrapper gap-y-14">
+            <h1 class="text-3xl font-bold leading-relaxed text-center text-gray-200 lg:text-5xl gap-y-5">
+                <span class="text-yellow-500">The pricing?</span> <span class="text-green-500">Oh it's completely free.</span>
+            </h1>
+            <p class="mb-10 text-sm text-center text-gray-300 lg:text-lg">Quiziz is a free open source project and is not made to generate any income. But it will continue to get better and better.</p>
+            <div class="flex items-stretch gap-x-10">
+                <a href="/signup" class="text-sm font-medium text-gray-200 md:text-lg bg-emerald-600 button-filled">Start creating</a>
+                <a href="https://github.com/Amir-R1384/quiziz" target="_blank" class="text-sm md:text-lg button-outline">Visit on Github</a>
+            </div>
+        </div>
+    </section>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path class="fill-secondary" fill-opacity="1" d="M0,192L120,186.7C240,181,480,171,720,181.3C960,192,1200,224,1320,240L1440,256L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path class="fill-neutral-200" fill-opacity="1" d="M0,288L120,288C240,288,480,288,720,282.7C960,277,1200,267,1320,261.3L1440,256L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
+    </svg>
+    <footer class="pb-6 bg-neutral-200">
+        <section>
+            <div class="flex justify-between py-5 text-gray-600 wrapper">
+                <div class="font-medium text-md">Made by Amir Ranjbar</div>
+                <div class="flex items-center gap-x-3">
+                    <a href="mailto:ranjbaramirreza5786@yahoo.com">
+                        <i class="transition-colors fas fa-at fa-xl hover:text-primary"></i>
+                    </a>
+                    <a href="https://github.com/Amir-R1384" target="_blank">
+                        <i class="transition-colors fab fa-github fa-xl hover:text-primary"></i>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+    </footer>
 </body>

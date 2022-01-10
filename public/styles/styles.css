@@ -2,6 +2,10 @@
 @tailwind base;
 @tailwind utilities;
 
+html {
+    @apply scroll-smooth scroll-p-20;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
 }
@@ -90,6 +94,28 @@ section {
 
 .link {
     @apply mx-auto font-semibold bg-primary px-2.5 py-1 rounded-md text-white;
+}
+
+.two-column {
+    @apply flex flex-col items-start justify-between gap-20 gap-y-10 pb-36 wrapper md:flex-row;
+    @apply px-4 !important;
+}
+
+.two-column_first {
+    @apply flex flex-col xl:gap-y-20 gap-y-10;
+}
+
+.two-column_heading {
+    @apply text-3xl font-bold text-gray-700 lg:text-4xl;
+}
+
+.two-column_text {
+    @apply text-sm font-medium leading-relaxed text-gray-500 md:text-sm lg:text-base;
+}
+
+.two-column_image {
+    box-shadow: 10px 10px 2px 0 rgba(13, 101, 96, 0.5);
+    @apply w-full border-4 md:w-1/2 rounded-xl border-secondary;
 }
 
 @keyframes rotate {
