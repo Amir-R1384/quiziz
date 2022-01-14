@@ -1,10 +1,11 @@
-# quiziz
+# Quiziz -  Create and play quizzes
 
-### An app that lets you make quizes and other people can participate in it alone.
+### [Go to the Quiziz website](https://quiziz-app.herokuapp.com)
 
-This project is enspired by the [Kahoot](https://kahoot.com/) website.
+### In Quiziz, you can create and play quizzes. You can also make private quizzes and only share them to who you want by adding them as your friend.
 
-In quiziz, you can create public and private quizes and other people can take the quiz alone and not with other people.
-You can gather achievements as you make and participate in quizes.
+### Just note that the website might take a few seconds to load at the first time.
 
-Live demo comming soon!
+### Thank you for taking a look at Quiziz.
+
+This project was enspired by [Kahoot](https://kahoot.com/)
