@@ -217,6 +217,22 @@ module.exports.deleteQuiz_delete = async (req, res) => {
         const quizzesMade = user.quizzesMade
         await User.findByIdAndUpdate(id, { quizzesMade: quizzesMade - 1 })
 
+        // Those the quiz was shared with
+        const sharedUsers = await User.find({
+            sharedQuizzes: {
+                $all: [quizId]
+            }
+        })
+        // Removing the quizId from their sharedQuizzes
+        for (let sharedUser of sharedUsers) {
+            const sharedQuizzes = sharedUser.sharedQuizzes
+            sharedQuizzes.splice(sharedQuizzes.indexOf(quizId), 1)
+
+            await User.findByIdAndUpdate(sharedUser._id, {
+                sharedQuizzes
+            })
+        }
+
         res.status(200).end()
     } catch (err) {
         console.error(err)
@@ -299,7 +315,7 @@ module.exports.removeSharedQuiz_delete = async (req, res) => {
         const { quizId } = req.body
 
         const { sharedQuizzes } = await User.findById(userId)
-        sharedQuizzes.splice(quizId, 1)
+        sharedQuizzes.splice(sharedQuizzes.indexOf(quizId), 1)
         await User.findByIdAndUpdate(userId, { sharedQuizzes })
 
         res.status(200).end()

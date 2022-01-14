@@ -132,6 +132,22 @@ module.exports.data_post = async (req, res) => {
         if (deleteAccount) {
             await deleteUserData(userId)
             await User.findByIdAndDelete(userId)
+
+            // Removing user from the user's friends
+            const friends = await User.find({
+                friends: {
+                    $all: [userId]
+                }
+            })
+            for (let friend of friends) {
+                const friends_of_friend = friend.friends
+                friends_of_friend.splice(friends_of_friend.indexOf(userId), 1)
+
+                await User.findByIdAndUpdate(friend._id, {
+                    friends: friends_of_friend
+                })
+            }
+
             res.cookie('jwt', '', { maxAge: 1 }) // Logging out the user
         }
 
