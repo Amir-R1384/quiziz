@@ -63,15 +63,18 @@
                 <svg class="mb-2" height="150" width="150" style="transform: rotate(-90deg);">
                     <circle id="progressRing" class=" stroke-primary" stroke="blue" stroke-width="10" fill="transparent" r="65" cx="75" cy="75" style="stroke-dasharray: calc(65 * 3.14 * 2) calc(65 * 3.14 * 2); stroke-dashoffset: calc(65 * 3.14 * 2); stroke-linecap: round; transition: all 1s ease-in-out;" />
                 </svg>
-                <div class="-mt-10 text-4xl font-semibold text-gray-600">You scored <span id="scoreNumDiv" class="font-bold text-primary">76%</span> </div>
-                <div class="text-lg text-gray-500 font-regular">Rate this quiz</div>
-                <div id="rating" class="flex -mt-12 gap-x-1">
-                    <%- include('./partials/star.ejs') %>
-                    <%- include('./partials/star.ejs') %>
-                    <%- include('./partials/star.ejs') %>
-                    <%- include('./partials/star.ejs') %>
-                    <%- include('./partials/star.ejs') %>
+                <div class="text-4xl font-semibold text-center text-gray-600 ">You scored <span id="scoreNumDiv" class="font-bold text-primary">76%</span> </div>
+                <div class="flex flex-col gap-y-2">
+                    <div class="text-lg text-gray-500 font-regular">Rate this quiz</div>
+                    <div id="rating" class="flex gap-x-1">
+                        <%- include('./partials/star.ejs') %>
+                        <%- include('./partials/star.ejs') %>
+                        <%- include('./partials/star.ejs') %>
+                        <%- include('./partials/star.ejs') %>
+                        <%- include('./partials/star.ejs') %>
+                    </div>
                 </div>
+                
                 <button id="returnHomeBtn" class="px-10 button-filled bg-secondary">Return home</button>
             </div>
         </div>
